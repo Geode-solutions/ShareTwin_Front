@@ -1,7 +1,7 @@
 import vtkWSLinkClient from 'vtk.js/Sources/IO/Core/WSLinkClient';
 import SmartConnect from 'wslink/src/SmartConnect';
 
-import protocols from 'vue-vtkjs-pvw-template/src/protocols';
+import protocols from 'Visualization_Frontend/src/protocols';
 
 import { connectImageStream } from 'vtk.js/Sources/Rendering/Misc/RemoteView';
 

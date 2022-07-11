@@ -1,12 +1,12 @@
 // import Vue from 'vue';
 import Vuex from 'vuex';
 
-import cone from 'vue-vtkjs-pvw-template/src/store/cone';
-import wslink from 'vue-vtkjs-pvw-template/src/store/wslink';
+import cone from 'Visualization_Frontend/src/store/cone';
+import wslink from 'Visualization_Frontend/src/store/wslink';
 
 /* eslint-enable no-param-reassign */
 
-function createStore() {
+function createStore () {
   return new Vuex.Store({
     modules: {
       cone,

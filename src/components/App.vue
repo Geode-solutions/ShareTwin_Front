@@ -6,20 +6,10 @@
       <span class="title">Geode-solutions viewer</span>
       <v-progress-linear :active="busy" :indeterminate="busy" absolute bottom />
       <v-spacer />
-      <v-switch
-        class="switch"
-        @click="$vuetify.theme.dark = !$vuetify.theme.dark"
-      />
+      <v-switch class="switch" @click="$vuetify.theme.dark = !$vuetify.theme.dark" />
       <v-icon v-text="`$resetCamera`" v-on:click="resetCamera()" />
     </v-app-bar>
-    <v-navigation-drawer
-      v-model="controlsDrawer"
-      clipped
-      app
-      fixed
-      disable-resize-watcher
-      width="300"
-    >
+    <v-navigation-drawer v-model="controlsDrawer" clipped app fixed disable-resize-watcher width="300">
       <SideMenu />
     </v-navigation-drawer>
     <v-main class="appContent">
@@ -32,9 +22,9 @@
 
 <script>
 import { mapGetters, mapActions } from 'vuex';
-import logo from 'vue-vtkjs-pvw-template/src/assets/logo.png';
-import RemoteRenderingView from 'vue-vtkjs-pvw-template/src/components/RemoteRenderingView.vue';
-import SideMenu from 'vue-vtkjs-pvw-template/src/components/SideMenu.vue';
+import logo from 'Visualization_Frontend/src/assets/logo.png';
+import RemoteRenderingView from 'Visualization_Frontend/src/components/RemoteRenderingView.vue';
+import SideMenu from 'Visualization_Frontend/src/components/SideMenu.vue';
 
 // ----------------------------------------------------------------------------
 // Component API
@@ -46,7 +36,7 @@ export default {
     RemoteRenderingView,
     SideMenu,
   },
-  data() {
+  data () {
     return {
       logo,
     };
@@ -67,7 +57,7 @@ export default {
       'ws_connect',
     ]),
   },
-  mounted() {
+  mounted () {
     this.ws_connect();
   },
 };

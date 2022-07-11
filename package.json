@@ -1,5 +1,5 @@
 {
-  "name": "vue-vtkjs-pvw-template",
+  "name": "Visualization_Frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -12,11 +12,11 @@
     "core-js": "3.19.0",
     "mocha": "^9.2.2",
     "typeface-roboto": "1.1.13",
-    "vtk.js": "20.2.3",
+    "vtk.js": "25.1.3",
     "vue": "2.6.14",
     "vuetify": "2.5.10",
     "vuex": "3.6.2",
-    "wslink": "1.1.0"
+    "wslink": "1.6.6"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "4.5.15",
