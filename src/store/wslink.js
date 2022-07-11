@@ -15,29 +15,29 @@ export default {
     busy: false,
   },
   getters: {
-    WS_CLIENT(state) {
+    WS_CLIENT (state) {
       return state.client;
     },
-    WS_CONFIG(state) {
+    WS_CONFIG (state) {
       return state.config;
     },
-    WS_BUSY(state) {
+    WS_BUSY (state) {
       return !!state.busy;
     },
   },
   mutations: {
-    WS_CLIENT_SET(state, client) {
+    WS_CLIENT_SET (state, client) {
       state.client = client;
     },
-    WS_CONFIG_SET(state, config) {
+    WS_CONFIG_SET (state, config) {
       state.config = config;
     },
-    WS_BUSY_SET(state, busy) {
+    WS_BUSY_SET (state, busy) {
       state.busy = busy;
     },
   },
   actions: {
-    ws_connect({ state, commit, dispatch }) {
+    ws_connect ({ state, commit, dispatch }) {
       // Initiate network connection
       const config = { application: 'cone' };
 
@@ -46,9 +46,10 @@ export default {
         // We suppose that we have dev server and that ParaView/VTK is running on port 1234
         console.log(
           'URL :',
-          `ws://Api2GeodeSolutions-1325713989.eu-west-3.elb.amazonaws.com:1234/ws`
+          `ws://api2.geode-solutions.com:1234/ws`
         );
-        config.sessionURL = `ws://Api2GeodeSolutions-1325713989.eu-west-3.elb.amazonaws.com:1234/ws`;
+        // ws://api2.geode-solutions.com/ws
+        config.sessionURL = `wss://api2.geode-solutions.com:1234/ws`;
       }
 
       const { client } = state;
@@ -105,7 +106,7 @@ export default {
           console.error(error);
         });
     },
-    WS_INITIALIZE_SERVER({ state }) {
+    WS_INITIALIZE_SERVER ({ state }) {
       if (state.client) {
         state.client
           .getRemote()
@@ -113,7 +114,7 @@ export default {
           .catch(console.error);
       }
     },
-    resetCamera({ state }) {
+    resetCamera ({ state }) {
       if (state.client) {
         state.client.getRemote().Cone.resetCamera().catch(console.error);
       }
