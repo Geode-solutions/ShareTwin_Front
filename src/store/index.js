@@ -6,7 +6,7 @@ import wslink from 'Visualization_Frontend/src/store/wslink';
 
 /* eslint-enable no-param-reassign */
 
-function createStore () {
+function createStore() {
   return new Vuex.Store({
     modules: {
       cone,

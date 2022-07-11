@@ -1,4 +1,3 @@
-
 export default {
   state: {
     resolution: 6,
@@ -6,30 +5,30 @@ export default {
     filename: '',
   },
   getters: {
-    resolution (state) {
+    resolution(state) {
       return state.resolution;
     },
-    height (state) {
+    height(state) {
       return state.height;
     },
-    filename (state) {
+    filename(state) {
       return state.filename;
     },
   },
   actions: {
-    async setConeResolution ({ state, dispatch }, resolution) {
+    async setConeResolution({ state, dispatch }, resolution) {
       const r = Number(resolution);
       state.resolution = r;
       return dispatch('WS_UPDATE_RESOLUTION', r);
     },
-    async setConeHeight ({ state, dispatch }, height) {
+    async setConeHeight({ state, dispatch }, height) {
       const h = Number(height);
       state.height = h;
       return dispatch('WS_UPDATE_HEIGHT', h);
     },
-    async sendFilenames ({ rootState }, filenames) {
+    async sendFilenames({ rootState }, filenames) {
       // return dispatch('WS_SEND_FILENAME', files);
-      console.log(rootState)
+      console.log(rootState);
       if (rootState.wslink.client) {
         rootState.wslink.client
           .getRemote()
