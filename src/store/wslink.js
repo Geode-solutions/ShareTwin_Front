@@ -46,10 +46,11 @@ export default {
         // We suppose that we have dev server and that ParaView/VTK is running on port 1234
         console.log(
           'URL :',
-          `ws://api2.geode-solutions.com:1234/ws`
+          `wss://api2.geode-solutions.com:443/ws`
         );
         // ws://api2.geode-solutions.com/ws
-        config.sessionURL = `wss://api2.geode-solutions.com:1234/ws`;
+        // config.sessionURL = `ws://localhost:1234/ws`;
+        config.sessionURL = `wss://api2.geode-solutions.com:443/ws`;
       }
 
       const { client } = state;
