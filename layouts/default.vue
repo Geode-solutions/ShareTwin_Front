@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <!-- <v-app-bar dark color="primary" fixed app>
+    <v-app-bar dark color="primary" fixed app>
       <v-row class="hidden-sm-and-down px-2">
         <v-btn text active-class="no-active" nuxt to="/">
           <v-app-bar-nav-icon>
@@ -22,9 +22,9 @@
         </v-icon>
       </v-row>
       <v-progress-linear :active="busy" :indeterminate="busy" absolute bottom />
-    </v-app-bar> -->
+    </v-app-bar>
 
-    <!-- <v-navigation-drawer
+    <v-navigation-drawer
       v-model="controlsDrawer"
       clipped
       app
@@ -33,8 +33,8 @@
       width="300"
     >
       <SideMenu />
-    </v-navigation-drawer> -->
-
+    </v-navigation-drawer>
+    
     <v-main class="secondary">
       <nuxt />
     </v-main>
@@ -44,17 +44,17 @@
 </template>
 
 <script>
-// import SideMenu from '@/components/SideMenu.vue'
+import SideMenu from '@/components/SideMenu.vue'
 
 export default {
   name: 'DefaultLayout',
   components: {
-    // SideMenu
+    SideMenu
   },
   data () {
     return {
       name: 'Geode-solutions viewer',
-      menu: false,
+      menu: true,
       date: new Date().getFullYear()
     }
   }

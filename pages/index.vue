@@ -1,26 +1,23 @@
 <template>
-  <v-app>
-    <p>
-      toto
-    </p>
-    
     <!-- <v-app-bar app absolute clipped-left>
       <v-app-bar-nav-icon @click="controlsDrawer = !controlsDrawer" />
       <img :src="logo" class="logo" @click="resetCamera()">
       <span class="text-h6">Geode-solutions viewer</span>
       <v-progress-linear :active="busy" :indeterminate="busy" absolute bottom />
-    </v-app-bar> -->
-    <!--     
-    <v-main class="appContent">
-      <div style="position: relative; width: 100%; height: 100%">
-        <remote-rendering-view :client="client" />
-      </div>
-    </v-main> -->
-  </v-app>
+    </v-app-bar>   -->
+  <!-- <v-main class="appContent">
+    <div style="position: relative; width: 100%; height: 100%">
+      <remote-rendering-view :client="client" />
+    </div>
+  </v-main> -->
+  <p>toto</p>
+  
+  
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+// import { mapGetters, mapActions } from 'vuex'
+
 // import RemoteRenderingView from '@/components/RemoteRenderingView.vue'
 
 
@@ -33,26 +30,24 @@ export default {
   components: {
     // RemoteRenderingView,
   },
-  data () {
-  },
   computed: {
-    ...mapGetters({
-      client: 'WS_CLIENT',
-      busy: 'WS_BUSY',
-      resolution: 'CONE_RESOLUTION',
-      height: 'CONE_HEIGHT'
-    })
+    // ...mapGetters({
+    //   client: 'WS_CLIENT',
+    //   busy: 'WS_BUSY',
+    //   resolution: 'CONE_RESOLUTION',
+    //   height: 'CONE_HEIGHT'
+    // })
   },
   mounted () {
-    this.ws_connect()
+    // this.ws_connect()
   },
   methods: {
-    ...mapActions([
-      'setConeResolution',
-      'setConeHeight',
-      'resetCamera',
-      'ws_connect'
-    ])
+    // ...mapActions([
+    //   'setConeResolution',
+    //   'setConeHeight',
+    //   'resetCamera',
+    //   'ws_connect'
+    // ])
   },
 }
 </script>
