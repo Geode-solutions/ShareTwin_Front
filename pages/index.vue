@@ -1,40 +1,28 @@
 <template>
   <v-app>
-    <v-app-bar app absolute clipped-left>
+    <p>
+      toto
+    </p>
+    
+    <!-- <v-app-bar app absolute clipped-left>
       <v-app-bar-nav-icon @click="controlsDrawer = !controlsDrawer" />
-      <img :src="logo" class="logo" v-on:click="resetCamera()" />
-      <span class="title">Geode-solutions viewer</span>
+      <img :src="logo" class="logo" @click="resetCamera()">
+      <span class="text-h6">Geode-solutions viewer</span>
       <v-progress-linear :active="busy" :indeterminate="busy" absolute bottom />
-      <v-spacer />
-      <v-switch
-        class="switch"
-        @click="$vuetify.theme.dark = !$vuetify.theme.dark"
-      />
-      <v-icon v-text="`$resetCamera`" v-on:click="resetCamera()" />
-    </v-app-bar>
-    <v-navigation-drawer
-      v-model="controlsDrawer"
-      clipped
-      app
-      fixed
-      disable-resize-watcher
-      width="300"
-    >
-      <SideMenu />
-    </v-navigation-drawer>
+    </v-app-bar> -->
+    <!--     
     <v-main class="appContent">
       <div style="position: relative; width: 100%; height: 100%">
         <remote-rendering-view :client="client" />
       </div>
-    </v-main>
+    </v-main> -->
   </v-app>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
-import logo from 'Visualization_Frontend/src/assets/logo.png';
-import RemoteRenderingView from 'Visualization_Frontend/src/components/RemoteRenderingView.vue';
-import SideMenu from 'Visualization_Frontend/src/components/SideMenu.vue';
+import { mapGetters, mapActions } from 'vuex'
+// import RemoteRenderingView from '@/components/RemoteRenderingView.vue'
+
 
 // ----------------------------------------------------------------------------
 // Component API
@@ -43,34 +31,30 @@ import SideMenu from 'Visualization_Frontend/src/components/SideMenu.vue';
 export default {
   name: 'App',
   components: {
-    RemoteRenderingView,
-    SideMenu,
+    // RemoteRenderingView,
   },
-  data() {
-    return {
-      logo,
-    };
+  data () {
   },
   computed: {
     ...mapGetters({
       client: 'WS_CLIENT',
       busy: 'WS_BUSY',
       resolution: 'CONE_RESOLUTION',
-      height: 'CONE_HEIGHT',
-    }),
+      height: 'CONE_HEIGHT'
+    })
+  },
+  mounted () {
+    this.ws_connect()
   },
   methods: {
     ...mapActions([
       'setConeResolution',
       'setConeHeight',
       'resetCamera',
-      'ws_connect',
-    ]),
+      'ws_connect'
+    ])
   },
-  mounted() {
-    this.ws_connect();
-  },
-};
+}
 </script>
 
 <style scoped>

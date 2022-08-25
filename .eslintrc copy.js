@@ -14,4 +14,5 @@ module.exports = {
     'semi': [2, 'never'],
     'vue/max-attributes-per-line': 'off'
   },
+  parserOptions: { parser: 'babel-eslint' }
 }
