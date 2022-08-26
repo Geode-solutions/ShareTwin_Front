@@ -1,5 +1,5 @@
-// import Cone from './Cone'
+import Cone from './Cone'
 
-// export default {
-//   Cone
-// }
+export default {
+    Cone
+}

@@ -1,6 +1,7 @@
 <template>
   <v-expansion-panels v-model="panelState" multiple accordion>
     <v-expansion-panel>
+      <!-- <p>toto</p> -->
       <v-file-input
         v-model="VtpFile"
         chips

@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar dark color="primary" fixed app>
+    <v-app-bar dark color="primary" fixed app clipped-left>
       <v-row class="hidden-sm-and-down px-2">
         <v-btn text active-class="no-active" nuxt to="/">
           <v-app-bar-nav-icon>
@@ -27,6 +27,7 @@
     <v-navigation-drawer
       v-model="controlsDrawer"
       clipped
+      permanent
       app
       fixed
       disable-resize-watcher
@@ -44,6 +45,7 @@
 </template>
 
 <script>
+import { mapGetters, mapActions } from 'vuex'
 import SideMenu from '@/components/SideMenu.vue'
 
 export default {
@@ -55,9 +57,25 @@ export default {
     return {
       name: 'Geode-solutions viewer',
       menu: true,
-      date: new Date().getFullYear()
+      // date: new Date().getFullYear()
     }
-  }
+  },
+  computed: {
+    ...mapGetters({
+      client: 'WS_CLIENT',
+      busy: 'WS_BUSY',
+      resolution: 'CONE_RESOLUTION',
+      height: 'CONE_HEIGHT'
+    })
+  },
+  methods: {
+    ...mapActions([
+      'setConeResolution',
+      'setConeHeight',
+      'resetCamera',
+      'ws_connect'
+    ])
+  },
 }
 </script>
 
