@@ -1,15 +1,15 @@
 <template>
   <v-main class="appContent">
-    <!-- <div style="position: relative; width: 100%; height: 100%">
+    <div style="position: relative; width: 100%; height: 100%">
       <remote-rendering-view :client="client" />
-    </div> -->
+    </div>
   </v-main>
 </template>
 
 <script>
 import { mapGetters, mapActions } from 'vuex'
 
-// import RemoteRenderingView from '@/components/RemoteRenderingView.vue'
+import RemoteRenderingView from '@/components/RemoteRenderingView.vue'
 
 
 // ----------------------------------------------------------------------------
@@ -19,26 +19,26 @@ import { mapGetters, mapActions } from 'vuex'
 export default {
   name: 'App',
   components: {
-    // RemoteRenderingView,
+    RemoteRenderingView,
   },
   computed: {
     ...mapGetters({
-      client: 'WS_CLIENT',
-      busy: 'WS_BUSY',
-      resolution: 'CONE_RESOLUTION',
-      height: 'CONE_HEIGHT'
+      client: 'wslink/WS_CLIENT',
+      busy: 'wslink/WS_BUSY',
+      resolution: 'cone/CONE_RESOLUTION',
+      height: 'cone/CONE_HEIGHT'
     })
   },
   mounted () {
     this.ws_connect()
   },
   methods: {
-    ...mapActions([
-      'setConeResolution',
-      'setConeHeight',
-      'resetCamera',
-      'ws_connect'
-    ])
+    ...mapActions({
+      setConeResolution: 'cone/setConeResolution',
+      setConeHeight: 'cone/setConeHeight',
+      resetCamera: 'wslink/resetCamera',
+      ws_connect: 'wslink/ws_connect'
+  })
   },
 }
 </script>

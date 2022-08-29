@@ -18,14 +18,13 @@
         <v-icon
           @click="resetCamera()"
         >
-          mdiCamera
+          mdi-camera
         </v-icon>
       </v-row>
       <v-progress-linear :active="busy" :indeterminate="busy" absolute bottom />
     </v-app-bar>
 
     <v-navigation-drawer
-      v-model="controlsDrawer"
       clipped
       permanent
       app
@@ -39,13 +38,12 @@
     <v-main class="secondary">
       <nuxt />
     </v-main>
-
-    <!-- <CookieControl v-if="$config.NODE_ENV === 'production'" /> -->
   </v-app>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
+import { mapGetters } from 'vuex'
+// mapActions
 import SideMenu from '@/components/SideMenu.vue'
 
 export default {
@@ -56,26 +54,24 @@ export default {
   data () {
     return {
       name: 'Geode-solutions viewer',
-      menu: true,
-      // date: new Date().getFullYear()
     }
   },
   computed: {
     ...mapGetters({
-      client: 'WS_CLIENT',
-      busy: 'WS_BUSY',
-      resolution: 'CONE_RESOLUTION',
-      height: 'CONE_HEIGHT'
+      client: 'wslink/WS_CLIENT',
+      busy: 'wslink/WS_BUSY',
+      resolution: 'cone/CONE_RESOLUTION',
+      height: 'cone/CONE_HEIGHT'
     })
   },
-  methods: {
-    ...mapActions([
-      'setConeResolution',
-      'setConeHeight',
-      'resetCamera',
-      'ws_connect'
-    ])
-  },
+  // methods: {
+  //   ...mapActions([
+  //     'cone/setConeResolution',
+  //     'cone/setConeHeight',
+  //     'wslink/resetCamera',
+  //     'wslink/ws_connect'
+  //   ])
+  // },
 }
 </script>
 

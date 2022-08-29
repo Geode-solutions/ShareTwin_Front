@@ -1,7 +1,6 @@
 <template>
-  <v-expansion-panels v-model="panelState" multiple accordion>
+  <v-expansion-panels multiple accordion>
     <v-expansion-panel>
-      <!-- <p>toto</p> -->
       <v-file-input
         v-model="VtpFile"
         chips
@@ -36,31 +35,10 @@ export default {
   },
   computed: {},
   methods: {
-    ...mapActions(['setFilenames', 'sendFilenames']),
-
-    UploadFile () {
-      const self = this
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader()
-        reader.onload = async function (event) {
-          try {
-            const params = new FormData()
-            params.append('file', event.target.result)
-            params.append('filename', self.files[0].name)
-            params.append('filesize', self.files[0].size)
-
-            self.loading = true
-            const response = await self.$axios.post('http://localhost:1234/123456/validitychecker/uploadfile', params)
-            self.loading = false
-
-            resolve(response)
-          } catch (err) {
-            reject(err)
-          }
-        }
-        reader.readAsDataURL(this.files[0])
-      })
-    },
+    ...mapActions({
+      setFilenames: 'wslink/setFilenames',
+      sendFilenames: 'cone/sendFilenames'
+    }),
     Load () {
       const VtiFilename = this.VtiFile.name
       const VtpFilename = this.VtpFile.name

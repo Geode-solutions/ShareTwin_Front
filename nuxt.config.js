@@ -8,13 +8,8 @@ export default {
     SITE_URL: process.env.SITE_URL
   },
 
-  ssr: true,
-  target: 'spa',
-  loadingIndicator: {
-    name: 'circle',
-    color: '#3B8070',
-    background: 'red'
-  },
+  ssr: false,
+
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     title: 'Visualization_Backend',

@@ -1,9 +1,9 @@
 <template>
-  <div class="viewer" />
+  <div class="toto" />
 </template>
 
 <script>
-// import vtkRemoteView from '@kitware/vtk.js/Rendering/Misc/RemoteView'
+import vtkRemoteView from '@kitware/vtk.js/Rendering/Misc/RemoteView'
 
 export default {
   name: 'RemoteRenderView',
@@ -38,9 +38,9 @@ export default {
     }
   },
   created () {
-    // this.view = vtkRemoteView.newInstance({
-    //   rpcWheelEvent: 'viewport.mouse.zoom.wheel'
-    // })
+    this.view = vtkRemoteView.newInstance({
+      rpcWheelEvent: 'viewport.mouse.zoom.wheel'
+    })
     // default of 0.5 causes 2x size labels on high-DPI screens. 1 good for demo, not for production.
     if (location.hostname.split('.')[0] === 'localhost') {
       this.view.setInteractiveRatio(1)
@@ -77,7 +77,7 @@ export default {
 </script>
 
 <style scoped>
-.viewer {
+.toto {
   position: absolute;
   top: 0;
   left: 0;

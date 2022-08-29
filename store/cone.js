@@ -30,6 +30,7 @@ export const actions = {
   async sendFilenames ({ rootState }, filenames) {
     // return dispatch('WS_SEND_FILENAME', files);
     console.log(rootState)
+    console.log("filenames :", filenames)
     if (rootState.wslink.client) {
       rootState.wslink.client
         .getRemote()

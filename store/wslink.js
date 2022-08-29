@@ -1,11 +1,12 @@
-// import vtkWSLinkClient from '@kitware/vtk.js/IO/Core/WSLinkClient'
-// import SmartConnect from 'wslink/src/SmartConnect'
+import vtkWSLinkClient from '@kitware/vtk.js/IO/Core/WSLinkClient'
+import SmartConnect from 'wslink/src/SmartConnect'
 
-// import { connectImageStream } from '@kitware/vtk.js/Rendering/Misc/RemoteView'
-// import protocols from '@/protocols'
+import '@kitware/vtk.js/Rendering/OpenGL/Profiles/Geometry'
+import { connectImageStream } from '@kitware/vtk.js/Rendering/Misc/RemoteView'
+import protocols from '@/protocols'
 
-// // Bind vtkWSLinkClient to our SmartConnect
-// vtkWSLinkClient.setSmartConnectClass(SmartConnect)
+// Bind vtkWSLinkClient to our SmartConnect
+vtkWSLinkClient.setSmartConnectClass(SmartConnect)
 
 export const state = () => (
   {
@@ -47,8 +48,8 @@ export const actions = {
     // if (location.port === '8080') {
     // We suppose that we have dev server and that ParaView/VTK is running on port 1234
     // ws://api2.geode-solutions.com/ws
-    // config.sessionURL = `ws://localhost:1234/ws`;
-    config.sessionURL = 'wss://api2.geode-solutions.com/ws'
+    config.sessionURL = `ws://localhost:1234/ws`
+    // config.sessionURL = 'wss://api2.geode-solutions.com/ws'
     console.log('API URL :', config.sessionURL)
     // }
 
