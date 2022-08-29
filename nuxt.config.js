@@ -5,6 +5,7 @@ export default {
 
   publicRuntimeConfig: {
     API_URL: process.env.NODE_ENV === 'production' ? 'https://api2.geode-solutions.com' : 'http://localhost:1234',
+    WS_URL: process.env.NODE_ENV === 'production' ? 'wss://api2.geode-solutions.com/ws' : 'ws://localhost:1234/ws',
     SITE_URL: process.env.SITE_URL
   },
 
