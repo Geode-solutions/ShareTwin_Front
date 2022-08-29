@@ -1,9 +1,7 @@
 <template>
-  <v-main class="appContent">
     <div style="position: relative; width: 100%; height: 100%">
       <remote-rendering-view :client="client" />
     </div>
-  </v-main>
 </template>
 
 <script>
