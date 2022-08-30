@@ -1,25 +1,8 @@
 <template>
   <v-expansion-panels multiple accordion>
     <v-expansion-panel>
-      <v-file-input
-        v-model="VtpFile"
-        chips
-        class="pa-4"
-        messages="Please select a .vtp file"
-        accept=".vtp"
-        rounded
-        :success-messages="message"
-        :success="success"
-        @click:clear="objects = []"
-        @change="SetVtpFile"
-      />
-      <v-file-input
-        v-model="VtiFile"
-        chips
-        class="pa-4"
-        messages="Please select a .vti file"
-        accept=".vti"
-      />
+      <FileSelector v-model="VtpFile" messages="Please select a .vtp file" accept=".vtp" />
+      <FileSelector v-model="VtiFile" messages="Please select a .vti file" accept=".vti" />
       <v-btn class="white--text" color="#003630" @click="Load">
         Load
       </v-btn>
@@ -29,9 +12,11 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import FileSelector from '@/components/FileSelector.vue'
 
 export default {
   name: 'SideMenu',
+  components: { FileSelector },
   data () {
     return {
       files: [],
@@ -53,6 +38,13 @@ export default {
     }),
 
     SetVtpFile(changedFiles){
+      this.success = true
+      this.message = 'File(s) selected'
+      if (changedFiles) {
+        this.files = [changedFiles]
+      }
+    },
+    SetVtiFile(changedFiles){
       this.success = true
       this.message = 'File(s) selected'
       if (changedFiles) {
