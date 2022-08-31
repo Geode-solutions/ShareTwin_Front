@@ -1,11 +1,29 @@
 <template>
   <v-expansion-panels multiple accordion>
     <v-expansion-panel>
-      <FileSelector v-model="VtpFile" messages="Please select a .vtp file" accept=".vtp" />
-      <FileSelector v-model="VtiFile" messages="Please select a .vti file" accept=".vti" />
-      <v-btn class="white--text" color="#003630" @click="Load">
-        Load
-      </v-btn>
+      <v-expansion-panel-header>
+        <div>
+          <v-icon color="primary" size="30">mdi-file-upload</v-icon>
+          Load files
+        </div>
+      </v-expansion-panel-header>
+      <v-expansion-panel-content>
+        <v-row>
+          <FileSelector v-model="VtpFile" messages="Please select a .vtp file" accept=".vtp" />
+        </v-row>
+        <v-row>
+          <FileSelector v-model="VtiFile" messages="Please select a .vti file" accept=".vti" />
+        </v-row>
+        <v-row
+          align-content="center"
+          justify="center">
+          <v-col cols="auto">
+            <v-btn color="primary" @click="Load">
+              Load
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-expansion-panel-content>
     </v-expansion-panel>
   </v-expansion-panels>
 </template>
@@ -51,7 +69,7 @@ export default {
         this.files = [changedFiles]
       }
     },
-    async Upload () {
+    async Load () {
       const self = this
       const reader = new FileReader()
       reader.onload = async function (event) {
@@ -80,12 +98,12 @@ export default {
       }
       await reader.readAsDataURL(this.files[0])
     },
-    Load () {
-      // const VtiFilename = this.VtiFile.name
-      const VtpFilename = this.VtpFile.name
-      this.sendFilenames({ VtpFilename })
-      // this.sendFilenames({ VtiFilename, VtpFilename })
-    }
+    // Load () {
+    //   // const VtiFilename = this.VtiFile.name
+    //   const VtpFilename = this.VtpFile.name
+    //   this.sendFilenames({ VtpFilename })
+    //   // this.sendFilenames({ VtiFilename, VtpFilename })
+    // }
   }
 }
 </script>

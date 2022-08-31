@@ -30,7 +30,7 @@
       app
       fixed
       disable-resize-watcher
-      width="300"
+      width="350"
     >
       <SideMenu />
     </v-navigation-drawer>

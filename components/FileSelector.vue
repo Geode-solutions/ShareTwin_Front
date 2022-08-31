@@ -13,34 +13,34 @@
 
 <script>
 export default {
-name: 'FileSelector',
-props: {
-    messages: {
-        type: String,
-        required: true,
+    name: 'FileSelector',
+    props: {
+        messages: {
+            type: String,
+            required: true,
+        },
+        accept: {
+            type: String,
+            required: true,
+        },
     },
-    accept: {
-        type: String,
-        required: true,
-    },
-},
-data () {
-    return {
-    files: [],
-    success: false,
-    message: '',
-    Filename: '',
-    VtpFile: ''
-    }
-},
-methods: {
-    SetFilename(changedFiles){
-        this.success = true
-        this.message = 'File(s) selected'
-        if (changedFiles) {
-            this.files = [changedFiles]
+    data () {
+        return {
+        files: [],
+        success: false,
+        message: '',
+        Filename: '',
         }
     },
-}
+    methods: {
+        SetFilename (changedFiles) {
+            this.success = true
+            this.message = 'File(s) selected'
+            if (changedFiles) {
+                this.files = [changedFiles]
+                this.$emit('input', this.content)
+            }
+        },
+    }
 }
 </script>
