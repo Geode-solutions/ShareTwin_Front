@@ -6,7 +6,7 @@
     :accept="accept"
     :success-messages="message"
     :success="success"
-    @click:clear="objects = []"
+    @click:clear="file = []"
     @change="SetFilename"
   />
 </template>
@@ -23,22 +23,25 @@ export default {
             type: String,
             required: true,
         },
+        file: {
+            type: Array,
+            required: true,
+        },
     },
     data () {
         return {
-        files: [],
-        success: false,
-        message: '',
-        Filename: '',
+            success: false,
+            message: '',
         }
     },
     methods: {
-        SetFilename (changedFiles) {
+        SetFilename (changedFile) {
             this.success = true
             this.message = 'File(s) selected'
-            if (changedFiles) {
-                this.files = [changedFiles]
-                this.$emit('input', this.content)
+            if (changedFile) {
+                this.file = [changedFile]
+                // console.log('this.files.size : ', this.file[0].size)
+                // this.$emit('input', this.files)
             }
         },
     }

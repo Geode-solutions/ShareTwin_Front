@@ -8,18 +8,16 @@
         </div>
       </v-expansion-panel-header>
       <v-expansion-panel-content>
-        <v-row>
-          <FileSelector v-model="VtpFile" messages="Please select a .vtp file" accept=".vtp" />
-        </v-row>
-        <v-row>
-          <FileSelector v-model="VtiFile" messages="Please select a .vti file" accept=".vti" />
+        <v-row v-for="(item, index) in items"
+          :key="index">
+          <FileSelector :messages="item.messages" :accept="item.accept" :file="item.file" :v-model="item.file" />
         </v-row>
         <v-row
           align-content="center"
           justify="center">
           <v-col cols="auto">
             <v-btn color="primary" @click="Load">
-              Load
+              Upload
             </v-btn>
           </v-col>
         </v-row>
@@ -41,7 +39,19 @@ export default {
       success: false,
       message: '',
       VtiFile: '',
-      VtpFile: ''
+      VtpFile: '',
+      items: [
+        {
+          file: []
+          , messages: "Please select a .vtp file"
+          , accept: ".vtp"
+        }
+        , {
+          file: []
+          , messages: "Please select a .vti file"
+          , accept: ".vti"
+        }
+      ]
     }
   },
   computed: {
@@ -69,41 +79,48 @@ export default {
         this.files = [changedFiles]
       }
     },
-    async Load () {
+    async Upload () {
       const self = this
       const reader = new FileReader()
-      reader.onload = async function (event) {
-        const params = new FormData()
-
-        params.append('object', 'PolygonalSurface3D')
-        params.append('file', event.target.result)
-        params.append('filename', self.this.VtpFile.name)
-        params.append('filesize', self.this.VtpFile.size)
-        params.append('extension', 'vtp')
-
-        self.busy = true
-
-        try {
-          await self.$axios
-          .post(`${self.ID}/fileconverter/convertfile`, params, {responseType: 'blob'})
-          .then((response) => {
-            if (response.status == 200) {
-              this.Load()
+      for (let i = 0; i < this.items.length; i++) {
+        let currentFile = this.items[i].file
+        console.log('currentFile.size : ', currentFile.size)
+        if(currentFile){
+          reader.onload = async function () {
+            const params = new FormData()
+    
+            params.append('object', 'PolygonalSurface3D')
+            params.append('file', currentFile)
+            params.append('filename', currentFile.name)
+            params.append('filesize', currentFile.size)
+            params.append('extension', 'vtp')
+    
+            self.busy = true
+    
+            try {
+              await self.$axios
+              .post(`${self.ID}/api/uploadfile`, params)
+              .then((response) => {
+                if (response.status == 200) {
+                  this.Load()
+                }
+                self.busy = false
+              })
+            } catch(err){
+              self.busy = false
             }
-            self.busy = false
-          })
-        } catch(err){
-          self.busy = false
+          }
         }
       }
       await reader.readAsDataURL(this.files[0])
     },
-    // Load () {
-    //   // const VtiFilename = this.VtiFile.name
-    //   const VtpFilename = this.VtpFile.name
-    //   this.sendFilenames({ VtpFilename })
-    //   // this.sendFilenames({ VtiFilename, VtpFilename })
-    // }
+    Load () {
+      // const VtiFilename = this.VtiFile.name
+      // const VtpFilename = this.VtpFile.name
+      console.log('fileSize : ', this.items[0].file.name)
+      // this.sendFilenames({ this })
+      // this.sendFilenames({ VtiFilename, VtpFilename })
+    }
   }
 }
 </script>
