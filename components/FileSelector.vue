@@ -14,6 +14,9 @@
 <script>
 export default {
     name: 'FileSelector',
+    model: {
+      prop: 'file',
+    },
     props: {
         messages: {
             type: String,
@@ -21,10 +24,6 @@ export default {
         },
         accept: {
             type: String,
-            required: true,
-        },
-        file: {
-            type: Array,
             required: true,
         },
     },
@@ -40,8 +39,8 @@ export default {
             this.message = 'File(s) selected'
             if (changedFile) {
                 this.file = [changedFile]
-                // console.log('this.files.size : ', this.file[0].size)
-                // this.$emit('input', this.files)
+                console.log('file from selector : ', this.file)
+                this.$emit('input', this.file)
             }
         },
     }

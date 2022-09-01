@@ -3,20 +3,24 @@
     <v-expansion-panel>
       <v-expansion-panel-header>
         <div>
-          <v-icon color="primary" size="30">mdi-file-upload</v-icon>
+          <v-icon color="primary" size="30">
+            mdi-file-upload
+          </v-icon>
           Load files
         </div>
       </v-expansion-panel-header>
       <v-expansion-panel-content>
         <v-row v-for="(item, index) in items"
-          :key="index">
-          <FileSelector :messages="item.messages" :accept="item.accept" :file="item.file" :v-model="item.file" />
+               :key="index"
+        >
+          <FileSelector v-model="item.file" :messages="item.messages" :accept="item.accept" />
         </v-row>
         <v-row
           align-content="center"
-          justify="center">
+          justify="center"
+        >
           <v-col cols="auto">
-            <v-btn color="primary" @click="Load">
+            <v-btn color="primary" @click="Upload">
               Upload
             </v-btn>
           </v-col>
@@ -65,59 +69,46 @@ export default {
       sendFilenames: 'cone/sendFilenames'
     }),
 
-    SetVtpFile(changedFiles){
-      this.success = true
-      this.message = 'File(s) selected'
-      if (changedFiles) {
-        this.files = [changedFiles]
-      }
-    },
-    SetVtiFile(changedFiles){
-      this.success = true
-      this.message = 'File(s) selected'
-      if (changedFiles) {
-        this.files = [changedFiles]
-      }
-    },
     async Upload () {
       const self = this
-      const reader = new FileReader()
-      for (let i = 0; i < this.items.length; i++) {
-        let currentFile = this.items[i].file
-        console.log('currentFile.size : ', currentFile.size)
-        if(currentFile){
-          reader.onload = async function () {
+      // self.$store.wslink.commit('WS_BUSY_SET', true)
+      for (let i = 0; i < self.items.length; i++) {
+        if (this.items[i].file.length){
+          const reader = new FileReader()
+          reader.onload = async function (event) {
             const params = new FormData()
-    
             params.append('object', 'PolygonalSurface3D')
-            params.append('file', currentFile)
-            params.append('filename', currentFile.name)
-            params.append('filesize', currentFile.size)
+            params.append('file', event.target.result)
+            params.append('filename', self.items[i].file[0].name)
+            params.append('filesize', self.items[i].file[0].size)
             params.append('extension', 'vtp')
-    
-            self.busy = true
-    
+            // self.$store.wslink.commit('WS_BUSY_SET', true)
             try {
-              await self.$axios
-              .post(`${self.ID}/api/uploadfile`, params)
+            self.$axios
+              .post(`${self.$config.API_URL}/123456/api/uploadfile`, params)
               .then((response) => {
                 if (response.status == 200) {
-                  this.Load()
+                  console.log('OKAYYYYY')
+                  // this.Load()
                 }
-                self.busy = false
+                // self.$store.wslink.commit('WS_BUSY_SET', false)
               })
             } catch(err){
-              self.busy = false
+              // self.$store.wslink.commit('WS_BUSY_SET', false)
             }
+          }
+          console.log('filename : ')
+          if (this.items[i].file.length){
+            reader.readAsDataURL(this.items[i].file[0])
+
           }
         }
       }
-      await reader.readAsDataURL(this.files[0])
     },
     Load () {
       // const VtiFilename = this.VtiFile.name
       // const VtpFilename = this.VtpFile.name
-      console.log('fileSize : ', this.items[0].file.name)
+      console.log('fileSize : ', this.items[0].file[0].size)
       // this.sendFilenames({ this })
       // this.sendFilenames({ VtiFilename, VtpFilename })
     }
