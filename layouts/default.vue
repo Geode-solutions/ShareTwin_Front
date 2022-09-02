@@ -30,7 +30,7 @@
       app
       fixed
       disable-resize-watcher
-      width="300"
+      width="350"
     >
       <SideMenu />
     </v-navigation-drawer>
@@ -43,7 +43,6 @@
 
 <script>
 import { mapGetters } from 'vuex'
-// mapActions
 import SideMenu from '@/components/SideMenu.vue'
 
 export default {
@@ -64,14 +63,6 @@ export default {
       height: 'cone/CONE_HEIGHT'
     })
   },
-  // methods: {
-  //   ...mapActions([
-  //     'cone/setConeResolution',
-  //     'cone/setConeHeight',
-  //     'wslink/resetCamera',
-  //     'wslink/ws_connect'
-  //   ])
-  // },
 }
 </script>
 

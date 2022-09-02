@@ -1,7 +1,7 @@
 <template>
-    <div style="position: relative; width: 100%; height: 100%">
-      <remote-rendering-view :client="client" />
-    </div>
+  <div style="position: relative; width: 100%; height: 100%">
+    <remote-rendering-view :client="client" />
+  </div>
 </template>
 
 <script>

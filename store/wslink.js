@@ -43,15 +43,8 @@ export const actions = {
   ws_connect ({ state, commit, dispatch }) {
     // Initiate network connection
     const config = { application: 'cone' }
-
-    // Custom setup for development (http:8080 / ws:1234)
-    // if (location.port === '8080') {
-    // We suppose that we have dev server and that ParaView/VTK is running on port 1234
-    // ws://api2.geode-solutions.com/ws
-    // config.sessionURL = `ws://localhost:1234/ws`
-    config.sessionURL = 'wss://api2.geode-solutions.com/ws'
+    config.sessionURL = this.$config.WS_URL
     console.log('API URL :', config.sessionURL)
-    // }
 
     const { client } = state
     if (client && client.isConnected()) {
