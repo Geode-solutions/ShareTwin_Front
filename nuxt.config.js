@@ -4,7 +4,7 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
 
   publicRuntimeConfig: {
-    API_URL: process.env.NODE_ENV === 'production' ? 'https://api2.geode-solutions.com' : 'http://localhost:5000',
+    API_URL: process.env.NODE_ENV === 'production' ? 'https://api2.geode-solutions.com/api' : 'http://localhost:5000/api',
     WS_URL: process.env.NODE_ENV === 'production' ? 'wss://api2.geode-solutions.com/ws' : 'ws://localhost:1234/ws',
     SITE_URL: process.env.SITE_URL
   },
