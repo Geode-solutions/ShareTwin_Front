@@ -39,7 +39,6 @@ export default {
             this.message = 'File(s) selected'
             if (changedFile) {
                 this.file = [changedFile]
-                console.log('file from selector : ', this.file)
                 this.$emit('input', this.file)
             }
         },

@@ -47,8 +47,8 @@ export default {
       items: [
         {
           file: []
-          , messages: "Please select a .vtp file"
-          , accept: ".vtp"
+          , messages: "Please select a .obj file"
+          , accept: ".obj"
         }
         , {
           file: []
@@ -88,8 +88,8 @@ export default {
               .post(`${self.$config.API_URL}/123456/api/uploadfile`, params)
               .then((response) => {
                 if (response.status == 200) {
-                  console.log('OKAYYYYY')
-                  // this.Load()
+                  let newFilename = response.data.newFilename
+                  self.Load(newFilename)
                 }
                 // self.$store.wslink.commit('WS_BUSY_SET', false)
               })
@@ -97,7 +97,6 @@ export default {
               // self.$store.wslink.commit('WS_BUSY_SET', false)
             }
           }
-          console.log('filename : ')
           if (this.items[i].file.length){
             reader.readAsDataURL(this.items[i].file[0])
 
@@ -105,12 +104,9 @@ export default {
         }
       }
     },
-    Load () {
-      // const VtiFilename = this.VtiFile.name
-      // const VtpFilename = this.VtpFile.name
-      console.log('fileSize : ', this.items[0].file[0].size)
-      // this.sendFilenames({ this })
-      // this.sendFilenames({ VtiFilename, VtpFilename })
+    Load (VtpFilename) {
+      console.log('coucou1')
+      this.sendFilenames({ VtpFilename })
     }
   }
 }
