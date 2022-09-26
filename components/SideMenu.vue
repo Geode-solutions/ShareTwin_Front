@@ -47,8 +47,8 @@ export default {
       items: [
         {
           file: []
-          , messages: "Please select a .obj file"
-          , accept: ".obj"
+          , messages: "Please select a .vtp file"
+          , accept: ".vtp"
         }
         , {
           file: []
@@ -85,7 +85,7 @@ export default {
             // self.$store.wslink.commit('WS_BUSY_SET', true)
             try {
             self.$axios
-              .post(`${self.$config.API_URL}/123456/api/uploadfile`, params)
+              .post(`${self.$config.API_URL}/uploadfile`, params)
               .then((response) => {
                 if (response.status == 200) {
                   let newFilename = response.data.newFilename
@@ -94,6 +94,7 @@ export default {
                 // self.$store.wslink.commit('WS_BUSY_SET', false)
               })
             } catch(err){
+              console.log({err})
               // self.$store.wslink.commit('WS_BUSY_SET', false)
             }
           }
