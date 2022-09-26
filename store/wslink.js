@@ -41,7 +41,6 @@ export const mutations = {
 
 export const actions = {
   ws_connect ({ state, commit, dispatch }) {
-    // Initiate network connection
     const config = { application: 'cone' }
     config.sessionURL = this.$config.WS_URL
     console.log('API URL :', config.sessionURL)
