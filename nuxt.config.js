@@ -4,8 +4,11 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
 
   publicRuntimeConfig: {
-    API_URL: process.env.NODE_ENV === 'production' ? 'https://api2.geode-solutions.com/geode' : 'http://localhost:80/123456/geode',
-    WS_URL: process.env.NODE_ENV === 'production' ? 'wss://api2.geode-solutions.com/viewer/ws' : 'ws://localhost:80/123456viewer/ws',
+    // API_URL: process.env.NODE_ENV === 'production' ? 'https://api2.geode-solutions.com/geode' : 'http://localhost:80/123456/geode',
+    API_URL: process.env.NODE_ENV === 'production' ? 'https://api2.geode-solutions.com/geode' : 'http://api2.geode-solutions.com:80/geode',
+    // WS_URL: process.env.NODE_ENV === 'production' ? 'wss://api2.geode-solutions.com/viewer/ws' : 'ws://localhost:80/123456viewer/ws',
+    WS_URL: process.env.NODE_ENV === 'production' ? 'wss://api2.geode-solutions.com/viewer/ws' : 'http://api2.geode-solutions.com:80/geode',
+
     SITE_URL: process.env.SITE_URL
   },
 
