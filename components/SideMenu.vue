@@ -79,18 +79,17 @@ export default {
           const reader = new FileReader()
           reader.onload = async function (event) {
             const params = new FormData()
-            // params.append('object', 'PolygonalSurface3D')
             params.append('file', event.target.result)
             params.append('filename', self.items[i].file[0].name)
             params.append('filesize', self.items[i].file[0].size)
-            // params.append('extension', 'vtp')
 
+            let route
             if(self.items[i].type==="data"){
-              let route = "convertfile"
+              route = "convertfile"
               params.append('object', 'PolygonalSurface3D')
               params.append('extension', 'vtp')
             } else if(self.items[i].type==="texture"){
-              let route = "uploadfile"
+              route = "uploadfile"
             }
             try {
             self.$axios
