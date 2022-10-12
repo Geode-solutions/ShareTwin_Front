@@ -13,7 +13,7 @@
         <v-row v-for="(item, index) in items"
                :key="index"
         >
-          <FileSelector v-model="item.file" :messages="item.messages" :accept="item.accept" />
+          <FileSelector v-model="item.file" :messages="item.messages" :accept="item.accept"/>
         </v-row>
         <v-row
           align-content="center"
@@ -42,18 +42,20 @@ export default {
       files: [],
       success: false,
       message: '',
-      VtiFile: '',
-      VtpFile: '',
+      VtiFilename: '',
+      VtpFilename: '',
       items: [
         {
           file: []
-          , messages: "Please select a .vtp file"
-          , accept: ".vtp"
+          , messages: "Please select a .obj file"
+          , accept: ".obj"
+          , type : "data"
         }
         , {
           file: []
           , messages: "Please select a .vti file"
           , accept: ".vti"
+          , type : "texture"
         }
       ]
     }
@@ -77,37 +79,51 @@ export default {
           const reader = new FileReader()
           reader.onload = async function (event) {
             const params = new FormData()
-            params.append('object', 'PolygonalSurface3D')
+            // params.append('object', 'PolygonalSurface3D')
             params.append('file', event.target.result)
             params.append('filename', self.items[i].file[0].name)
             params.append('filesize', self.items[i].file[0].size)
-            params.append('extension', 'vtp')
-            // self.$store.wslink.commit('WS_BUSY_SET', true)
+            // params.append('extension', 'vtp')
+
+            if(self.items[i].type==="data"){
+              let route = "convertfile"
+              params.append('object', 'PolygonalSurface3D')
+              params.append('extension', 'vtp')
+            } else if(self.items[i].type==="texture"){
+              let route = "uploadfile"
+            }
             try {
             self.$axios
-              .post(`${self.$config.API_URL}/uploadfile`, params)
+              .post(`${self.$config.API_URL}/${route}`, params)
               .then((response) => {
                 if (response.status == 200) {
                   let newFilename = response.data.newFilename
-                  self.Load(newFilename)
+                  console.log(newFilename)
+                  if(i===0){
+                    self.VtpFilename = newFilename
+                  } else if(i===1){
+                    self.VtiFilename = newFilename
+                  }
                 }
-                // self.$store.wslink.commit('WS_BUSY_SET', false)
               })
             } catch(err){
               console.log({err})
-              // self.$store.wslink.commit('WS_BUSY_SET', false)
+              self.$store.wslink.commit('WS_BUSY_SET', false)
             }
           }
           if (this.items[i].file.length){
             reader.readAsDataURL(this.items[i].file[0])
-
+            console.log(this.VtpFilename)
           }
         }
       }
+      console.log(this.VtpFilename)
+      console.log(this.VtpFilename)
+
+      this.Load(this.VtpFilename, this.VtiFilename)
     },
-    Load (VtpFilename) {
-      console.log('coucou1')
-      this.sendFilenames({ VtpFilename })
+    Load (VtpFilename, VtiFilename) {
+      this.sendFilenames({ VtpFilename, VtiFilename })
     }
   }
 }
