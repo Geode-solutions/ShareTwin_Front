@@ -68,12 +68,14 @@ export default {
   methods: {
     ...mapActions({
       setFilenames: 'wslink/setFilenames',
+      setBusy: 'wslink/WS_BUSY_SET',
       sendFilenames: 'cone/sendFilenames'
     }),
 
     async Upload () {
       const self = this
-      // self.$store.wslink.commit('WS_BUSY_SET', true)
+      self.setBusy(true)
+
       for (let i = 0; i < self.items.length; i++) {
         if (this.items[i].file.length){
           const reader = new FileReader()
@@ -91,13 +93,14 @@ export default {
             } else if(self.items[i].type==="texture"){
               route = "uploadfile"
             }
+            console.log('route :', route)
             try {
-            self.$axios
+            await self.$axios
               .post(`${self.$config.API_URL}/${route}`, params)
               .then((response) => {
                 if (response.status == 200) {
                   let newFilename = response.data.newFilename
-                  console.log(newFilename)
+                  console.log({newFilename})
                   if(i===0){
                     self.VtpFilename = newFilename
                   } else if(i===1){
@@ -107,22 +110,20 @@ export default {
               })
             } catch(err){
               console.log({err})
-              self.$store.wslink.commit('WS_BUSY_SET', false)
+              self.setBusy(false)
             }
           }
           if (this.items[i].file.length){
-            reader.readAsDataURL(this.items[i].file[0])
-            console.log(this.VtpFilename)
+            await reader.readAsDataURL(this.items[i].file[0])
           }
         }
       }
-      console.log(this.VtpFilename)
-      console.log(this.VtpFilename)
 
       this.Load(this.VtpFilename, this.VtiFilename)
     },
     Load (VtpFilename, VtiFilename) {
       this.sendFilenames({ VtpFilename, VtiFilename })
+      console.log('Load')
     }
   }
 }
