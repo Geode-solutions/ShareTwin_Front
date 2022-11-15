@@ -42,18 +42,18 @@ export default {
       files: [],
       success: false,
       message: '',
-      VtiFilename: '',
-      VtpFilename: '',
+      DataFilename: '',
+      TextureFilename: '',
       items: [
         {
           file: []
-          , messages: "Please select a .obj file"
-          , accept: ".obj"
+          , messages: "Please select a data file"
+          , accept: ".obj, .vtp"
           , type : "data"
         }
         , {
           file: []
-          , messages: "Please select a .vti file"
+          , messages: "Please select a texture file"
           , accept: ".vti"
           , type : "texture"
         }
@@ -86,44 +86,44 @@ export default {
             params.append('filesize', self.items[i].file[0].size)
 
             let route
-            if(self.items[i].type==="data"){
+            if((self.items[i].type==="data") && (!self.items[i].file[0].name.includes('.vtp'))){
+              console.log(self.items[i].file[0].name.includes('.vtp'))
               route = "convertfile"
               params.append('object', 'PolygonalSurface3D')
               params.append('extension', 'vtp')
             } else if(self.items[i].type==="texture"){
               route = "uploadfile"
             }
-            console.log('route :', route)
+            // console.log('route :', route)
+            // console.log('self.$config.GEODE_URL :', self.$config.GEODE_URL)
             try {
-            await self.$axios
-              .post(`${self.$config.API_URL}/${route}`, params)
-              .then((response) => {
-                if (response.status == 200) {
-                  let newFilename = response.data.newFilename
-                  console.log({newFilename})
-                  if(i===0){
-                    self.VtpFilename = newFilename
-                  } else if(i===1){
-                    self.VtiFilename = newFilename
-                  }
-                }
-              })
+            const response = await self.$axios.post(`${self.$config.GEODE_URL}/geode/${route}`, params)
+     
+            if (response.status == 200) {
+              let newFilename = response.data.newFilename
+              console.log({newFilename})
+              if(self.items[i].type==="data"){
+                self.DataFilename = newFilename
+              } else if(self.items[i].type==="texture"){
+                self.TextureFilename = newFilename
+              }
+              self.Load(self.DataFilename, self.TextureFilename)
+            }
+
             } catch(err){
               console.log({err})
               self.setBusy(false)
             }
           }
-          if (this.items[i].file.length){
-            await reader.readAsDataURL(this.items[i].file[0])
+          if (self.items[i].file.length){
+            reader.readAsDataURL(this.items[i].file[0])
           }
         }
       }
 
-      this.Load(this.VtpFilename, this.VtiFilename)
     },
-    Load (VtpFilename, VtiFilename) {
-      this.sendFilenames({ VtpFilename, VtiFilename })
-      console.log('Load')
+    async Load (DataFilename, TextureFilename) {
+      this.sendFilenames({ DataFilename, TextureFilename })
     }
   }
 }

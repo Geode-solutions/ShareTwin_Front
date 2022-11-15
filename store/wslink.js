@@ -42,7 +42,7 @@ export const mutations = {
 export const actions = {
   ws_connect ({ state, commit, dispatch }) {
     const config = { application: 'cone' }
-    config.sessionURL = this.$config.WS_URL
+    config.sessionURL = this.$config.VIEWER_URL + '/viewer/ws'
     console.log('API URL :', config.sessionURL)
 
     const { client } = state
