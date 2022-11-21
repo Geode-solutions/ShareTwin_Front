@@ -12,7 +12,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Visualization_Backend',
+    title: 'ShareTwin_Front',
     htmlAttrs: {
       lang: 'en'
     },
