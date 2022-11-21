@@ -1,5 +1,5 @@
 export default function ({ $axios, $config, store }) {
-  $axios.setBaseURL($config.API_URL)
+  $axios.setBaseURL($config.GEODE_URL)
 
   $axios.onRequest((config) => {
     store.commit('startRequest')

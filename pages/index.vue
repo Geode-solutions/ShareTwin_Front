@@ -5,8 +5,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex'
-
+import { mapActions, mapGetters, mapState } from 'vuex'
 import RemoteRenderingView from '@/components/RemoteRenderingView.vue'
 
 
@@ -20,18 +19,21 @@ export default {
     RemoteRenderingView,
   },
   computed: {
+    ...mapState({ID: 'ID', cloudRunning: 'cloudRunning'}),
     ...mapGetters({
-      client: 'wslink/WS_CLIENT',
       busy: 'wslink/WS_BUSY',
-      resolution: 'cone/CONE_RESOLUTION',
-      height: 'cone/CONE_HEIGHT'
+      client: 'wslink/WS_CLIENT',
+      height: 'cone/CONE_HEIGHT',
+      resolution: 'cone/CONE_RESOLUTION'
     })
   },
   mounted () {
+    this.createConnexion()
     this.ws_connect()
   },
   methods: {
     ...mapActions({
+      createConnexion: 'createConnexion',
       setConeResolution: 'cone/setConeResolution',
       setConeHeight: 'cone/setConeHeight',
       resetCamera: 'wslink/resetCamera',

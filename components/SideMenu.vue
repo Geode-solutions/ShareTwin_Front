@@ -62,7 +62,7 @@ export default {
   },
   computed: {
     ...mapState({
-      busy: 'busy'
+      busy: 'busy', ID: 'ID'
     }),
   },
   methods: {
@@ -94,10 +94,9 @@ export default {
             } else if(self.items[i].type==="texture"){
               route = "uploadfile"
             }
-            // console.log('route :', route)
-            // console.log('self.$config.GEODE_URL :', self.$config.GEODE_URL)
+            if(self.items[i].file.length){
             try {
-            const response = await self.$axios.post(`${self.$config.GEODE_URL}/geode/${route}`, params)
+            const response = await self.$axios.post(`/${self.ID}/geode/${route}`, params)
      
             if (response.status == 200) {
               let newFilename = response.data.newFilename
@@ -114,6 +113,7 @@ export default {
               console.log({err})
               self.setBusy(false)
             }
+          }
           }
           if (self.items[i].file.length){
             reader.readAsDataURL(this.items[i].file[0])

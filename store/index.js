@@ -11,6 +11,7 @@ export const state = () => ({
 export const mutations = {
   setID (state, ID) {
     state.ID = ID
+    console.log('ID : ', ID)
   },
   setConnexionLaunched (state, connexionLaunched) {
     state.connexionLaunched = connexionLaunched
@@ -43,7 +44,7 @@ export const actions = {
       return dispatch('CreateBackEnd')
     } else {
       try {
-        const response = await this.$axios.post(`${ID}/ping`)
+        const response = await this.$axios.post(`/${ID}/geode/ping`)
         if (response.status === 200) {
           commit("setID", ID)
           commit("setCloudRunning", true)
@@ -56,7 +57,7 @@ export const actions = {
   },
   async CreateBackEnd ({ commit, dispatch }) {
     try {
-      const response = await this.$axios.post(`${this.$config.SITE_BRANCH}/sharetwin/createbackend`)
+      const response = await this.$axios.post(`/sharetwin/createbackend`)
       if (response.status == 200) {
         commit("setID", response.data.ID)
         localStorage.setItem('ID', response.data.ID)
@@ -79,7 +80,7 @@ export const actions = {
   },
   async DoPing ({ state, commit }) {
     try {
-      const response = await this.$axios.post(`${state.ID}/ping`)
+      const response = await this.$axios.post(`/${state.ID}/ping`)
       if (response.status == 200) {
         commit("setCloudRunning", true)
       }
