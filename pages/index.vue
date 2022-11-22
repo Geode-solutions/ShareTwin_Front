@@ -28,8 +28,10 @@ export default {
     })
   },
   async mounted () {
-    await this.createConnexion()
-    this.ws_connect()
+    if(process.client){
+      await this.createConnexion()
+      this.ws_connect()
+    }
   },
   methods: {
     ...mapActions({
