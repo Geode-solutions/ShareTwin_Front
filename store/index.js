@@ -57,7 +57,7 @@ export const actions = {
   },
   async CreateBackEnd ({ commit, dispatch }) {
     try {
-      const response = await this.$axios.post(`/sharetwin/createbackend`)
+      const response = await this.$axios.post(`${this.$config.SITE_BRANCH}/sharetwin/createbackend`)
       if (response.status == 200) {
         commit("setID", response.data.ID)
         localStorage.setItem('ID', response.data.ID)
