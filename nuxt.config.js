@@ -4,19 +4,16 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
 
   publicRuntimeConfig: {
-    // API_URL: process.env.NODE_ENV === 'production' ? 'https://api2.geode-solutions.com/geode' : 'http://localhost:80/123456/geode',
-    API_URL: process.env.NODE_ENV === 'production' ? 'https://api2.geode-solutions.com/geode' : 'http://api2.geode-solutions.com:80/geode',
-    // WS_URL: process.env.NODE_ENV === 'production' ? 'wss://api2.geode-solutions.com/viewer/ws' : 'ws://localhost:80/123456viewer/ws',
-    WS_URL: process.env.NODE_ENV === 'production' ? 'wss://api2.geode-solutions.com/viewer/ws' : 'http://api2.geode-solutions.com:80/geode',
-
-    SITE_URL: process.env.SITE_URL
+    GEODE_URL: process.env.NODE_ENV == 'production' ? 'https://api2.geode-solutions.com' : 'http://localhost:80',
+    VIEWER_URL: process.env.NODE_ENV == 'production' ? 'wss://api2.geode-solutions.com' : 'ws://localhost:80',
+    SITE_BRANCH: process.env.NODE_ENV === 'production' ? process.env.SITE_BRANCH : '',
   },
 
   ssr: false,
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: 'Visualization_Backend',
+    title: 'ShareTwin_Front',
     htmlAttrs: {
       lang: 'en'
     },

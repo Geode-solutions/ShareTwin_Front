@@ -25,7 +25,7 @@ export default {
         accept: {
             type: String,
             required: true,
-        },
+        }
     },
     data () {
         return {

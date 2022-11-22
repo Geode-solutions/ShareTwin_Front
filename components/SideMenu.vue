@@ -13,7 +13,7 @@
         <v-row v-for="(item, index) in items"
                :key="index"
         >
-          <FileSelector v-model="item.file" :messages="item.messages" :accept="item.accept" />
+          <FileSelector v-model="item.file" :messages="item.messages" :accept="item.accept"/>
         </v-row>
         <v-row
           align-content="center"
@@ -42,72 +42,88 @@ export default {
       files: [],
       success: false,
       message: '',
-      VtiFile: '',
-      VtpFile: '',
+      DataFilename: '',
+      TextureFilename: '',
       items: [
         {
           file: []
-          , messages: "Please select a .vtp file"
-          , accept: ".vtp"
+          , messages: "Please select a data file"
+          , accept: ".obj, .vtp"
+          , type : "data"
         }
         , {
           file: []
-          , messages: "Please select a .vti file"
+          , messages: "Please select a texture file"
           , accept: ".vti"
+          , type : "texture"
         }
       ]
     }
   },
   computed: {
     ...mapState({
-      busy: 'busy'
+      busy: 'busy', ID: 'ID'
     }),
   },
   methods: {
     ...mapActions({
       setFilenames: 'wslink/setFilenames',
+      setBusy: 'wslink/WS_BUSY_SET',
       sendFilenames: 'cone/sendFilenames'
     }),
 
     async Upload () {
       const self = this
-      // self.$store.wslink.commit('WS_BUSY_SET', true)
+      self.setBusy(true)
+
       for (let i = 0; i < self.items.length; i++) {
         if (this.items[i].file.length){
           const reader = new FileReader()
           reader.onload = async function (event) {
             const params = new FormData()
-            params.append('object', 'PolygonalSurface3D')
             params.append('file', event.target.result)
             params.append('filename', self.items[i].file[0].name)
             params.append('filesize', self.items[i].file[0].size)
-            params.append('extension', 'vtp')
-            // self.$store.wslink.commit('WS_BUSY_SET', true)
+
+            let route
+            if((self.items[i].type==="data") && (!self.items[i].file[0].name.includes('.vtp'))){
+              console.log(self.items[i].file[0].name.includes('.vtp'))
+              route = "convertfile"
+              params.append('object', 'PolygonalSurface3D')
+              params.append('extension', 'vtp')
+            } else if(self.items[i].type==="texture"){
+              route = "uploadfile"
+            }
+            if(self.items[i].file.length){
             try {
-            self.$axios
-              .post(`${self.$config.API_URL}/uploadfile`, params)
-              .then((response) => {
-                if (response.status == 200) {
-                  let newFilename = response.data.newFilename
-                  self.Load(newFilename)
-                }
-                // self.$store.wslink.commit('WS_BUSY_SET', false)
-              })
+            const response = await self.$axios.post(`/${self.ID}/geode/${route}`, params)
+     
+            if (response.status == 200) {
+              let newFilename = response.data.newFilename
+              console.log({newFilename})
+              if(self.items[i].type==="data"){
+                self.DataFilename = newFilename
+              } else if(self.items[i].type==="texture"){
+                self.TextureFilename = newFilename
+              }
+              self.Load(self.DataFilename, self.TextureFilename)
+            }
+
             } catch(err){
               console.log({err})
-              // self.$store.wslink.commit('WS_BUSY_SET', false)
+              self.setBusy(false)
             }
           }
-          if (this.items[i].file.length){
+          }
+          if (self.items[i].file.length){
             reader.readAsDataURL(this.items[i].file[0])
-
           }
         }
       }
+
     },
-    Load (VtpFilename) {
-      console.log('coucou1')
-      this.sendFilenames({ VtpFilename })
+    async Load (DataFilename, TextureFilename) {
+      this.sendFilenames({ DataFilename, TextureFilename })
     }
   }
 }

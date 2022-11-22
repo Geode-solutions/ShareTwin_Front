@@ -1,5 +1,5 @@
 <template>
-  <img alt="geode-solutions logo" src="@/assets/logo.svg">
+  <img alt="Share Twin logo" src="@/assets/logo.svg">
 </template>
 
 <script>
