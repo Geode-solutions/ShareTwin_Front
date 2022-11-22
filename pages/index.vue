@@ -27,8 +27,8 @@ export default {
       resolution: 'cone/CONE_RESOLUTION'
     })
   },
-  mounted () {
-    this.createConnexion()
+  async mounted () {
+    await this.createConnexion()
     this.ws_connect()
   },
   methods: {
