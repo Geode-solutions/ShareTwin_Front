@@ -51,12 +51,6 @@ export default {
           , accept: ".obj, .vtp"
           , type : "data"
         }
-        , {
-          file: []
-          , messages: "Please select a texture file"
-          , accept: ".vti"
-          , type : "texture"
-        }
       ]
     }
   },
