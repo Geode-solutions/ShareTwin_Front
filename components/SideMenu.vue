@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import { mapActions, mapState } from 'vuex'
+import { mapActions, mapMutations, mapState } from 'vuex'
 import FileSelector from '@/components/FileSelector.vue'
 
 export default {
@@ -62,9 +62,9 @@ export default {
   methods: {
     ...mapActions({
       setFilenames: 'wslink/setFilenames',
-      setBusy: 'wslink/WS_BUSY_SET',
       sendFilenames: 'cone/sendFilenames'
     }),
+    ...mapMutations({setBusy: 'wslink/WS_BUSY_SET'}),
 
     async Upload () {
       const self = this
@@ -116,8 +116,8 @@ export default {
       }
 
     },
-    async Load (DataFilename, TextureFilename) {
-      this.sendFilenames({ DataFilename, TextureFilename })
+    async Load (DataFilename) {
+      this.sendFilenames({ DataFilename })
     }
   }
 }
