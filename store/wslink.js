@@ -40,9 +40,9 @@ export const mutations = {
 }
 
 export const actions = {
-  ws_connect ({ state, commit, dispatch }) {
+  ws_connect ({ state, commit, dispatch, rootState }) {
     const config = { application: 'cone' }
-    config.sessionURL = this.$config.VIEWER_URL + `/${$store.state.ID}/viewer/ws`
+    config.sessionURL = this.$config.VIEWER_URL + `/${rootState.ID}/viewer/ws`
     console.log('API URL :', config.sessionURL)
 
     const { client } = state
