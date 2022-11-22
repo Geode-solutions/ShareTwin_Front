@@ -95,25 +95,25 @@ export default {
               route = "uploadfile"
             }
             if(self.items[i].file.length){
-            try {
-            const response = await self.$axios.post(`/${self.ID}/geode/${route}`, params)
-     
-            if (response.status == 200) {
-              let newFilename = response.data.newFilename
-              console.log({newFilename})
-              if(self.items[i].type==="data"){
-                self.DataFilename = newFilename
-              } else if(self.items[i].type==="texture"){
-                self.TextureFilename = newFilename
+              try {
+              const response = await self.$axios.post(`/${self.ID}/geode/${route}`, params)
+      
+              if (response.status == 200) {
+                let newFilename = response.data.newFilename
+                console.log({newFilename})
+                if(self.items[i].type==="data"){
+                  self.DataFilename = newFilename
+                } else if(self.items[i].type==="texture"){
+                  self.TextureFilename = newFilename
+                }
+                self.Load(self.DataFilename, self.TextureFilename)
               }
-              self.Load(self.DataFilename, self.TextureFilename)
-            }
 
-            } catch(err){
-              console.log({err})
-              self.setBusy(false)
+              } catch(err){
+                console.log({err})
+                self.setBusy(false)
+              }
             }
-          }
           }
           if (self.items[i].file.length){
             reader.readAsDataURL(this.items[i].file[0])

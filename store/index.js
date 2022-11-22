@@ -81,7 +81,7 @@ export const actions = {
   },
   async DoPing ({ state, commit }) {
     try {
-      const response = await this.$axios.post(`/${state.ID}/ping`)
+      const response = await this.$axios.post(`/${state.ID}/geode/ping`)
       if (response.status == 200) {
         commit("setCloudRunning", true)
       }
