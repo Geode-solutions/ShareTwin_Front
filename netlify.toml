@@ -1,0 +1,9 @@
+[context.production.environment]
+  SITE_BRANCH = ""
+  SITE_URL = "https://share-twin.com"
+[context.deploy-preview.environment]
+  SITE_BRANCH = ""
+  SITE_URL = "https://share-twin.com"
+[context."next".environment]
+  SITE_BRANCH = "/test"
+  SITE_URL = "https://next.share-twin.com"
