@@ -13,7 +13,7 @@
         <v-row v-for="(item, index) in items"
                :key="index"
         >
-          <FileSelector v-model="item.file" :messages="item.messages" :accept="item.accept"/>
+          <FileSelector v-model="item.file" :messages="item.messages" :accept="item.accept" />
         </v-row>
         <v-row
           align-content="center"

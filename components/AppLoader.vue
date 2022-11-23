@@ -1,54 +1,54 @@
 <template>
-    <v-dialog
-        v-if="cloudRunning"
-        width="70%"
-        :value="value"
-        :persistent="loading"
-        :fullscreen="$vuetify.breakpoint.smAndDown"
-        @input="onDialogChange"
-        @click:outside="!loading && close()"
-        >
+  <v-dialog
+    v-if="cloudRunning"
+    width="70%"
+    :value="value"
+    :persistent="loading"
+    :fullscreen="$vuetify.breakpoint.smAndDown"
+    @input="onDialogChange"
+    @click:outside="!loading && close()"
+  >
     <v-card>
-        <v-card-text class="pa-0">
+      <v-card-text class="pa-0">
         <v-card flat>
-            <v-card-text>
+          <v-card-text>
             <v-container>
-                <v-tabs v-model="active_tab">
+              <v-tabs v-model="active_tab">
                 <v-tab>Local</v-tab>
                 
                 <v-tab-item transition="fade-transition">
-                    <girder-box />     
+                  <girder-box />     
                 </v-tab-item>
-                </v-tabs>
+              </v-tabs>
             </v-container>
-            </v-card-text>
-            <v-card-actions>
+          </v-card-text>
+          <v-card-actions>
             <v-spacer />
             <span v-if="anyErrors" class="red--text mr-3">Only checked files will be loaded.</span>
             <v-btn
-                text
-                :disabled="loading"
-                @click="close"
+              text
+              :disabled="loading"
+              @click="close"
             >
-                Cancel
+              Cancel
             </v-btn>
             <v-btn
-                color="primary"
-                :disabled="loading || pendingFiles || !hasReadyFiles"
-                @click="loadFiles"
+              color="primary"
+              :disabled="loading || pendingFiles || !hasReadyFiles"
+              @click="loadFiles"
             >
-            {{ loading ? 'Loading...' : 'Load' }}
-          </v-btn>
-        </v-card-actions>
-      </v-card>
-    </v-card-text>
-  </v-card>
-</v-dialog>
+              {{ loading ? 'Loading...' : 'Load' }}
+            </v-btn>
+          </v-card-actions>
+        </v-card>
+      </v-card-text>
+    </v-card>
+  </v-dialog>
 </template>
 
 
 <script>
-// import { mapGetters, mapState, mapActions } from 'vuex';
+import { mapState } from 'vuex'
 
 
 export default {
@@ -60,6 +60,11 @@ data () {
         value: true
     }
 },
+computed: {
+    ...mapState({
+      cloudRunning: 'cloudRunning'
+    }),
+  },
 methods: {
     // close() {
     //   this.$emit('input', false);
