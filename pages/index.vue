@@ -1,5 +1,5 @@
 <template>
-  <div v-if="cloudRunning" style="position: relative; width: 100%; height: 100%">
+  <div style="position: relative; width: 100%; height: 100%">
     <CloudLoading v-if="!cloudRunning" />
     <remote-rendering-view v-else :client="client" />
   </div>
