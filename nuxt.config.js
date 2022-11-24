@@ -7,6 +7,9 @@ export default {
     GEODE_URL: process.env.NODE_ENV == 'production' ? 'https://api2.geode-solutions.com' : 'http://localhost:80',
     VIEWER_URL: process.env.NODE_ENV == 'production' ? 'wss://api2.geode-solutions.com' : 'ws://localhost:80',
     SITE_BRANCH: process.env.NODE_ENV === 'production' ? process.env.SITE_BRANCH : '',
+    recaptcha: {
+      siteKey: process.env.RECAPTCHA_SITE_KEY
+    }
   },
 
   ssr: false,
@@ -51,8 +54,13 @@ export default {
   // Modules: https://go.nuxtjs.dev/config-modules
   modules: [
     // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/recaptcha'
   ],
+
+  recaptcha: {
+    version: 2,
+  },
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {},

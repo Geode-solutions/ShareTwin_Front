@@ -19,7 +19,7 @@
           @click="resetCamera()"
         >
           mdi-camera
-        </v-icon >
+        </v-icon>
       </v-row>
       <v-progress-linear :active="busy" :indeterminate="busy" absolute bottom />
     </v-app-bar>
