@@ -1,5 +1,5 @@
 <template>
-  <v-expansion-panels multiple accordion>
+  <v-expansion-panels v-if="cloudRunning" multiple accordion>
     <v-expansion-panel>
       <v-expansion-panel-header>
         <div>
@@ -56,7 +56,7 @@ export default {
   },
   computed: {
     ...mapState({
-      busy: 'busy', ID: 'ID'
+      busy: 'busy', ID: 'ID', cloudRunning: 'cloudRunning'
     }),
   },
   methods: {
