@@ -1,6 +1,6 @@
 <template>
   <div style="position: relative; width: 100%; height: 100%">
-    <CloudLoading v-if="!cloudRunning" />
+    <Launcher v-if="!cloudRunning" />
     <remote-rendering-view v-else :client="client" />
   </div>
 </template>
@@ -8,9 +8,7 @@
 <script>
 import { mapActions, mapGetters, mapState } from 'vuex'
 import RemoteRenderingView from '@/components/RemoteRenderingView.vue'
-import CloudLoading from '@/components/CloudLoading.vue'
-
-
+import Launcher from '@/components/Launcher.vue'
 // ----------------------------------------------------------------------------
 // Component API
 // ----------------------------------------------------------------------------
@@ -18,7 +16,7 @@ import CloudLoading from '@/components/CloudLoading.vue'
 export default {
   name: 'App',
   components: {
-    CloudLoading, RemoteRenderingView,
+    Launcher, RemoteRenderingView,
   },
   computed: {
     ...mapState({ID: 'ID', cloudRunning: 'cloudRunning'}),
