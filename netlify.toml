@@ -1,9 +1,12 @@
 [context.production.environment]
   SITE_BRANCH = ""
+  RECAPTCHA_SITE_KEY = "6LdPWi8jAAAAACH7JQZcWOK1Agmqpt4h6C5DCOlw"
   SITE_URL = "https://share-twin.com"
 [context.deploy-preview.environment]
   SITE_BRANCH = ""
+  RECAPTCHA_SITE_KEY = "6LdPWi8jAAAAACH7JQZcWOK1Agmqpt4h6C5DCOlw"
   SITE_URL = "https://share-twin.com"
 [context."next".environment]
   SITE_BRANCH = "/test"
+  RECAPTCHA_SITE_KEY = "6LdPWi8jAAAAACH7JQZcWOK1Agmqpt4h6C5DCOlw"
   SITE_URL = "https://next.share-twin.com"
