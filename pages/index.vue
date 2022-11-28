@@ -29,7 +29,6 @@ export default {
   },
   methods: {
     ...mapActions({
-      createConnexion: 'createConnexion',
       setConeResolution: 'cone/setConeResolution',
       setConeHeight: 'cone/setConeHeight',
       resetCamera: 'wslink/resetCamera',

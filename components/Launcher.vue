@@ -2,7 +2,7 @@
     <v-container justify="space-around">
         <v-row rows="auto" align-content="center" align="center">
             <v-col  v-if="((!captchaValidated) && (this.$config.NODE_ENV === 'production'))" cols="auto" align-self="center" align="center">
-              <v-card elevation="5" width="100">
+              <v-card elevation="5" cols="auto">
                 <v-card-title class="justify-center">
                   Please confirm that you're not a robot
                 </v-card-title>
