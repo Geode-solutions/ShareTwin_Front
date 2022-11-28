@@ -2,8 +2,16 @@
     <v-container justify="space-around">
         <v-row rows="auto" align-content="center" align="center">
             <v-col v-if="((!captchaValidated) && (this.$config.NODE_ENV === 'production'))" cols="10" align-self="center" align="center">
-                <recaptcha class="align-center"/>
-                <v-btn @click="SubmitRecaptcha()" color="primary">Start tool</v-btn> 
+              <v-card class="card" loading elevation="5">
+                <v-card-title class="justify-center">
+                  Please confirm that you're not a robot
+                </v-card-title>
+                <v-card-text align="center">
+                  Please confirm that you're not a robot before launching the app
+                </v-card-text>
+              </v-card>
+              <recaptcha class="align-center"/>
+              <v-btn @click="SubmitRecaptcha()" color="primary">Start app</v-btn> 
             </v-col>
             <v-col v-else-if="internalError">
                 <InternalError />
