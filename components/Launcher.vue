@@ -1,7 +1,7 @@
 <template>
     <v-container justify="space-around">
         <v-row rows="auto" align-content="center" align="center">
-            <v-col v-if="((!captchaValidated) && (this.$config.NODE_ENV === 'production'))" cols="10" align-self="center" align="center">
+            <v-col  v-if="((!captchaValidated) && (this.$config.NODE_ENV === 'production'))" cols="auto" align-self="center" align="center">
               <v-card elevation="5" width="100">
                 <v-card-title class="justify-center">
                   Please confirm that you're not a robot
@@ -52,7 +52,7 @@ export default {
   },
   mounted(){
     if(process.client){
-        if(this.$config.NODE_ENV !== 'production'){
+        if(this.$config.NODE_ENV != 'production'){
             this.$store.commit('setCaptchaValidated', true)
         }
     }
