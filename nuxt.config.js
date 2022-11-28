@@ -8,6 +8,7 @@ export default {
     VIEWER_URL: process.env.NODE_ENV == 'production' ? 'wss://api2.geode-solutions.com' : 'ws://localhost:80',
     SITE_URL: process.env.SITE_URL,
     SITE_BRANCH: process.env.NODE_ENV === 'production' ? process.env.SITE_BRANCH : '',
+    NODE_ENV: process.env.NODE_ENV,
     recaptcha: {
       siteKey: process.env.RECAPTCHA_SITE_KEY
     }
