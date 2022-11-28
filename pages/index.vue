@@ -27,12 +27,6 @@ export default {
       resolution: 'cone/CONE_RESOLUTION'
     })
   },
-  async mounted () {
-    if(process.client){
-      await this.createConnexion()
-      this.ws_connect()
-    }
-  },
   methods: {
     ...mapActions({
       createConnexion: 'createConnexion',
