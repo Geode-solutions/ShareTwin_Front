@@ -4,7 +4,7 @@
             <v-col  v-if="((!captchaValidated) && (this.$config.NODE_ENV === 'production'))" cols="12" align-self="center" align="center">
               <v-card class="pb-5" elevation="5">
                 <v-card-title class="justify-center">
-                  Please confirm that you're not a robot
+                  Please confirm that you are not a robot
                 </v-card-title>
                 <v-card-text align="center">
                   Please confirm that you're not a robot before launching the app
