@@ -1,5 +1,5 @@
 <template>
-  <div class="toto" />
+  <div class="viewer" />
 </template>
 
 <script>
@@ -77,7 +77,7 @@ export default {
 </script>
 
 <style scoped>
-.toto {
+.viewer {
   position: absolute;
   top: 0;
   left: 0;

@@ -18,6 +18,7 @@ export const mutations = {
   },
   setCloudRunning (state, cloudRunning) {
     state.cloudRunning = cloudRunning
+    console.log('cloudRunning : ', cloudRunning)
   },
   setUnderMaintenance (state, underMaintenance) {
     state.underMaintenance = underMaintenance
@@ -83,7 +84,10 @@ export const actions = {
     try {
       const response = await this.$axios.post(`/${state.ID}/geode/ping`)
       if (response.status == 200) {
-        commit("setCloudRunning", true)
+        if (state.cloudRunning == false) {
+          commit("setCloudRunning", true)
+        }
+
       }
     } catch (e) {
       if (state.requestCounter == 0) {
