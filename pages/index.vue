@@ -1,6 +1,6 @@
 <template>
   <div style="position: relative; width: 100%; height: 100%">
-    <Launcher v-if="!cloud_running" />
+    <Launcher v-if="!cloud_running"/>
     <remote-rendering-view v-else :client="client" />
   </div>
 </template>
@@ -16,7 +16,8 @@ import Launcher from '@/components/Launcher.vue'
 export default {
   name: 'App',
   components: {
-    Launcher, RemoteRenderingView,
+    Launcher
+    , RemoteRenderingView,
   },
   computed: {
     ...mapState({ID: 'ID', cloud_running: 'cloud_running'}),

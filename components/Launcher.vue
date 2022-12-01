@@ -1,17 +1,17 @@
 <template>
   <v-container class="space-around">
     <v-row align-content="center" class="justify-center">
-      <v-col v-if="((!captcha_validated) && ($config.NODE_ENV === 'production'))" cols="12" align-self="center" class="center">
+      <v-col v-if="((!captcha_validated) && ($config.NODE_ENV === 'production'))" cols="12" class="text-center">
         <v-card class="pb-5" elevation="5">
           <v-card-title class="justify-center">
             Please confirm that you are not a robot
           </v-card-title>
-          <v-card-text class="justify-center">
+          <v-card-text class="text-center">
             Please confirm that you're not a robot before launching the app
           </v-card-text>
         </v-card>
-        <recaptcha class="justify-center" />
-        <v-btn color="primary" @click="submit_recaptcha()">
+        <recaptcha class="d-flex justify-space-around" />
+        <v-btn color="primary" @click="submit_recaptcha()" class="text-center">
           Start app
         </v-btn> 
       </v-col>
@@ -63,7 +63,7 @@ export default {
     if(process.client){
       console.log(this.$config.NODE_ENV)
         if(this.$config.NODE_ENV !== 'production'){
-            this.$store.commit('set_captcha_validated', true)
+            // this.$store.commit('set_captcha_validated', true)
         }
     }
   },

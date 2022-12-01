@@ -5,7 +5,7 @@
       class="ma-3"
     >
       <v-card class="card" elevation="5">
-        <v-card-title class="justify-center">
+        <v-card-title class="d-flex justify-center">
           <v-icon color="orange" size="20">
             mdi-traffic-cone
           </v-icon>
@@ -15,7 +15,7 @@
           </v-icon>
         </v-card-title>
 
-        <v-card-text class="justify-center">
+        <v-card-text class="d-flex justify-center">
           This tool is currently under maintenance, please try later
         </v-card-text>
       </v-card>

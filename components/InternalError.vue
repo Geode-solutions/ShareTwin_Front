@@ -5,7 +5,7 @@
       class="ma-3"
     >
       <v-card class="card" elevation="5">
-        <v-card-title class="justify-center">
+        <v-card-title class="d-flex justify-center">
           <v-icon color="error" size="20">
             mdi-close-octagon
           </v-icon>
@@ -14,10 +14,10 @@
             mdi-close-octagon
           </v-icon>
         </v-card-title>
-        <v-card-subtitle class="justify-center">
+        <v-card-subtitle class="d-flex justify-center">
           Oops, something went wrong...
         </v-card-subtitle>
-        <v-card-text class="justify-center">
+        <v-card-text class="d-flex justify-center">
           The request could not be handled by the server, please try refreshing the page
         </v-card-text>
       </v-card>
