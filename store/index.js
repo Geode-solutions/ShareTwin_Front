@@ -1,98 +1,99 @@
 
 export const state = () => ({
   ID: '',
-  connexionLaunched: false,
-  cloudRunning: false,
-  underMaintenance: false,
-  internalError: false,
-  captchaValidated: false,
-  requestCounter: 0
+  connexion_launched: false,
+  cloud_running: false,
+  under_maintenance: false,
+  internal_error: false,
+  captcha_validated: false,
+  request_counter: 0
 })
 export const mutations = {
   setID (state, ID) {
     state.ID = ID
     console.log('ID : ', ID)
   },
-  setConnexionLaunched (state, connexionLaunched) {
-    state.connexionLaunched = connexionLaunched
+  set_connexion_launched (state, connexion_launched) {
+    state.connexion_launched = connexion_launched
   },
-  setCloudRunning (state, cloudRunning) {
-    state.cloudRunning = cloudRunning
-    console.log('cloudRunning : ', cloudRunning)
+  set_cloud_running (state, cloud_running) {
+    state.cloud_running = cloud_running
+    console.log('cloud_running : ', cloud_running)
   },
-  setUnderMaintenance (state, underMaintenance) {
-    state.underMaintenance = underMaintenance
+  set_under_maintenance (state, under_maintenance) {
+    state.under_maintenance = under_maintenance
   },
-  setInternalError (state, internalError) {
-    state.internalError = internalError
+  set_internal_error (state, internal_error) {
+    state.internal_error = internal_error
   },
-  setCaptchaValidated (state, captchaValidated) {
-    state.captchaValidated = captchaValidated
+  set_captcha_validated (state, captcha_validated) {
+    state.captcha_validated = captcha_validated
+    console.log('captcha_validated : ', captcha_validated)
   },
-  startRequest (state) {
-    state.requestCounter++
+  start_request (state) {
+    state.request_counter++
   },
-  stopRequest (state) {
-    state.requestCounter--
+  stop_request (state) {
+    state.request_counter--
   }
 }
 export const actions = {
-  async createConnexion ({ commit, dispatch }) {
-    if (this.state.connexionLaunched) { return }
-    commit("setConnexionLaunched", true)
+  async create_connexion ({ commit, dispatch }) {
+    if (this.state.connexion_launched) { return }
+    commit("set_connexion_launched", true)
     const ID = localStorage.getItem('ID')
     if (ID === null || typeof ID === 'undefined') {
-      return dispatch('CreateBackEnd')
+      return dispatch('create_backend')
     } else {
       try {
         const response = await this.$axios.post(`/${ID}/geode/ping`)
         if (response.status === 200) {
           commit("setID", ID)
-          commit("setCloudRunning", true)
-          return dispatch('PingTask')
+          commit("set_cloud_running", true)
+          return dispatch('ping_task')
         }
       } catch (e) {
-        return dispatch('CreateBackEnd')
+        return dispatch('create_backend')
       }
     }
   },
-  async CreateBackEnd ({ commit, dispatch }) {
+  async create_backend ({ commit, dispatch }) {
     try {
       console.log(this.$config)
       const response = await this.$axios.post(`${this.$config.SITE_BRANCH}/sharetwin/createbackend`)
       if (response.status == 200) {
         commit("setID", response.data.ID)
         localStorage.setItem('ID', response.data.ID)
-        commit("setCloudRunning", true)
-        return dispatch('PingTask')
+        commit("set_cloud_running", true)
+        return dispatch('ping_task')
       }
     } catch (e) {
       let status = e.toJSON().status
       if (status === 500) {
-        commit("setInternalError", true)
+        commit("set_internal_error", true)
       } else if (status === 404) {
-        commit("setUnderMaintenance", true)
+        commit("set_under_maintenance", true)
       }
       console.log("error: ", e.toJSON().message)
     }
   },
 
-  PingTask ({ dispatch }) {
-    setInterval(() => dispatch('DoPing'), 10 * 1000)
+  ping_task ({ dispatch }) {
+    setInterval(() => dispatch('do_ping'), 10 * 1000)
   },
-  async DoPing ({ state, commit }) {
+  async do_ping ({ state, commit }) {
     try {
       const response = await this.$axios.post(`/${state.ID}/geode/ping`)
       if (response.status == 200) {
-        if (state.cloudRunning == false) {
-          commit("setCloudRunning", true)
+        if (state.cloud_running == false) {
+          commit("set_cloud_running", true)
         }
 
       }
     } catch (e) {
-      if (state.requestCounter == 0) {
+      if (state.request_counter == 0) {
         console.log("error: ", e)
-        commit("setCloudRunning", false)
+        commit("set_cloud_running", false)
       }
     }
   }

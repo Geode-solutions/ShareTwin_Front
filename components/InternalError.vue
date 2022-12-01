@@ -14,8 +14,10 @@
             mdi-close-octagon
           </v-icon>
         </v-card-title>
-        <v-card-subtitle align="center">Oops, something went wrong...</v-card-subtitle>
-        <v-card-text align="center">
+        <v-card-subtitle class="justify-center">
+          Oops, something went wrong...
+        </v-card-subtitle>
+        <v-card-text class="justify-center">
           The request could not be handled by the server, please try refreshing the page
         </v-card-text>
       </v-card>

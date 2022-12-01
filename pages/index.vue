@@ -1,6 +1,6 @@
 <template>
   <div style="position: relative; width: 100%; height: 100%">
-    <Launcher v-if="!cloudRunning" />
+    <Launcher v-if="!cloud_running" />
     <remote-rendering-view v-else :client="client" />
   </div>
 </template>
@@ -19,7 +19,7 @@ export default {
     Launcher, RemoteRenderingView,
   },
   computed: {
-    ...mapState({ID: 'ID', cloudRunning: 'cloudRunning'}),
+    ...mapState({ID: 'ID', cloud_running: 'cloud_running'}),
     ...mapGetters({
       busy: 'wslink/WS_BUSY',
       client: 'wslink/WS_CLIENT',

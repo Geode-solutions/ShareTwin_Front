@@ -15,7 +15,7 @@
           </v-icon>
         </v-card-title>
 
-        <v-card-text align="center">
+        <v-card-text class="justify-center">
           This tool is currently under maintenance, please try later
         </v-card-text>
       </v-card>

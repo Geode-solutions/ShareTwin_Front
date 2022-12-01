@@ -8,10 +8,10 @@
         <v-card-title class="justify-center">
           Cloud instance is starting...
         </v-card-title>
-        <v-card-subtitle align="center">
+        <v-card-subtitle class="justify-center">
           Why do you have to wait?
         </v-card-subtitle>
-        <v-card-text align="center">
+        <v-card-text class="justify-center">
           We start our server only on demand... and this takes a few minutes before
           you can use our free <applet />.
           <br>
