@@ -78,16 +78,9 @@ export default {
             params.append('file', event.target.result)
             params.append('filename', self.items[i].file[0].name)
             params.append('filesize', self.items[i].file[0].size)
-
-            let route
-            if((self.items[i].type==="data") && (!self.items[i].file[0].name.includes('.vtp'))){
-              console.log(self.items[i].file[0].name.includes('.vtp'))
-              route = "convertfile"
-              params.append('object', 'PolygonalSurface3D')
-              params.append('extension', 'vtp')
-            } else if(self.items[i].type==="texture"){
-              route = "uploadfile"
-            }
+            const route = "convertfile"
+            params.append('object', 'PolygonalSurface3D')
+            params.append('extension', 'vtp')
             if(self.items[i].file.length){
               try {
               const response = await self.$axios.post(`/${self.ID}/geode/${route}`, params)
