@@ -79,7 +79,7 @@ export const actions = {
   },
 
   ping_task ({ dispatch }) {
-    setInterval(() => dispatch('do_ping'), 10 * 1000)
+    setInterval(() => dispatch('do_ping'), 5 * 1000)
   },
   async do_ping ({ state, commit }) {
     try {

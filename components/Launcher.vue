@@ -63,7 +63,7 @@ export default {
     if(process.client){
       console.log(this.$config.NODE_ENV)
         if(this.$config.NODE_ENV !== 'production'){
-            // this.$store.commit('set_captcha_validated', true)
+            this.$store.commit('set_captcha_validated', true)
         }
     }
   },

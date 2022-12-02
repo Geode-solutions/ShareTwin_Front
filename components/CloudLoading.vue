@@ -13,7 +13,7 @@
         </v-card-subtitle>
         <v-card-text class="text-center">
           We start our server only on demand... and this takes a few minutes before
-          you can use our free <applet />.
+          you can use our free app.
           <br>
           This is aligned with an energy sobriety strategy. So be patient
           <v-icon color="primary" size="20">
