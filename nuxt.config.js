@@ -4,8 +4,8 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
 
   publicRuntimeConfig: {
-    GEODE_URL: process.env.NODE_ENV == 'production' ? 'https://api2.geode-solutions.com' : 'http://localhost:80',
-    VIEWER_URL: process.env.NODE_ENV == 'production' ? 'wss://api2.geode-solutions.com' : 'ws://localhost:80',
+    GEODE_URL: process.env.NODE_ENV == 'production' ? 'https://api2.geode-solutions.com' : 'https://localhost',
+    VIEWER_URL: process.env.NODE_ENV == 'production' ? 'wss://api2.geode-solutions.com' : 'wss://localhost',
     SITE_URL: process.env.SITE_URL,
     SITE_BRANCH: process.env.NODE_ENV === 'production' ? process.env.SITE_BRANCH : '',
     NODE_ENV: process.env.NODE_ENV,
@@ -69,7 +69,6 @@ export default {
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
     theme: {
       themes: {
         light: {
