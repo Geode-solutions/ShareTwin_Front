@@ -15,11 +15,6 @@
           class="switch"
           @click="$vuetify.theme.dark = !$vuetify.theme.dark"
         />
-        <v-icon
-          @click="resetCamera()"
-        >
-          mdi-camera
-        </v-icon>
       </v-row>
       <v-progress-linear :active="busy" :indeterminate="busy" absolute bottom />
     </v-app-bar>

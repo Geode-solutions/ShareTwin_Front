@@ -2,18 +2,24 @@
   <v-container class="space-around">
     <v-row align-content="center" class="justify-center">
       <v-col v-if="((!captcha_validated) && ($config.NODE_ENV === 'production'))" cols="12" class="text-center">
-        <v-card class="pb-5" elevation="5">
-          <v-card-title class="justify-center">
-            Please confirm that you are not a robot
-          </v-card-title>
-          <v-card-text class="text-center">
-            Please confirm that you're not a robot before launching the app
-          </v-card-text>
-        </v-card>
-        <recaptcha class="d-flex justify-space-around" />
-        <v-btn color="primary" @click="submit_recaptcha()" class="text-center">
-          Start app
-        </v-btn> 
+          <v-col>
+            <v-card elevation="5">
+            <v-card-title class="justify-center">
+              Please confirm that you are not a robot
+            </v-card-title>
+            <v-card-text class="text-center">
+              Please confirm that you're not a robot before launching the app
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col cols="12">
+          <recaptcha class="d-flex justify-space-around" />
+        </v-col>
+        <v-col cols="12" class="d-flex justify-space-around">
+          <v-btn color="primary" @click="submit_recaptcha()" class="text-center">
+            Start app
+          </v-btn> 
+        </v-col>
       </v-col>
       <v-col v-else-if="internal_error">
         <InternalError />
@@ -50,7 +56,6 @@ export default {
       if (newValue === true) {
         await this.create_connexion()
         this.ws_connect()
-        console.log('tototo')
       }
     },
     cloud_running(newValue, oldValue) {
@@ -63,8 +68,8 @@ export default {
     if(process.client){
       console.log(this.$config.NODE_ENV)
         if(this.$config.NODE_ENV !== 'production'){
-            this.$store.commit('setID', 'd1380b4597824ce5bfe3b1d83f3f0050')
-            this.$store.commit('set_cloud_running', true)
+            // this.$store.commit('setID', 'd1380b4597824ce5bfe3b1d83f3f0050')
+            // this.$store.commit('set_cloud_running', true)
         }
     }
   },
@@ -73,14 +78,14 @@ export default {
     ...mapActions({ create_connexion: 'create_connexion', ws_connect: 'wslink/ws_connect'}),
     async submit_recaptcha() {
         try {
-        const token = await this.$recaptcha.getResponse()
-        console.log('ReCaptcha token:', token)
-        const response = await this.$axios.post(`${this.$config.SITE_URL}/.netlify/functions/recaptcha?token=${token}`)
-        this.$store.commit('set_captcha_validated', response.status == 200)
-        console.log('this.captchaValidated :', this.captchaValidated)
-        await this.$recaptcha.reset()
+          const token = await this.$recaptcha.getResponse()
+          console.log('ReCaptcha token:', token)
+          const response = await this.$axios.post(`${this.$config.SITE_URL}/.netlify/functions/recaptcha?token=${token}`)
+          this.$store.commit('set_captcha_validated', response.status == 200)
+          console.log('this.captchaValidated :', this.captchaValidated)
+          await this.$recaptcha.reset()
         } catch (error) {
-        console.log('Login error:', error)
+          console.log('Login error:', error)
         }
     },
   },
