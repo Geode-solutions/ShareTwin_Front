@@ -1,0 +1,117 @@
+<template>
+  <v-expansion-panels v-if="cloud_running" multiple accordion>
+    <v-expansion-panel>
+      <v-expansion-panel-header>
+        <div>
+          <v-icon color="primary" size="30">
+            mdi-file-upload
+          </v-icon>
+          Load files
+        </div>
+      </v-expansion-panel-header>
+      <v-expansion-panel-content>
+        <v-row v-for="(item, index) in items"
+               :key="index"
+        >
+          <FileSelector v-model="item.file" :messages="item.messages" :accept="item.accept" />
+        </v-row>
+        <v-row
+          align-content="center"
+          justify="center"
+        >
+          <v-col cols="auto">
+            <v-btn color="primary" @click="Upload">
+              Upload
+            </v-btn>
+          </v-col>
+        </v-row>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+  </v-expansion-panels>
+</template>
+
+<script>
+import { mapActions, mapMutations, mapState } from 'vuex'
+import FileSelector from '@/components/FileSelector.vue'
+
+export default {
+  name: 'SideMenu',
+  components: { FileSelector },
+  data () {
+    return {
+      files: [],
+      success: false,
+      message: '',
+      DataFilename: '',
+      TextureFilename: '',
+      items: [
+        {
+          file: []
+          , messages: "Please select a data file"
+          , accept: ".obj, .vtp"
+          , type : "data"
+        }
+      ]
+    }
+  },
+  computed: {
+    ...mapState({
+      busy: 'busy', ID: 'ID', cloud_running: 'cloud_running'
+    }),
+  },
+  methods: {
+    ...mapActions({
+      setFilenames: 'wslink/setFilenames',
+      sendFilenames: 'cone/sendFilenames'
+    }),
+    ...mapMutations({setBusy: 'wslink/WS_BUSY_SET'}),
+
+    async Upload () {
+      const self = this
+      self.setBusy(true)
+
+      for (let i = 0; i < self.items.length; i++) {
+        if (this.items[i].file.length){
+          const reader = new FileReader()
+          reader.onload = async function (event) {
+            const params = new FormData()
+            params.append('file', event.target.result)
+            params.append('filename', self.items[i].file[0].name)
+            params.append('filesize', self.items[i].file[0].size)
+            const route = "convertfile"
+            params.append('object', 'PolygonalSurface3D')
+            params.append('extension', 'vtp')
+            if(self.items[i].file.length){
+              try {
+              const response = await self.$axios.post(`/${self.ID}/geode/${route}`, params)
+      
+              if (response.status == 200) {
+                let newFilename = response.data.newFilename
+                console.log({newFilename})
+                if(self.items[i].type==="data"){
+                  self.DataFilename = newFilename
+                } else if(self.items[i].type==="texture"){
+                  self.TextureFilename = newFilename
+                }
+                self.Load(self.DataFilename, self.TextureFilename)
+              }
+
+              } catch(err){
+                console.log({err})
+                self.setBusy(false)
+              }
+            }
+          }
+          if (self.items[i].file.length){
+            reader.readAsDataURL(this.items[i].file[0])
+          }
+        }
+      }
+
+    },
+    async Load (DataFilename) {
+      this.sendFilenames({ DataFilename })
+    }
+  }
+}
+</script>
