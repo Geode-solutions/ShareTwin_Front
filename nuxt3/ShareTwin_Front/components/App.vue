@@ -2,75 +2,34 @@
   <v-app>
     <v-app-bar app absolute clipped-left>
       <v-app-bar-nav-icon @click="controlsDrawer = !controlsDrawer" />
-      <img :src="logo" class="logo" v-on:click="resetCamera()" />
+      <img :src="logo" class="logo" v-on:click="ws_link_store.reset_camera()" />
       <span class="title">Geode-solutions viewer</span>
       <v-progress-linear :active="busy" :indeterminate="busy" absolute bottom />
       <v-spacer />
-      <v-switch
-        class="switch"
-        @click="$vuetify.theme.dark = !$vuetify.theme.dark"
-      />
+      <v-switch class="switch" @click="$vuetify.theme.dark = !$vuetify.theme.dark" />
       <v-icon v-text="`$resetCamera`" v-on:click="resetCamera()" />
     </v-app-bar>
-    <v-navigation-drawer
-      v-model="controlsDrawer"
-      clipped
-      app
-      fixed
-      disable-resize-watcher
-      width="300"
-    >
+    <v-navigation-drawer v-model="controlsDrawer" clipped app fixed disable-resize-watcher width="300">
       <SideMenu />
     </v-navigation-drawer>
     <v-main class="appContent">
       <div style="position: relative; width: 100%; height: 100%">
-        <remote-rendering-view :client="client" />
+        <RemoteRenderingView :client="client" />
       </div>
     </v-main>
   </v-app>
 </template>
 
-<script>
-import { mapGetters, mapActions } from 'vuex';
-import logo from 'Visualization_Frontend/src/assets/logo.png';
-import RemoteRenderingView from 'Visualization_Frontend/src/components/RemoteRenderingView.vue';
-import SideMenu from 'Visualization_Frontend/src/components/SideMenu.vue';
+<script setup>
+import logo from '@/public/favico.ico'
+import { use_ws_link_store } from '@/stores/wslink'
 
-// ----------------------------------------------------------------------------
-// Component API
-// ----------------------------------------------------------------------------
+const ws_link_store = use_ws_link_store()
+const { client, busy } = storeToRefs(ws_link_store)
 
-export default {
-  name: 'App',
-  components: {
-    RemoteRenderingView,
-    SideMenu,
-  },
-  data() {
-    return {
-      logo,
-    };
-  },
-  computed: {
-    ...mapGetters({
-      client: 'WS_CLIENT',
-      busy: 'WS_BUSY',
-      resolution: 'CONE_RESOLUTION',
-      height: 'CONE_HEIGHT',
-    }),
-  },
-  methods: {
-    ...mapActions([
-      'setConeResolution',
-      'setConeHeight',
-      'resetCamera',
-      'ws_connect',
-    ]),
-  },
-  mounted() {
-    this.ws_connect();
-  },
-};
+onMounted(() => {
+  ws_link_store.ws_connect();
+})
 </script>
 
 <style scoped>

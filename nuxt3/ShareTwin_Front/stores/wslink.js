@@ -1,3 +1,5 @@
+import { defineStore } from 'pinia'
+
 import vtkWSLinkClient from 'vtk.js/Sources/IO/Core/WSLinkClient';
 import SmartConnect from 'wslink/src/SmartConnect';
 
@@ -8,52 +10,27 @@ import { connectImageStream } from 'vtk.js/Sources/Rendering/Misc/RemoteView';
 // Bind vtkWSLinkClient to our SmartConnect
 vtkWSLinkClient.setSmartConnectClass(SmartConnect);
 
-export default {
-  state: {
+
+export const use_ws_link_store = defineStore('ws_link', {
+  state: () => ({
     client: null,
     config: null,
     busy: false,
-  },
-  getters: {
-    WS_CLIENT (state) {
-      return state.client;
-    },
-    WS_CONFIG (state) {
-      return state.config;
-    },
-    WS_BUSY (state) {
-      return !!state.busy;
-    },
-  },
-  mutations: {
-    WS_CLIENT_SET (state, client) {
-      state.client = client;
-    },
-    WS_CONFIG_SET (state, config) {
-      state.config = config;
-    },
-    WS_BUSY_SET (state, busy) {
-      state.busy = busy;
-    },
-  },
+  }),
+  // getters: {
+  //   WS_CLIENT (state) {
+  //     return state.client;
+  //   },
+  // },
   actions: {
-    ws_connect ({ state, commit, dispatch }) {
-      // Initiate network connection
+    ws_connect () {
       const config = { application: 'cone' };
-
-      // Custom setup for development (http:8080 / ws:1234)
       if (location.port === '8080') {
-        // We suppose that we have dev server and that ParaView/VTK is running on port 1234
-        console.log(
-          'URL :',
-          `wss://api2.geode-solutions.com:443/ws`
-        );
-        // ws://api2.geode-solutions.com/ws
         // config.sessionURL = `ws://localhost:1234/ws`;
         config.sessionURL = `wss://api2.geode-solutions.com:443/ws`;
       }
 
-      const { client } = state;
+      const { client } = this
       if (client && client.isConnected()) {
         client.disconnect(-1);
       }
@@ -64,7 +41,7 @@ export default {
 
       // Connect to busy store
       clientToConnect.onBusyChange((count) => {
-        commit('WS_BUSY_SET', count);
+        this.buzy = count
       });
       clientToConnect.beginBusy();
 
@@ -91,34 +68,31 @@ export default {
         .connect(config)
         .then((validClient) => {
           connectImageStream(validClient.getConnection().getSession());
-          commit('WS_CLIENT_SET', validClient);
+          this.client = validClient
           clientToConnect.endBusy();
 
           // Now that the client is ready let's setup the server for us
-          dispatch('WS_INITIALIZE_SERVER');
-          // if (state.client) {
-          if (state.client) {
-            state.client.getRemote().Cone.reset().catch(console.error);
+          this.ws_initialize_server()
+          if (this.client) {
+            this.client.getRemote().Cone.reset().catch(console.error);
           }
-          // state.client.Cone.reset()
-          // }
         })
         .catch((error) => {
           console.error(error);
         });
     },
-    WS_INITIALIZE_SERVER ({ state }) {
-      if (state.client) {
-        state.client
+    ws_initialize_server () {
+      if (this.client) {
+        this.client
           .getRemote()
           .Cone.createVisualization()
           .catch(console.error);
       }
     },
-    resetCamera ({ state }) {
+    reset_camera ({ state }) {
       if (state.client) {
-        state.client.getRemote().Cone.resetCamera().catch(console.error);
+        this.client.getRemote().Cone.resetCamera().catch(console.error);
       }
     },
   },
-};
+})

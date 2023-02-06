@@ -23,10 +23,12 @@
     "nuxt": "^3.1.2",
     "pinia": "^2.0.30",
     "sass": "^1.58.0",
-    "vue-gtag": "^2.0.1",
-    "vue-recaptcha": "^2.0.3",
-    "vuetify": "^3.1.1",
     "vtk.js": "26.3.3",
+    "vue-gtag": "^2.0.1",
+    "vuetify": "^3.1.1",
     "wslink": "1.10.0"
+  },
+  "overrides": {
+    "vue": "latest"
   }
 }
