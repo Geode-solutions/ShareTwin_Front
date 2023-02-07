@@ -12,7 +12,7 @@ export default new Vuetify({
   icons: {
     iconfont: 'mdi',
     values: {
-      resetCamera: 'mdi-camera',
+      reset_camera: 'mdi-camera',
     },
   },
 });

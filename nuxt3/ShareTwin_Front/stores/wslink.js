@@ -1,9 +1,11 @@
 import { defineStore } from 'pinia'
 
+import { use_cloud_store } from '@/stores/cloud'
+
 import vtkWSLinkClient from 'vtk.js/Sources/IO/Core/WSLinkClient';
 import SmartConnect from 'wslink/src/SmartConnect';
 
-import protocols from 'Visualization_Frontend/src/protocols';
+import protocols from '@/protocols';
 
 import { connectImageStream } from 'vtk.js/Sources/Rendering/Misc/RemoteView';
 
@@ -24,11 +26,16 @@ export const use_ws_link_store = defineStore('ws_link', {
   // },
   actions: {
     ws_connect () {
-      const config = { application: 'cone' };
-      if (location.port === '8080') {
-        // config.sessionURL = `ws://localhost:1234/ws`;
-        config.sessionURL = `wss://api2.geode-solutions.com:443/ws`;
-      }
+      // const config = { application: 'cone' };
+      const cloud_store = use_cloud_store()
+      const { ID } = storeToRefs(cloud_store)
+      const app_config = useRuntimeConfig()
+      const base_url = `${config.API_URL}/${ID.value}`
+      // if (location.port === '8080') {
+      // config.sessionURL = `ws://localhost:1234/ws`;
+      config.sessionURL = `wss://api2.geode-solutions.com:443/ws`;
+      config.sessionURL = `${app_config.WS_PROTOCOL}://${app_config.BASE_URL}/ws`
+      // }
 
       const { client } = this
       if (client && client.isConnected()) {
@@ -85,13 +92,13 @@ export const use_ws_link_store = defineStore('ws_link', {
       if (this.client) {
         this.client
           .getRemote()
-          .Cone.createVisualization()
+          .Cone.create_visualization()
           .catch(console.error);
       }
     },
     reset_camera ({ state }) {
       if (state.client) {
-        this.client.getRemote().Cone.resetCamera().catch(console.error);
+        this.client.getRemote().Cone.reset_camera().catch(console.error);
       }
     },
   },

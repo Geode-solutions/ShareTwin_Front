@@ -7,7 +7,7 @@
       <v-progress-linear :active="busy" :indeterminate="busy" absolute bottom />
       <v-spacer />
       <v-switch class="switch" @click="$vuetify.theme.dark = !$vuetify.theme.dark" />
-      <v-icon v-text="`$resetCamera`" v-on:click="resetCamera()" />
+      <v-icon v-text="`$reset_camera`" v-on:click="reset_camera()" />
     </v-app-bar>
     <v-navigation-drawer v-model="controlsDrawer" clipped app fixed disable-resize-watcher width="300">
       <SideMenu />
