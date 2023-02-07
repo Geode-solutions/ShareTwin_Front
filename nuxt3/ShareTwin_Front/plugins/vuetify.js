@@ -10,8 +10,8 @@ const light_theme = {
   dark: false,
   colors: {
     background: '#FFFFFF',
-    primary: colors.teal.darken1,
-    secondary: colors.teal.lighten4,
+    primary: '#01321f',
+    secondary: '#212121',
     accent: colors.amber.accent4,
     error: colors.red.accent4,
     info: colors.yellow.accent4,

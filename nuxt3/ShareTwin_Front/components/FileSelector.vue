@@ -1,17 +1,19 @@
 <template>
-  <v-file-input v-model="file" chips class="pa-4" :accept="accept" :label="message" :success="success"
-    @click:clear="file = []"  />
+  <v-file-input v-model="files" chips class="pa-4" :label="label" :accept="accept" @click:clear="files = []"
+    @change="SetFilename" />
 </template>
 
 <script setup>
 
+const props = DefineProps({
+  component_options: { type: Object, required: true }
+})
 
-  function SetFilename (changedFile) {
-      if (changedFile) {
-        this.file = [changedFile]
-        this.$emit('input', this.file)
-      }
-    },
-  }
-}
+const { accept, label } = props.component_options
+const files = ref([])
+
+watch(files, (value) => {
+  console.log(value)
+})
+
 </script>
