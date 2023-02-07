@@ -26,16 +26,12 @@ export const use_ws_link_store = defineStore('ws_link', {
   // },
   actions: {
     ws_connect () {
-      // const config = { application: 'cone' };
+      const config = { application: 'cone' };
       const cloud_store = use_cloud_store()
       const { ID } = storeToRefs(cloud_store)
       const app_config = useRuntimeConfig()
-      const base_url = `${config.API_URL}/${ID.value}`
-      // if (location.port === '8080') {
-      // config.sessionURL = `ws://localhost:1234/ws`;
-      config.sessionURL = `wss://api2.geode-solutions.com:443/ws`;
-      config.sessionURL = `${app_config.WS_PROTOCOL}://${app_config.BASE_URL}/ws`
-      // }
+      const base_url = `${app_config.WS_PROTOCOL}://${app_config.BASE_URL}/${ID.value}`
+      config.sessionURL = `${base_url}/viewer/ws`
 
       const { client } = this
       if (client && client.isConnected()) {
