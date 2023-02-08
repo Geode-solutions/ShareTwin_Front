@@ -60,11 +60,11 @@ export const use_cloud_store = defineStore('cloud', {
     },
 
     mutations: {
-      start_request (state) {
-        state.request_counter++
+      start_request () {
+        this.request_counter++
       },
-      stop_request (state) {
-        state.request_counter--
+      stop_request () {
+        this.request_counter--
       }
     }
   }

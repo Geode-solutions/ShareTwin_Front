@@ -1,13 +1,11 @@
 import { defineStore } from 'pinia'
 
-import { use_cloud_store } from '@/stores/cloud'
+import vtkWSLinkClient from '@kitware/vtk.js/IO/Core/WSLinkClient'
+import SmartConnect from 'wslink/src/SmartConnect'
 
-import vtkWSLinkClient from 'vtk.js/Sources/IO/Core/WSLinkClient';
-import SmartConnect from 'wslink/src/SmartConnect';
-
-import protocols from '@/protocols';
-
-import { connectImageStream } from 'vtk.js/Sources/Rendering/Misc/RemoteView';
+import '@kitware/vtk.js/Rendering/OpenGL/Profiles/Geometry'
+import { connectImageStream } from '@kitware/vtk.js/Rendering/Misc/RemoteView'
+import protocols from '@/protocols'
 
 // Bind vtkWSLinkClient to our SmartConnect
 vtkWSLinkClient.setSmartConnectClass(SmartConnect);
@@ -19,11 +17,6 @@ export const use_ws_link_store = defineStore('ws_link', {
     config: null,
     busy: false,
   }),
-  // getters: {
-  //   WS_CLIENT (state) {
-  //     return state.client;
-  //   },
-  // },
   actions: {
     ws_connect () {
       const config = { application: 'cone' };
@@ -92,8 +85,8 @@ export const use_ws_link_store = defineStore('ws_link', {
           .catch(console.error);
       }
     },
-    reset_camera ({ state }) {
-      if (state.client) {
+    reset_camera () {
+      if (this.client) {
         this.client.getRemote().Cone.reset_camera().catch(console.error);
       }
     },

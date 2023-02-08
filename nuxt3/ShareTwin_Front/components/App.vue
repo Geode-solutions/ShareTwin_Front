@@ -22,7 +22,7 @@
 
 <script setup>
 import logo from '@/public/favico.ico'
-import { use_ws_link_store } from '@/stores/wslink'
+import { use_ws_link_store } from '~~/stores/ws_link'
 
 const ws_link_store = use_ws_link_store()
 const { client, busy } = storeToRefs(ws_link_store)

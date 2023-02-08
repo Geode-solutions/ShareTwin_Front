@@ -2,8 +2,8 @@
   <div class="view"></div>
 </template>
 
-<script steup>
-import vtkRemoteView from 'vtk.js/Sources/Rendering/Misc/RemoteView';
+<script setup>
+import vtkRemoteView from '@kitware/vtk.js/Rendering/Misc/RemoteView';
 
 const props = defineProps({
   viewId: { type: String, required: true, default: '-1' },

@@ -9,7 +9,7 @@
           @expired="is_captcha_validated = false" @verify="submit_recaptcha" align-self="center" />
       </v-col>
       <v-col v-if="!is_cloud_running && is_connexion_launched">
-        <ToolsLoading />
+        <Loading />
       </v-col>
     </v-row>
   </v-container>
@@ -17,8 +17,7 @@
 
 <script setup>
 import { use_cloud_store } from '@/stores/cloud'
-import { storeToRefs } from 'pinia'
-import { VueRecaptcha } from 'vue-recaptcha'
+import { VueRecaptcha } from "vue-recaptcha";
 
 const cloud_store = use_cloud_store()
 const { is_cloud_running, is_captcha_validated, is_connexion_launched } = storeToRefs(cloud_store)

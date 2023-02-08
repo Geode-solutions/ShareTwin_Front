@@ -11,7 +11,7 @@ export default defineNuxtConfig({
       NODE_ENV: process.env.NODE_ENV,
     }
   },
-
+  ssr: false,
   target: 'static',
 
   // ** Customize the progress-bar color
