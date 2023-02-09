@@ -17,7 +17,7 @@
 
 <script setup>
 import { use_cloud_store } from '@/stores/cloud'
-import { VueRecaptcha } from "vue-recaptcha";
+import { VueRecaptcha } from "vue-recaptcha"
 
 const cloud_store = use_cloud_store()
 const { is_cloud_running, is_captcha_validated, is_connexion_launched } = storeToRefs(cloud_store)

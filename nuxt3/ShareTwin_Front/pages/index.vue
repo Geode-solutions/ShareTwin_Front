@@ -1,14 +1,19 @@
 <template>
   <div style="position: relative; width: 100%; height: 100%">
-    <Launcher v-if="!cloud_running" />
+    <Launcher v-if="!is_cloud_running" class="pa-5" />
     <remote-rendering-view v-else :client="client" />
   </div>
 </template>
 
 <script setup>
-// ...mapState({ID: 'ID', cloud_running: 'cloud_running'}),
-// ...mapGetters({
-//   client: 'wslink/WS_CLIENT',
+import { use_cloud_store } from '@/stores/cloud'
+import { use_ws_link_store } from '@/stores/ws_link'
+
+const cloud_store = use_cloud_store()
+const ws_link_store = use_ws_link_store()
+
+const { is_cloud_running } = storeToRefs(cloud_store)
+const { client } = storeToRefs(ws_link_store)
 </script>
 
 <style scoped>

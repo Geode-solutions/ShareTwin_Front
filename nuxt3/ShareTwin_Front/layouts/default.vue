@@ -1,13 +1,10 @@
 <template>
   <v-app>
     <v-app-bar dark color="primary" fixed app clipped-left>
-      <v-row class="hidden-sm-and-down px-2">
+      <v-row class="pa-2">
         <v-col>
-
           <v-btn :active="false" active-class="no-active" to="/">
-            <!-- <v-app-bar-nav-icon> -->
             <ShareTwinLogo />
-            <!-- </v-app-bar-nav-icon> -->
           </v-btn>
           <v-spacer />
         </v-col>
@@ -26,7 +23,10 @@
 </template>
 
 <script setup>
-// busy: 'wslink/WS_BUSY',
+import { use_ws_link_store } from '@/stores/ws_link'
+
+const ws_link_store = use_ws_link_store()
+const { busy } = storeToRefs(ws_link_store)
 </script>
 
 <style scoped>
@@ -36,9 +36,7 @@
 </style>
 
 <style>
-.v-card__text,
-.v-card__title {
-  word-break: normal;
-  /* maybe !important  */
+.card {
+  border-radius: 15px
 }
 </style>

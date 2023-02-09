@@ -1,8 +1,8 @@
 <template>
   <v-row justify="center">
-    <v-col cols="11" class="ma-3">
+    <v-col cols="12" class="ma-3">
       <v-card class="card" loading elevation="5">
-        <v-card-title class="justify-center">
+        <v-card-title class="text-center">
           Cloud instance is starting...
         </v-card-title>
         <v-card-subtitle class="text-center">

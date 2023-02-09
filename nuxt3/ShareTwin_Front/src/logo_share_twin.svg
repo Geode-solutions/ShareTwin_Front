@@ -23,8 +23,8 @@
      inkscape:deskcolor="#505050"
      showgrid="false"
      inkscape:zoom="3.85"
-     inkscape:cx="734.41558"
-     inkscape:cy="38.571429"
+     inkscape:cx="142.33766"
+     inkscape:cy="90"
      inkscape:window-width="1920"
      inkscape:window-height="991"
      inkscape:window-x="2391"
@@ -36,62 +36,132 @@
     <style
        bx:fonts="Orbitron"
        id="style28">@import url(https://fonts.googleapis.com/css2?family=Orbitron%3Aital%2Cwght%400%2C400%3B0%2C500%3B0%2C600%3B0%2C700%3B0%2C800%3B0%2C900&amp;display=swap);</style>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter19406"
+       x="-0.37020705"
+       y="-0.40053943"
+       width="1.927527"
+       height="2.0130646">
+      <feFlood
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood19396" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite19398" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="3"
+         result="blur"
+         id="feGaussianBlur19400" />
+      <feOffset
+         dx="6"
+         dy="6"
+         result="offset"
+         id="feOffset19402" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite19404" />
+    </filter>
+    <filter
+       style="color-interpolation-filters:sRGB;"
+       inkscape:label="Drop Shadow"
+       id="filter20144"
+       x="-0.0093990135"
+       y="-0.065536731"
+       width="1.0266305"
+       height="1.1856874">
+      <feFlood
+         flood-opacity="0.498039"
+         flood-color="rgb(0,0,0)"
+         result="flood"
+         id="feFlood20134" />
+      <feComposite
+         in="flood"
+         in2="SourceGraphic"
+         operator="in"
+         result="composite1"
+         id="feComposite20136" />
+      <feGaussianBlur
+         in="composite1"
+         stdDeviation="3"
+         result="blur"
+         id="feGaussianBlur20138" />
+      <feOffset
+         dx="6"
+         dy="6"
+         result="offset"
+         id="feOffset20140" />
+      <feComposite
+         in="SourceGraphic"
+         in2="offset"
+         operator="over"
+         result="composite2"
+         id="feComposite20142" />
+    </filter>
   </defs>
   <text
-     style="font-size:142.678px;font-family:Orbitron;white-space:pre;fill:#979696;fill-opacity:1;stroke-width:3.17061"
-     x="539.73242"
-     y="150.78911"
-     id="text3592"
-     transform="scale(0.97920349,1.0212382)">Twin</text>
-  <ellipse
-     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1"
-     cx="105.97536"
-     cy="20.086935"
-     id="ellipse32"
-     rx="16.033102"
-     ry="15.121162" />
-  <ellipse
-     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1"
-     cx="25.809832"
-     cy="65.450424"
-     id="ellipse34"
-     rx="16.033102"
-     ry="15.121162" />
-  <ellipse
-     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1"
-     cx="105.97536"
-     cy="110.81391"
-     id="ellipse36"
-     rx="16.033102"
-     ry="15.121162" />
-  <ellipse
-     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1"
-     cx="25.809832"
-     cy="156.17738"
-     id="ellipse38"
-     rx="16.033102"
-     ry="15.121162" />
-  <text
-     style="font-size:142.678px;font-family:Orbitron;white-space:pre;fill:#fffffc;fill-opacity:1;stroke-width:3.17061"
+     style="font-size:142.678px;font-family:Orbitron;white-space:pre;fill:#fffffc;fill-opacity:1;stroke-width:3.17061;filter:url(#filter20144)"
      x="125.94641"
      y="158.30542"
      id="text40"
      transform="scale(0.97920349,1.0212382)">hare Twin</text>
-  <path
-     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1"
-     d="M 39.989506,58.068235 92.757652,28.046679"
-     id="path42" />
-  <path
-     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1"
-     d="M 39.335357,148.49884 93.305978,120.19505"
-     id="path44" />
-  <path
-     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1"
-     d="M 38.514461,74.52914 92.42737,103.13233"
-     id="path46" />
   <text
      style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:55px;font-family:Orbitron;-inkscape-font-specification:'Orbitron, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;white-space:pre;fill:#ffffff"
      x="169.65811"
      y="198.16196"
      id="text48" />
+  <path
+     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1;filter:url(#filter19406)"
+     d="M 39.335357,148.49884 93.305978,120.19505"
+     id="path44" />
+  <path
+     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1;filter:url(#filter19406)"
+     d="M 38.514461,74.52914 92.42737,103.13233"
+     id="path46" />
+  <ellipse
+     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1;filter:url(#filter19406)"
+     cx="105.97536"
+     cy="110.81391"
+     id="ellipse36"
+     rx="16.033102"
+     ry="15.121162"
+     transform="matrix(0.97708221,0,0,0.9788147,2.4948501,2.4183413)" />
+  <path
+     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1;filter:url(#filter19406)"
+     d="M 39.989506,58.068235 92.757652,28.046679"
+     id="path42" />
+  <ellipse
+     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1;filter:url(#filter19406)"
+     cx="25.809832"
+     cy="65.450424"
+     id="ellipse34"
+     rx="16.033102"
+     ry="15.121162"
+     transform="matrix(0.98945767,0,0,0.96566389,0.33882706,2.320356)" />
+  <ellipse
+     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1;filter:url(#filter19406)"
+     cx="105.97536"
+     cy="20.086935"
+     id="ellipse32"
+     rx="16.033102"
+     ry="15.121162"
+     transform="matrix(0.96419541,0,0,0.99249736,3.8596583,0.22045781)" />
+  <ellipse
+     style="fill:none;stroke:#ffffff;stroke-width:9.34227;stroke-opacity:1;filter:url(#filter19406)"
+     cx="25.809832"
+     cy="156.17738"
+     id="ellipse38"
+     rx="16.033102"
+     ry="15.121162"
+     transform="matrix(0.97708221,0,0,0.9788147,0.65763365,3.3793802)" />
 </svg>
