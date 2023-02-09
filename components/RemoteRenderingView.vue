@@ -1,5 +1,5 @@
 <template>
-  <div class="view"></div>
+  <div ref="canva" class="canva"></div>
 </template>
 
 <script setup>
@@ -10,62 +10,70 @@ const props = defineProps({
   client: { type: Object, required: true, default: null }
 })
 const { client, viewId } = props
-
 const connected = ref(false)
 
-onCreated(() => {
-  view = vtkRemoteView.newInstance({
-    rpcWheelEvent: 'viewport.mouse.zoom.wheel',
+
+const view = vtkRemoteView.newInstance({ rpcWheelEvent: 'viewport.mouse.zoom.wheel' })
+const canva = ref(null).
+
+
+
+
+  watch(client, () => {
+    connect()
   })
+
+watch(viewId, (id) => {
+  if (connected.value) {
+    view.setViewId(id)
+    view.render()
+  }
+})
+
+function enablePicking (value) {
+  view.getInteractorStyle().setSendMouseMove(value)
+}
+
+
+onMounted(() => {
+
   // default of 0.5 causes 2x size labels on high-DPI screens. 1 good for demo, not for production.
   if (location.hostname.split('.')[0] === 'localhost') {
     view.setInteractiveRatio(1)
   }
 })
 onMounted(() => {
-  view.setContainer(this.$el)
+  view.setContainer(canva)
   window.addEventListener('resize', view.resize)
   connect()
 })
+onBeforeUnmount(() => {
+  if (this.subscription) {
+    this.subscription.unsubscribe()
+    this.subscription = null
+  }
+  window.removeEventListener('resize', view.resize)
+  view.delete()
+})
+
 function connect () {
   if (client) {
     const session = client.getConnection().getSession()
     view.setSession(session)
     view.setViewId(viewId)
-    connected.value = true
+    connected = true
     view.render()
   }
 }
 function handleClick (event) {
-  this.onClick(event);
+  onClick(event)
 }
-// watch: {
-//   client() {
-//     connect()
-//   },
-//   viewId(id) {
-//     // console.log('RemoteRenderView', id);
-//     if (this.connected) {
-//       this.view.setViewId(id);
-//       this.view.render();
-//     }
-//   },
-//   enablePicking(value) {
-//     this.view.getInteractorStyle().setSendMouseMove(value);
-//   },
-// }
-onBeforeUnmount(() => {
-  if (subscription) {
-    subscription.unsubscribe();
-    subscription = null;
-  }
-  window.removeEventListener('resize', view.resize);
-  view.delete();
-})
+
+
 </script>
 
 <style scoped>
-.view {
+.canva {
   position: absolute;
   top: 0;
   left: 0;

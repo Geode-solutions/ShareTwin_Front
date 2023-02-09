@@ -19,7 +19,7 @@ export const use_cloud_store = defineStore('cloud', {
         return this.create_backend()
       } else {
         const config = useRuntimeConfig()
-        const { data, error } = await useFetch(`${config.public.API_URL}/${ID}/ping`, { method: 'POST' })
+        const { data, error } = await useFetch(`${config.public.GEODE_PROTOCOL}://${config.public.API_URL}/${ID}/geode/ping`, { method: 'POST' })
         console.log("error", error)
         if (data.value !== null) {
           this.ID = ID
@@ -32,7 +32,7 @@ export const use_cloud_store = defineStore('cloud', {
     },
     async create_backend () {
       const config = useRuntimeConfig()
-      const { data, error } = await useFetch(`${config.public.API_URL}${config.public.SITE_BRANCH}/sharetwin/createbackend`, { method: 'POST' })
+      const { data, error } = await useFetch(`${config.public.GEODE_PROTOCOL}://${config.public.API_URL}${config.public.SITE_BRANCH}/sharetwin/createbackend`, { method: 'POST' })
       if (data.value !== null) {
         this.ID = data.value.ID
         localStorage.setItem('ID', data.value.ID)
@@ -49,7 +49,7 @@ export const use_cloud_store = defineStore('cloud', {
     },
     async do_ping () {
       const config = useRuntimeConfig()
-      const { data, error } = await useFetch(`${config.public.API_URL}/${this.ID}/ping`, { method: 'POST' })
+      const { data, error } = await useFetch(`${config.public.GEODE_PROTOCOL}://${config.public.API_URL}/${this.ID}/geode/ping`, { method: 'POST' })
       if (data.value !== null) {
         this.is_cloud_running = true
       } else {

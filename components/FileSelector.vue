@@ -5,7 +5,7 @@
 
 <script setup>
 
-const props = DefineProps({
+const props = defineProps({
   component_options: { type: Object, required: true }
 })
 

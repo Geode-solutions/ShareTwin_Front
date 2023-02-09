@@ -11,7 +11,7 @@
       </v-expansion-panel-title>
       <v-expansion-panel-text>
         <v-row v-for="(item, index) in data_tree" :key="index">
-          <compo :component_options="item.component_options" />
+          <component :is="item.component.component_name" :component_options="item.component.component_options" />
         </v-row>
         <v-row align-content="center" justify="center">
           <v-col cols="auto">
@@ -28,7 +28,7 @@
 <script setup>
 import { use_cloud_store } from '@/stores/cloud'
 import { use_ws_link_store } from '@/stores/ws_link'
-import FileSelector from './FileSelector.vue'
+import FileSelector from '@/components/FileSelector.vue'
 
 const cloud_store = use_cloud_store()
 const ws_link_store = use_ws_link_store()
@@ -64,15 +64,15 @@ async function upload_file () {
         params.append('object', 'PolygonalSurface3D')
         params.append('extension', 'vtp')
         if (data_tree[i].file.length) {
-          try {
-            const { data, error } = await api_fetch(`/${convertfile}`, { body: params, method: 'POST' })
+          const { data, error } = await api_fetch(`/${convertfile}`, { body: params, method: 'POST' })
+          if (data) {
             let new_filename = data.value.newFilename
             console.log({ new_filename })
             load(new_filename)
             ws_link_store.$patch({ busy: false })
-          } catch (error) {
+          } else if (error) {
             console.log({ error })
-
+            ws_link_store.$patch({ busy: false })
           }
         }
         if (data_tree[i].file.length) {
