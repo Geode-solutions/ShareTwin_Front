@@ -11,6 +11,19 @@ export default defineNuxtConfig({
       NODE_ENV: process.env.NODE_ENV,
     }
   },
+
+  app: {
+    head: {
+      titleTemplate: 'Share Twin',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: 'Platform for urban and geological data visualization' },
+        { link: [{ rel: 'icon', type: 'image/svg+xml', href: "/icon_share_twin.svg" }] }
+      ]
+    }
+  },
+
   ssr: false,
   target: 'static',
 

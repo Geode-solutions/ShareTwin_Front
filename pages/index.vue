@@ -1,7 +1,7 @@
 <template>
   <div style="position: relative; width: 100%; height: 100%">
     <Launcher v-if="!is_cloud_running" class="pa-5" />
-    <remote-rendering-view v-else :client="client" />
+    <RemoteRenderingView v-else :client="client" />
   </div>
 </template>
 
