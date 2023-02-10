@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import { use_cloud_store } from '@/stores/cloud'
+import _ from 'lodash'
 
 import vtkWSLinkClient from '@kitware/vtk.js/IO/Core/WSLinkClient'
 import SmartConnect from 'wslink/src/SmartConnect'
@@ -13,9 +15,10 @@ vtkWSLinkClient.setSmartConnectClass(SmartConnect);
 
 export const use_ws_link_store = defineStore('ws_link', {
   state: () => ({
-    client: null,
+    client: {},
     config: null,
     busy: false,
+    is_client_created: false
   }),
   actions: {
     ws_connect () {
@@ -23,15 +26,20 @@ export const use_ws_link_store = defineStore('ws_link', {
       const cloud_store = use_cloud_store()
       const { ID } = storeToRefs(cloud_store)
       const app_config = useRuntimeConfig()
-      const base_url = `${app_config.WS_PROTOCOL}://${app_config.BASE_URL}/${ID.value}`
+      console.log(app_config)
+      const base_url = `${app_config.public.VIEWER_PROTOCOL}://${app_config.public.API_URL}/${ID.value}`
       config.sessionURL = `${base_url}/viewer/ws`
 
       const { client } = this
-      if (client && client.isConnected()) {
+      console.log("created ", this.is_client_created);
+      if (this.is_client_created && client.isConnected()) {
         client.disconnect(-1);
+        this.is_client_created = false;
       }
+      console.log("created ", this.is_client_created);
       let clientToConnect = client;
-      if (!clientToConnect) {
+      console.log(_.isEmpty(clientToConnect))
+      if (_.isEmpty(clientToConnect)) {
         clientToConnect = vtkWSLinkClient.newInstance({ protocols });
       }
 
@@ -69,16 +77,19 @@ export const use_ws_link_store = defineStore('ws_link', {
 
           // Now that the client is ready let's setup the server for us
           this.ws_initialize_server()
-          if (this.client) {
-            this.client.getRemote().Cone.reset().catch(console.error);
-          }
+          this.client.getRemote().Cone.reset().catch(console.error);
+          console.log("created ", this.is_client_created);
+          this.is_client_created = true;
+          console.log("created ", this.is_client_created);
         })
         .catch((error) => {
           console.error(error);
         });
     },
     ws_initialize_server () {
-      if (this.client) {
+      console.log('ws_initialize_server !_.isEmpty(this.client)', !_.isEmpty(this.client))
+      console.log('ws_initialize_server this.client', this.client)
+      if (!_.isEmpty(this.client)) {
         this.client
           .getRemote()
           .Cone.create_visualization()
@@ -86,7 +97,9 @@ export const use_ws_link_store = defineStore('ws_link', {
       }
     },
     reset_camera () {
-      if (this.client) {
+      console.log('reset_camera !_.isEmpty(this.client)', !_.isEmpty(this.client))
+      console.log('reset_camera this.client', this.client)
+      if (!_.isEmpty(this.client)) {
         this.client.getRemote().Cone.reset_camera().catch(console.error);
       }
     },

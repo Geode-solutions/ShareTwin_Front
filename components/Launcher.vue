@@ -17,15 +17,18 @@
 
 <script setup>
 import { use_cloud_store } from '@/stores/cloud'
+import { use_ws_link_store } from '@/stores/ws_link'
 import { VueRecaptcha } from "vue-recaptcha"
 
+const ws_link_store = use_ws_link_store()
 const cloud_store = use_cloud_store()
 const { is_cloud_running, is_captcha_validated, is_connexion_launched } = storeToRefs(cloud_store)
 
-watch(is_captcha_validated, (value) => {
+watch(is_captcha_validated, async (value) => {
   console.log('is_captcha_validated : ', value)
   if (value === true) {
-    cloud_store.create_connexion()
+    await cloud_store.create_connexion()
+    await ws_link_store.ws_connect()
   }
 })
 
@@ -43,6 +46,7 @@ onMounted(() => {
     }
   }
 })
+onUnmounted(() => { console.log("unmount") })
 
 async function submit_recaptcha (token) {
   try {
