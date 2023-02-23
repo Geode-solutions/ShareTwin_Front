@@ -29,12 +29,12 @@
 <script setup>
 import { use_cloud_store } from '@/stores/cloud'
 import { use_ws_link_store } from '@/stores/ws_link'
-import { use_data_store } from '@/stores/data'
+import { use_vtk_store } from '@/stores/vtk'
 import FileSelector from '@/components/FileSelector.vue'
 
 const cloud_store = use_cloud_store()
 const ws_link_store = use_ws_link_store()
-const data_store = use_data_store()
+const vtk_store = use_vtk_store()
 
 const { is_cloud_running } = storeToRefs(cloud_store)
 
@@ -97,7 +97,7 @@ async function upload_file () {
 }
 
 async function load (DataFilename) {
-  data_store.send_filenames({ DataFilename })
+  vtk_store.send_filenames({ DataFilename })
 }
 
 </script>

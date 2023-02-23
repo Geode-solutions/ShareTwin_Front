@@ -1,5 +1,5 @@
-import Cone from './Cone';
+import vtk from './vtk';
 
 export default {
-  Cone,
+  vtk,
 };

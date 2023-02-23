@@ -77,7 +77,7 @@ export const use_ws_link_store = defineStore('ws_link', {
 
           // Now that the client is ready let's setup the server for us
           this.ws_initialize_server()
-          this.client.getRemote().Cone.reset().catch(console.error);
+          this.client.getRemote().vtk.reset().catch(console.error);
           console.log("created ", this.is_client_created);
           this.is_client_created = true;
           console.log("created ", this.is_client_created);
@@ -92,7 +92,7 @@ export const use_ws_link_store = defineStore('ws_link', {
       if (!_.isEmpty(this.client)) {
         this.client
           .getRemote()
-          .Cone.create_visualization()
+          .vtk.create_visualization()
           .catch(console.error);
       }
     },
@@ -100,7 +100,7 @@ export const use_ws_link_store = defineStore('ws_link', {
       console.log('reset_camera !_.isEmpty(this.client)', !_.isEmpty(this.client))
       console.log('reset_camera this.client', this.client)
       if (!_.isEmpty(this.client)) {
-        this.client.getRemote().Cone.reset_camera().catch(console.error);
+        this.client.getRemote().vtk.reset_camera().catch(console.error);
       }
     },
   },
