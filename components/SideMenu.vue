@@ -15,7 +15,7 @@
         </v-row>
         <v-row align-content="center" justify="center">
           <v-col cols="auto">
-            <v-btn color="primary" @click="upload_file">
+            <v-btn color="primary" @click="upload_file()">
               Upload
             </v-btn>
           </v-col>
@@ -35,55 +35,54 @@ const ws_link_store = use_ws_link_store()
 
 const { is_cloud_running } = storeToRefs(cloud_store)
 
-const data_tree = reactive([
-  {
-    title: '',
-    file: [],
-    component: {
+const data_tree = reactive({
+    items: [{
+      file: [],
       component_name: shallowRef(FileSelector),
       component_options: {
-        label: "Please select a data file"
+        multiple: false,
+        label: 'Please select a file'
         , accept: ".obj, .vtp"
-      }
-    }
-    , type: "data"
-  }
-])
+      }}]
+    })
+
+provide('data_tree', data_tree)
 
 async function upload_file () {
   ws_link_store.$patch({ busy: true })
 
   for (let i = 0; i < data_tree.length; i++) {
-    if (data_tree[i].file.length) {
+    if (items[i].file.length) {
       const reader = new FileReader()
       reader.onload = async function (event) {
         const params = new FormData()
         params.append('file', event.target.result)
-        params.append('filename', data_tree[i].file[0].name)
-        params.append('filesize', data_tree[i].file[0].size)
+        params.append('filename', items[i].file[0].name)
+        params.append('filesize', items[i].file[0].size)
+        const route = "convertfile"
         params.append('object', 'PolygonalSurface3D')
         params.append('extension', 'vtp')
-        if (data_tree[i].file.length) {
-          const { data, error } = await api_fetch(`/${convertfile}`, { body: params, method: 'POST' })
-          if (data) {
-            let new_filename = data.value.newFilename
-            console.log({ new_filename })
-            load(new_filename)
-            ws_link_store.$patch({ busy: false })
-          } else if (error) {
-            console.log({ error })
-            ws_link_store.$patch({ busy: false })
-          }
-        }
-        if (data_tree[i].file.length) {
-          reader.readAsDataURL(data_tree[i].file[0])
+        if (items[i].file.length) {
+          await api_fetch(`/${convertfile}`, {
+            body: params, method: 'POST', onResponse ({ response }) {
+              load(response._data.newFilename)
+            },
+            onError ({ error }) {
+              console.log(error)
+              ws_link_store.$patch({ busy: false })
+            }
+          })
         }
       }
     }
+    if (items[i].file.length) {
+      reader.readAsDataURL(this.items[i].file[0])
+    }
   }
-  async function load (data_filename) {
-    send_filenames({ data_filename })
-  }
+}
+
+async function load (DataFilename) {
+  this.send_filenames({ DataFilename })
 }
 
 </script>

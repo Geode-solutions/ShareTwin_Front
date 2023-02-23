@@ -1,5 +1,6 @@
 <template>
-  <div style="overflow: hidden; position: relative; z-index: 0"  ref="viewer" class="viewer">toto</div>
+  <v-col style="overflow: hidden; position: relative; z-index: 1; height: 100%" ref="viewer" class="viewer">
+  </v-col>
 </template>
 
 <script setup>
@@ -11,7 +12,7 @@ const props = defineProps({
 })
 const { client, viewId } = toRefs(props)
 const connected = ref(false)
-console.log("coucou", client, process.client)
+console.log("process.client", client, process.client)
 
 const view = vtkRemoteView.newInstance({ rpcWheelEvent: 'viewport.mouse.zoom.wheel' })
 // default of 0.5 causes 2x size labels on high-DPI screens. 1 good for demo, not for production.
@@ -23,7 +24,6 @@ const viewer = ref(null)
 
 watch(client, (new_client) => {
   console.log(new_client)
-  // console.log("client", client, new_client)
   connect()
 })
 
@@ -34,19 +34,18 @@ watch(viewId, (id) => {
   }
 })
 
-// function enablePicking (value) {
-//   view.getInteractorStyle().setSendMouseMove(value)
-// }
+function resize () {
+  view.getCanvasView().setSize(0, 0) // hack to fit full size
+  view.resize();
+}
 
 
 onMounted(async () => {
-  window.addEventListener('resize', view.resize)
-  window.addEventListener('resize', () => { console.log("rect", viewer.value.getBoundingClientRect()) })
-  console.log("onMounted", client, viewer.value)
+  window.addEventListener('resize', resize)
   await nextTick()
-  view.setContainer(viewer.value)
+  view.setContainer(viewer.value.$el)
   connect()
-  console.log("onMounted2", client, viewer.value)
+  resize()
 
 })
 
@@ -55,7 +54,7 @@ onBeforeUnmount(() => {
     this.subscription.unsubscribe()
     this.subscription = null
   }
-  window.removeEventListener('resize', view.resize)
+  window.removeEventListener('resize', resize)
   view.delete()
 })
 

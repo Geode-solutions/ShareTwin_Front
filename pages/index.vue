@@ -1,5 +1,5 @@
 <template>
-  <v-container>
+  <v-container class="pa-0 fill-height">
     <v-row no-gutters class="fill-height">
 
       <!-- <div class="appContent" style="position: relative; width: 100%; height: 100%"> -->
