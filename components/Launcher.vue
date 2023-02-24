@@ -3,7 +3,7 @@
     <v-row align-content="center" align="center">
       <v-col v-if="!is_captcha_validated" cols="12" align-self="center" align="center">
         <h4 class="pb-3">
-          Please complete the recaptcha to launch the tool
+          Please complete the recaptcha to launch the app
         </h4>
         <vue-recaptcha ref="recaptcha" sitekey="6LdPWi8jAAAAACH7JQZcWOK1Agmqpt4h6C5DCOlw" :loadRecaptchaScript="true"
           @expired="is_captcha_validated = false" @verify="submit_recaptcha" align-self="center" />
@@ -50,6 +50,7 @@ async function submit_recaptcha (token) {
   try {
     const config = useRuntimeConfig()
     const response = await $fetch.raw(`${config.SITE_URL}/.netlify/functions/recaptcha?token=${token}`)
+    console.log('response', response)
     cloud_store.$patch({ is_captcha_validated: response.status == 200 })
     recaptcha.reset()
   } catch (error) {
