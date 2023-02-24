@@ -1,84 +1,93 @@
-import colors from 'vuetify/es5/util/colors'
+import colors from 'vuetify/lib/util/colors'
 
-export default {
-  // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
+export default defineNuxtConfig({
+  runtimeConfig: {
+    public: {
+      API_URL: process.env.NODE_ENV === 'production' ? 'api.share-twin.com:443' : 'localhost:80',
+      VIEWER_PROTOCOL: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
+      GEODE_PROTOCOL: process.env.NODE_ENV === 'production' ? 'https' : 'http',
+      SITE_URL: process.env.SITE_URL,
+      SITE_BRANCH: process.env.NODE_ENV === 'production' ? process.env.SITE_BRANCH : '',
+      NODE_ENV: process.env.NODE_ENV,
+    }
+  },
 
-  publicRuntimeConfig: {
-    GEODE_URL: process.env.NODE_ENV == 'production' ? 'https://api.share-twin.com' : 'http://localhost:80',
-    VIEWER_URL: process.env.NODE_ENV == 'production' ? 'wss://api.share-twin.com' : 'ws://localhost:80',
-    SITE_URL: process.env.SITE_URL,
-    SITE_BRANCH: process.env.NODE_ENV === 'production' ? process.env.SITE_BRANCH : '',
-    NODE_ENV: process.env.NODE_ENV,
-    recaptcha: {
-      siteKey: process.env.RECAPTCHA_SITE_KEY
+  app: {
+    head: {
+      titleTemplate: 'Share Twin',
+      meta: [
+        { charset: 'utf-8' },
+        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
+        { hid: 'description', name: 'description', content: 'Platform for urban and geological data visualization' },
+        { link: [{ rel: 'icon', type: 'image/svg+xml', href: '/icon_share_twin.svg' }] }
+      ]
     }
   },
 
   ssr: false,
+  target: 'static',
 
-  // Global page headers: https://go.nuxtjs.dev/config-head
-  head: {
-    title: 'ShareTwin_Front',
-    htmlAttrs: {
-      lang: 'en'
-    },
-    meta: [
-      { charset: 'utf-8' },
-      { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      { hid: 'description', name: 'description', content: '' },
-      { name: 'format-detection', content: 'telephone=no' }
+  // ** Customize the progress-bar color
+  loading: { color: '#fff' },
+
+  // ** Global CSS
+  css: ['vuetify/lib/styles/main.sass'],
+
+  // ** Nuxt.js modules
+  modules:
+    [
+      ['@dargmuesli/nuxt-cookie-control',
+        {
+          controlButton: true,
+          domain: 'geode-solutions.com',
+          colors: {
+            modalOverlay: '#000',
+            barBackground: colors.teal.darken1,
+            barButtonColor: '#000',
+            modalTextColor: '#000',
+            modalOverlayOpacity: 0,
+            modalButtonColor: '#fff',
+            modalUnsavedColor: '#000',
+            modalButtonBackground: colors.teal.darken1,
+            controlButtonIconColor: colors.teal.darken1,
+            checkboxActiveBackground: colors.teal.darken1,
+            checkboxInactiveBackground: '#000',
+            modalButtonHoverBackground: '#333',
+            checkboxDisabledBackground: '#ddd',
+            controlButtonIconHoverColor: colors.amber.accent4,
+            controlButtonHoverBackground: colors.brown.darken4
+          }
+        }
+      ],
+      ['@pinia/nuxt',
+        {
+          autoImports: [
+            'storeToRefs',
+          ],
+        }],
     ],
-    link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }
+
+  cookies: {
+    necessary: [
+      {
+        name: 'Default Cookies',
+        description: 'Used for cookie control.',
+        cookies: ['cookie_control_consent', 'cookie_control_enabled_cookies'],
+        isSecureContext: true
+      }
     ]
   },
 
-  // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [
-  ],
-
-  // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [
-    '@/plugins/axios'
-  ],
-
-  // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
-  buildModules: [
-    // https://go.nuxtjs.dev/eslint
-    '@nuxtjs/eslint-module',
-    // https://go.nuxtjs.dev/vuetify
-    '@nuxtjs/vuetify'
-  ],
-
-  // Modules: https://go.nuxtjs.dev/config-modules
-  modules: [
-    // https://go.nuxtjs.dev/axios
-    '@nuxtjs/axios',
-    '@nuxtjs/recaptcha'
-  ],
-
-  recaptcha: {
-    version: 2,
-  },
-
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  axios: {},
-
-  // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
-  vuetify: {
-    theme: {
-      themes: {
-        light: {
-          primary: colors.teal.darken1,
-          secondary: colors.teal.lighten4,
-          accent: colors.red.darken4
-        }
-      }
-    },
-    icons: { iconfont: 'mdi', values: { logo: { component: 'GeodeLogo' } } }
-  },
-
-  // Build Configuration: https://go.nuxtjs.dev/config-build
+  // ** Build configuration
   build: {
+    transpile: ['vuetify'],
+  },
+  vue: {
+    compilerOptions: {
+      isCustomElement: (tag) => ['md-linedivider'].includes(tag)
+    }
+  },
+  nitro: {
+    preset: 'netlify'
   }
-}
+})
