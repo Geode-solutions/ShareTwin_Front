@@ -75,6 +75,7 @@ async function upload_file () {
         await api_fetch(`/geode/convertfile`, {
           body: params, method: 'POST', onResponse ({ response }) {
             load(response._data.newFilename)
+            ws_link_store.$patch({ busy: false })
           },
           onError ({ error }) {
             console.log(error)
@@ -90,6 +91,8 @@ async function upload_file () {
 }
 
 async function load (DataFilename) {
+  console.log('load')
+  console.log('DataFilename', DataFilename)
   vtk_store.send_filenames({ DataFilename })
 }
 
