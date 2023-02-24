@@ -59,13 +59,10 @@ provide('data_tree', data_tree)
 
 async function upload_file () {
   ws_link_store.$patch({ busy: true })
-  console.log('1')
   for (let i = 0; i < data_tree.items.length; i++) {
-    console.log('2')
     let current_item = data_tree.items[i]
     const reader = new FileReader()
     reader.onload = async function (event) {
-      console.log('4')
       const params = new FormData()
       params.append('file', event.target.result)
       params.append('filename', data_tree.items[i].file[0].name)
@@ -73,10 +70,8 @@ async function upload_file () {
       const route = "convertfile"
       params.append('object', 'PolygonalSurface3D')
       params.append('extension', 'vtp')
-      console.log('5')
 
       if (current_item.file.length) {
-        console.log('6')
         await api_fetch(`/geode/convertfile`, {
           body: params, method: 'POST', onResponse ({ response }) {
             load(response._data.newFilename)
@@ -89,8 +84,6 @@ async function upload_file () {
       }
     }
     if (current_item.file.length) {
-      console.log('3.5')
-      console.log(current_item.file[0])
       reader.readAsDataURL(current_item.file[0])
     }
   }
