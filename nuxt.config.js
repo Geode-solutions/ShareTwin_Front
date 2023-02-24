@@ -3,7 +3,7 @@ import colors from 'vuetify/lib/util/colors'
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      API_URL: process.env.NODE_ENV === 'production' ? 'api.geode-solutions.com:443' : 'localhost:80',
+      API_URL: process.env.NODE_ENV === 'production' ? 'api.share-twin.com:443' : 'localhost:80',
       VIEWER_PROTOCOL: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
       GEODE_PROTOCOL: process.env.NODE_ENV === 'production' ? 'https' : 'http',
       SITE_URL: process.env.SITE_URL,
