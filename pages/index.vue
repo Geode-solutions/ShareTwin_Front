@@ -1,64 +1,38 @@
 <template>
-  <div style="position: relative; width: 100%; height: 100%">
-    <Launcher v-if="!cloud_running"/>
-    <remote-rendering-view v-else :client="client" />
-  </div>
+  <v-container class="pa-0 fill-height">
+    <v-row no-gutters class="fill-height">
+
+      <!-- <div class="appContent" style="position: relative; width: 100%; height: 100%"> -->
+      <Launcher v-if="!is_cloud_running || !is_client_created" class="pa-5" />
+      <RemoteRenderingView v-else :client="client" />
+      <!-- </div> -->
+    </v-row>
+  </v-container>
 </template>
 
-<script>
-import { mapActions, mapGetters, mapState } from 'vuex'
-import RemoteRenderingView from '@/components/RemoteRenderingView.vue'
-import Launcher from '@/components/Launcher.vue'
-// ----------------------------------------------------------------------------
-// Component API
-// ----------------------------------------------------------------------------
+<script setup>
+import { use_cloud_store } from '@/stores/cloud'
+import { use_ws_link_store } from '@/stores/ws_link'
 
-export default {
-  name: 'App',
-  components: {
-    Launcher
-    , RemoteRenderingView,
-  },
-  computed: {
-    ...mapState({ID: 'ID', cloud_running: 'cloud_running'}),
-    ...mapGetters({
-      busy: 'wslink/WS_BUSY',
-      client: 'wslink/WS_CLIENT',
-      height: 'cone/CONE_HEIGHT',
-      resolution: 'cone/CONE_RESOLUTION'
-    })
-  },
-  methods: {
-    ...mapActions({
-      setConeResolution: 'cone/setConeResolution',
-      setConeHeight: 'cone/setConeHeight',
-      resetCamera: 'wslink/resetCamera',
-      ws_connect: 'wslink/ws_connect'
-  })
-  },
-}
+const cloud_store = use_cloud_store()
+const ws_link_store = use_ws_link_store()
+
+const { is_cloud_running } = storeToRefs(cloud_store)
+const { client, is_client_created } = storeToRefs(ws_link_store)
 </script>
 
 <style scoped>
-/* set vuetify-specific wrapper to contain our overlay */
 .content--wrap {
   position: relative;
 }
 
 .appContent {
-  /* need a fixed height of arbitrary value
-   * so the vtk viewers don't grow too much in
-   * height when resizing. */
   height: 0;
 }
 
 .logo {
   height: 35px;
   padding-right: 10px;
-}
-
-.slider {
-  max-width: 300px;
 }
 
 .switch {

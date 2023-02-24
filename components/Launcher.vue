@@ -1,93 +1,63 @@
 <template>
-  <v-container class="space-around">
-    <v-row align-content="center" class="justify-center">
-      <v-col v-if="((!captcha_validated) && ($config.NODE_ENV === 'production'))" cols="12" class="text-center">
-          <v-col>
-            <v-card elevation="5">
-            <v-card-title class="justify-center">
-              Please confirm that you are not a robot
-            </v-card-title>
-            <v-card-text class="text-center">
-              Please confirm that you're not a robot before launching the app
-            </v-card-text>
-          </v-card>
-        </v-col>
-        <v-col cols="12">
-          <recaptcha class="d-flex justify-space-around" />
-        </v-col>
-        <v-col cols="12" class="d-flex justify-space-around">
-          <v-btn color="primary" @click="submit_recaptcha()" class="text-center">
-            Start app
-          </v-btn> 
-        </v-col>
+  <v-container justify="space-around">
+    <v-row align-content="center" align="center">
+      <v-col v-if="!is_captcha_validated" cols="12" align-self="center" align="center">
+        <h4 class="pb-3">
+          Please complete the recaptcha to launch the tool
+        </h4>
+        <vue-recaptcha ref="recaptcha" sitekey="6Lce72wgAAAAAOXrHyDxRQBhk6NDTD80MrXOlgbC" :loadRecaptchaScript="true"
+          @expired="is_captcha_validated = false" @verify="submit_recaptcha" align-self="center" />
       </v-col>
-      <v-col v-else-if="internal_error">
-        <InternalError />
-      </v-col>
-      <v-col v-else-if="under_maintenance">
-        <UnderMaintenance />
-      </v-col>
-      <v-col v-else-if="!cloud_running">
-        <CloudLoading />
+      <v-col v-if="!is_cloud_running && is_connexion_launched">
+        <Loading />
       </v-col>
     </v-row>
   </v-container>
 </template>
 
-<script>
-import { mapActions, mapState } from 'vuex'
-import CloudLoading from '@/components/CloudLoading.vue'
-import InternalError from '@/components/InternalError.vue'
-import UnderMaintenance from '@/components/UnderMaintenance.vue'
+<script setup>
+import { use_cloud_store } from '@/stores/cloud'
+import { use_ws_link_store } from '@/stores/ws_link'
+import { VueRecaptcha } from "vue-recaptcha"
 
-export default {
-  name: 'FileConverter',
-  components: { CloudLoading
-              , InternalError
-              , UnderMaintenance },
-  computed: {
-    ...mapState(['captcha_validated'
-                , 'cloud_running'
-                , 'internal_error'
-                , 'under_maintenance']),
-  },
-  watch: {
-    async captcha_validated(newValue) {
-      if (newValue === true) {
-        await this.create_connexion()
-        this.ws_connect()
-      }
-    },
-    cloud_running(newValue, oldValue) {
-      if (newValue === false && oldValue == true) {
-        this.$store.commit('set_internal_error', true)
-      }
-    },
-  },
-  mounted(){
-    if(process.client){
-      console.log(this.$config.NODE_ENV)
-        if(this.$config.NODE_ENV !== 'production'){
-            // this.$store.commit('setID', 'd1380b4597824ce5bfe3b1d83f3f0050')
-            // this.$store.commit('set_cloud_running', true)
-        }
+const ws_link_store = use_ws_link_store()
+const cloud_store = use_cloud_store()
+const { is_cloud_running, is_captcha_validated, is_connexion_launched } = storeToRefs(cloud_store)
+
+watch(is_captcha_validated, async (value) => {
+  console.log('is_captcha_validated : ', value)
+  if (value === true) {
+    await cloud_store.create_connexion()
+    await ws_link_store.ws_connect()
+  }
+})
+
+watch(is_cloud_running, (value, oldValue) => {
+  if (value === false && oldValue == true) {
+    cloud_store.$patch({ internal_error: true })
+  }
+})
+
+onMounted(() => {
+  if (process.client) {
+    const config = useRuntimeConfig()
+    if (config.public.NODE_ENV !== 'production') {
+      cloud_store.$patch({ is_captcha_validated: true })
     }
-  },
+  }
+})
+onUnmounted(() => { console.log("unmount") })
 
-  methods: {
-    ...mapActions({ create_connexion: 'create_connexion', ws_connect: 'wslink/ws_connect'}),
-    async submit_recaptcha() {
-        try {
-          const token = await this.$recaptcha.getResponse()
-          console.log('ReCaptcha token:', token)
-          const response = await this.$axios.post(`${this.$config.SITE_URL}/.netlify/functions/recaptcha?token=${token}`)
-          this.$store.commit('set_captcha_validated', response.status == 200)
-          console.log('this.captchaValidated :', this.captchaValidated)
-          await this.$recaptcha.reset()
-        } catch (error) {
-          console.log('Login error:', error)
-        }
-    },
-  },
+async function submit_recaptcha (token) {
+  try {
+    const config = useRuntimeConfig()
+    console.log('ReCaptcha token:', token)
+    const response = await $fetch.raw(`${config.SITE_URL}/.netlify/functions/recaptcha?token=${token}`)
+    console.log(response)
+    cloud_store.$patch({ is_captcha_validated: response.status == 200 })
+    recaptcha.reset()
+  } catch (error) {
+    console.log('ReCaptcha login error:', error)
+  }
 }
 </script>
