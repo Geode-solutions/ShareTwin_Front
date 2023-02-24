@@ -12,7 +12,6 @@ const props = defineProps({
 })
 const { client, viewId } = toRefs(props)
 const connected = ref(false)
-console.log("process.client", client, process.client)
 
 const view = vtkRemoteView.newInstance({ rpcWheelEvent: 'viewport.mouse.zoom.wheel' })
 // default of 0.5 causes 2x size labels on high-DPI screens. 1 good for demo, not for production.
@@ -23,7 +22,6 @@ const viewer = ref(null)
 
 
 watch(client, (new_client) => {
-  console.log(new_client)
   connect()
 })
 
@@ -49,17 +47,7 @@ onMounted(async () => {
 
 })
 
-onBeforeUnmount(() => {
-  if (this.subscription) {
-    this.subscription.unsubscribe()
-    this.subscription = null
-  }
-  window.removeEventListener('resize', resize)
-  view.delete()
-})
-
 function connect () {
-  console.log('client', client)
   const session = client.value.getConnection().getSession()
   view.setSession(session)
   view.setViewId(viewId.value)
@@ -72,15 +60,3 @@ function handleClick (event) {
 
 
 </script>
-
-<style>
-.viewer {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 500px;
-  overflow: hidden;
-  z-index: 1;
-}
-</style>

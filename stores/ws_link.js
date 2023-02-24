@@ -26,19 +26,15 @@ export const use_ws_link_store = defineStore('ws_link', {
       const cloud_store = use_cloud_store()
       const { ID } = storeToRefs(cloud_store)
       const app_config = useRuntimeConfig()
-      console.log(app_config)
       const base_url = `${app_config.public.VIEWER_PROTOCOL}://${app_config.public.API_URL}/${ID.value}`
       config.sessionURL = `${base_url}/viewer/ws`
 
       const { client } = this
-      console.log("created ", this.is_client_created);
       if (this.is_client_created && client.isConnected()) {
         client.disconnect(-1);
         this.is_client_created = false;
       }
-      console.log("created ", this.is_client_created);
       let clientToConnect = client;
-      console.log(_.isEmpty(clientToConnect))
       if (_.isEmpty(clientToConnect)) {
         clientToConnect = vtkWSLinkClient.newInstance({ protocols });
       }
@@ -78,17 +74,14 @@ export const use_ws_link_store = defineStore('ws_link', {
           // Now that the client is ready let's setup the server for us
           this.ws_initialize_server()
           this.client.getRemote().vtk.reset().catch(console.error);
-          console.log("created ", this.is_client_created);
           this.is_client_created = true;
-          console.log("created ", this.is_client_created);
         })
         .catch((error) => {
           console.error(error);
         });
     },
     ws_initialize_server () {
-      console.log('ws_initialize_server !_.isEmpty(this.client)', !_.isEmpty(this.client))
-      console.log('ws_initialize_server this.client', this.client)
+
       if (!_.isEmpty(this.client)) {
         this.client
           .getRemote()
@@ -97,8 +90,6 @@ export const use_ws_link_store = defineStore('ws_link', {
       }
     },
     reset_camera () {
-      console.log('reset_camera !_.isEmpty(this.client)', !_.isEmpty(this.client))
-      console.log('reset_camera this.client', this.client)
       if (!_.isEmpty(this.client)) {
         this.client.getRemote().vtk.reset_camera().catch(console.error);
       }

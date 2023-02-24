@@ -67,7 +67,6 @@ async function upload_file () {
       params.append('file', event.target.result)
       params.append('filename', data_tree.items[i].file[0].name)
       params.append('filesize', data_tree.items[i].file[0].size)
-      const route = "convertfile"
       params.append('object', 'PolygonalSurface3D')
       params.append('extension', 'vtp')
 
@@ -91,8 +90,6 @@ async function upload_file () {
 }
 
 async function load (DataFilename) {
-  console.log('load')
-  console.log('DataFilename', DataFilename)
   vtk_store.send_filenames({ DataFilename })
 }
 

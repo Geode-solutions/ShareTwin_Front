@@ -19,7 +19,7 @@ export default defineNuxtConfig({
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         { hid: 'description', name: 'description', content: 'Platform for urban and geological data visualization' },
-        { link: [{ rel: 'icon', type: 'image/svg+xml', href: "/icon_share_twin.svg" }] }
+        { link: [{ rel: 'icon', type: 'image/svg+xml', href: '/icon_share_twin.svg' }] }
       ]
     }
   },
@@ -36,29 +36,29 @@ export default defineNuxtConfig({
   // ** Nuxt.js modules
   modules:
     [
-      // ['@dargmuesli/nuxt-cookie-control',
-      //   {
-      //     controlButton: true,
-      //     domain: 'geode-solutions.com',
-      //     colors: {
-      //       modalOverlay: '#000',
-      //       barBackground: colors.teal.darken1,
-      //       barButtonColor: '#000',
-      //       modalTextColor: '#000',
-      //       modalOverlayOpacity: 0,
-      //       modalButtonColor: '#fff',
-      //       modalUnsavedColor: '#000',
-      //       modalButtonBackground: colors.teal.darken1,
-      //       controlButtonIconColor: colors.teal.darken1,
-      //       checkboxActiveBackground: colors.teal.darken1,
-      //       checkboxInactiveBackground: '#000',
-      //       modalButtonHoverBackground: '#333',
-      //       checkboxDisabledBackground: '#ddd',
-      //       controlButtonIconHoverColor: colors.amber.accent4,
-      //       controlButtonHoverBackground: colors.brown.darken4
-      //     }
-      //   }
-      // ],
+      ['@dargmuesli/nuxt-cookie-control',
+        {
+          controlButton: true,
+          domain: 'geode-solutions.com',
+          colors: {
+            modalOverlay: '#000',
+            barBackground: colors.teal.darken1,
+            barButtonColor: '#000',
+            modalTextColor: '#000',
+            modalOverlayOpacity: 0,
+            modalButtonColor: '#fff',
+            modalUnsavedColor: '#000',
+            modalButtonBackground: colors.teal.darken1,
+            controlButtonIconColor: colors.teal.darken1,
+            checkboxActiveBackground: colors.teal.darken1,
+            checkboxInactiveBackground: '#000',
+            modalButtonHoverBackground: '#333',
+            checkboxDisabledBackground: '#ddd',
+            controlButtonIconHoverColor: colors.amber.accent4,
+            controlButtonHoverBackground: colors.brown.darken4
+          }
+        }
+      ],
       ['@pinia/nuxt',
         {
           autoImports: [
