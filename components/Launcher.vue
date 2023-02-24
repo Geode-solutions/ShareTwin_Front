@@ -50,7 +50,6 @@ async function submit_recaptcha (token) {
   try {
     const config = useRuntimeConfig()
     const response = await $fetch.raw(`${config.SITE_URL}/.netlify/functions/recaptcha?token=${token}`)
-    console.log('response', response)
     cloud_store.$patch({ is_captcha_validated: response.status == 200 })
     recaptcha.reset()
   } catch (error) {
