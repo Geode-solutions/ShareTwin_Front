@@ -64,20 +64,22 @@ async function upload_file () {
     const reader = new FileReader()
     reader.onload = async function (event) {
       const params = new FormData()
+      params.append('object_type', 'PolygonalSurface3D')
       params.append('file', event.target.result)
-      params.append('filename', data_tree.items[i].file[0].name)
-      params.append('filesize', data_tree.items[i].file[0].size)
-      params.append('object', 'PolygonalSurface3D')
-      params.append('extension', 'vtp')
+      params.append('old_file_name', data_tree.items[i].file[0].name)
+      params.append('file_size', data_tree.items[i].file[0].size)
+      params.append('new_extension', 'vtp')
 
       if (current_item.file.length) {
-        await api_fetch(`/geode/convertfile`, {
+        await api_fetch(`/convertfile`, {
           body: params, method: 'POST', onResponse ({ response }) {
-            load(response._data.newFilename)
+            console.log(response)
+            create_object_pipeline(response._data.new_file_name, response._data.id)
             ws_link_store.$patch({ busy: false })
           },
           onError ({ error }) {
             console.log(error)
+            console.log(response)
             ws_link_store.$patch({ busy: false })
           }
         })
@@ -89,8 +91,9 @@ async function upload_file () {
   }
 }
 
-async function load (DataFilename) {
-  vtk_store.send_filenames({ DataFilename })
+async function create_object_pipeline (params) {
+  console.log('params', params)
+  vtk_store.create_object_pipeline({ params })
 }
 
 </script>
