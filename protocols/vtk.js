@@ -3,7 +3,7 @@ export default function createMethods (session) {
   return {
     create_visualization: () => session.call('create_visualization', []),
     reset_camera: () => session.call('reset_camera', []),
-    send_filenames: (file_names) => session.call('send_filenames', [file_names]),
+    create_object_pipeline: (params) => session.call('create_object_pipeline', [params]),
     reset: () => session.call('reset'),
   };
 }
