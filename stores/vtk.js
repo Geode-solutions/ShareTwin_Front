@@ -7,11 +7,11 @@ export const use_vtk_store = defineStore('vtk', {
     filename: '',
   }),
   actions: {
-    async create_object_pipeline (file_name) {
+    async create_object_pipeline (params) {
       if (ws_link_store.client) {
         use_ws_link_store().client
           .getRemote()
-          .vtk.create_object_pipeline(file_name)
+          .vtk.create_object_pipeline(params)
           .catch(console.error);
       }
     }

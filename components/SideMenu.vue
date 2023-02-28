@@ -74,7 +74,7 @@ async function upload_file () {
         await api_fetch(`/convertfile`, {
           body: params, method: 'POST', onResponse ({ response }) {
             console.log(response)
-            create_object_pipeline(response._data.new_file_name, response._data.id)
+            create_object_pipeline({ "file_name": response._data.new_file_name, "id": response._data.id })
             ws_link_store.$patch({ busy: false })
           },
           onError ({ error }) {
@@ -93,7 +93,7 @@ async function upload_file () {
 
 async function create_object_pipeline (params) {
   console.log('params', params)
-  vtk_store.create_object_pipeline({ params })
+  vtk_store.create_object_pipeline(params)
 }
 
 </script>
