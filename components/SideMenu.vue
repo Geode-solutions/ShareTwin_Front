@@ -1,29 +1,32 @@
 <template>
-  <v-expansion-panels v-if="is_cloud_running" multiple accordion>
-    <v-expansion-panel>
-      <v-expansion-panel-title>
-        <div>
-          <v-icon color="primary" size="30">
-            mdi-file-upload
-          </v-icon>
-          Load files
-        </div>
-      </v-expansion-panel-title>
-      <v-expansion-panel-text>
-        <v-row v-for="(item, index) in data_tree.items" :key="index">
-          <component :is="item.component.component_name" :component_options="item.component.component_options"
-            :index="index" />
-        </v-row>
-        <v-row align-content="center" justify="center">
-          <v-col cols="auto">
-            <v-btn color="primary" @click="upload_file()">
-              Upload
-            </v-btn>
-          </v-col>
-        </v-row>
-      </v-expansion-panel-text>
-    </v-expansion-panel>
-  </v-expansion-panels>
+  <v-navigation-drawer clipped permanent app fixed disable-resize-watcher width="350">
+
+    <v-expansion-panels v-if="is_cloud_running" multiple accordion>
+      <v-expansion-panel>
+        <v-expansion-panel-title>
+          <div>
+            <v-icon color="primary" size="30">
+              mdi-file-upload
+            </v-icon>
+            Load files
+          </div>
+        </v-expansion-panel-title>
+        <v-expansion-panel-text>
+          <v-row v-for="(item, index) in data_tree.items" :key="index">
+            <component :is="item.component.component_name" :component_options="item.component.component_options"
+              :index="index" />
+          </v-row>
+          <v-row align-content="center" justify="center">
+            <v-col cols="auto">
+              <v-btn color="primary" @click="upload_file()">
+                Upload
+              </v-btn>
+            </v-col>
+          </v-row>
+        </v-expansion-panel-text>
+      </v-expansion-panel>
+    </v-expansion-panels>
+  </v-navigation-drawer>
 </template>
 
 <script setup>
