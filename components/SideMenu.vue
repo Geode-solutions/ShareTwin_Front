@@ -68,7 +68,6 @@ async function upload_file () {
       params.append('file', event.target.result)
       params.append('old_file_name', data_tree.items[i].file[0].name)
       params.append('file_size', data_tree.items[i].file[0].size)
-      params.append('new_extension', 'vtp')
 
       if (current_item.file.length) {
         await api_fetch(`/convertfile`, {
