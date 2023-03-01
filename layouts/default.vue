@@ -2,6 +2,7 @@
   <v-app>
     <Header />
     <SideMenu />
+    <FileLoader />
 
     <v-main class="secondary">
       <slot />
@@ -9,7 +10,9 @@
   </v-app>
 </template>
 
+<script setup>
 
+</script>
 
 <style scoped>
 * {

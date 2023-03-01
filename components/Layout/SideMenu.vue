@@ -12,7 +12,7 @@
           </div>
         </v-expansion-panel-title>
         <v-expansion-panel-text>
-          <v-row v-for="(item, index) in data_tree.items" :key="index">
+          <v-row v-for="(item, index) in object_tree.items" :key="index">
             <component :is="item.component.component_name" :component_options="item.component.component_options"
               :index="index" />
           </v-row>
@@ -41,7 +41,7 @@ const vtk_store = use_vtk_store()
 
 const { is_cloud_running } = storeToRefs(cloud_store)
 
-const data_tree = reactive({
+const object_tree = reactive({
   items: [
     {
       file: [],
@@ -53,24 +53,23 @@ const data_tree = reactive({
           , accept: ".obj, .vtp"
         }
       }
-
     }
   ]
 })
 
-provide('data_tree', data_tree)
+provide('object_tree', object_tree)
 
 async function upload_file () {
   ws_link_store.$patch({ busy: true })
-  for (let i = 0; i < data_tree.items.length; i++) {
-    let current_item = data_tree.items[i]
+  for (let i = 0; i < object_tree.items.length; i++) {
+    let current_item = object_tree.items[i]
     const reader = new FileReader()
     reader.onload = async function (event) {
       const params = new FormData()
       params.append('object_type', 'PolygonalSurface3D')
       params.append('file', event.target.result)
-      params.append('old_file_name', data_tree.items[i].file[0].name)
-      params.append('file_size', data_tree.items[i].file[0].size)
+      params.append('old_file_name', object_tree.items[i].file[0].name)
+      params.append('file_size', object_tree.items[i].file[0].size)
 
       if (current_item.file.length) {
         await api_fetch(`/convertfile`, {
