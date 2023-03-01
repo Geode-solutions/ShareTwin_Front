@@ -2,7 +2,7 @@
   <v-app>
     <Header />
     <SideMenu />
-    <FileLoader />
+    <FileLoaderWrapper />
 
     <v-main class="secondary">
       <slot />
