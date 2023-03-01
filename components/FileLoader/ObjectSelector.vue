@@ -26,14 +26,13 @@ const props = defineProps({
 const { geode_objects, input_files } = props.component_options
 
 const stepper_tree = inject('stepper_tree')
-const { tool_route } = stepper_tree
 
 const allowed_objects = ref([])
 
 async function get_allowed_objects (input_files) {
   const params = new FormData()
   params.append('filename', input_files[0].name)
-  const { data } = await api_fetch(`/${tool_route}/allowedobjects`, { body: params, method: 'POST' })
+  const { data } = await api_fetch(`/allowedobjects`, { body: params, method: 'POST' })
   allowed_objects.value = data.value.objects
 }
 

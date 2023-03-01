@@ -1,7 +1,7 @@
 <template>
   <v-app>
-    <Header />
-    <SideMenu />
+    <LayoutHeader />
+    <LayoutSideMenu />
     <FileLoaderWrapper />
 
     <v-main class="secondary">
