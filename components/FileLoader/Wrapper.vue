@@ -35,7 +35,7 @@ const stepper_tree = reactive({
   geode_object: geode_object,
   steps: [
     {
-      step_title: 'Please select a file to load',
+      step_title: 'Please select the file(s) to load',
       component: {
         component_name: shallowRef(FileLoaderFileSelector),
         component_options: {
@@ -63,7 +63,7 @@ const stepper_tree = reactive({
       })
     },
     {
-      step_title: 'Load your files',
+      step_title: 'Load your file(s)',
       component: {
         component_name: shallowRef(FileLoaderLoadButton),
         component_options: {
