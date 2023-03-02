@@ -46,6 +46,13 @@ async function upload_file () {
           console.log(response)
           create_object_pipeline({ "file_name": response._data.new_file_name, "id": response._data.id })
           ws_link_store.$patch({ busy: false })
+          
+          app_store.add_object_tree_item({
+            'displayed_name': input_files[i].name,
+            'file_name': response._data.new_file_name,
+            'id': response._data.id,
+            'type': 'BRep'
+          })
         },
         onError ({ error }) {
           console.log(error)
