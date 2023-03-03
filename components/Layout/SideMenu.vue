@@ -5,7 +5,7 @@
         <v-expansion-panel-title>
           <v-row>
             <v-col cols="auto" class="align-self-center">
-              <v-img :src="BRep" width="35" />
+              <v-img :src="geode_objects[item.type].image" width="35" />
             </v-col>
             <v-col cols="auto" class="align-self-center">
               <h4>
@@ -26,7 +26,7 @@
 <script setup>
 import { use_app_store } from '@/stores/app'
 import { use_cloud_store } from '@/stores/cloud'
-import BRep from '@/assets/img/geode_objects/BRep.svg'
+import geode_objects from '@/assets/geode_objects'
 
 const app_store = use_app_store()
 const cloud_store = use_cloud_store()
