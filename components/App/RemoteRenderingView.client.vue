@@ -1,5 +1,5 @@
 <template>
-  <v-col style="overflow: hidden; position: relative; z-index: 1; height: 100%" ref="viewer" class="viewer">
+  <v-col style="overflow: hidden; position: relative; z-index: 1; height: 100%; width: 100%" ref="viewer" class="viewer">
   </v-col>
 </template>
 

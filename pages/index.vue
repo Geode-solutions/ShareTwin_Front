@@ -1,5 +1,5 @@
 <template>
-  <v-container class="pa-0 fill-height">
+  <v-container class="pa-0 fill-height" fluid>
     <v-row no-gutters class="fill-height">
       <AppLauncher v-if="!is_cloud_running || !is_client_created" class="pa-5" />
       <AppRemoteRenderingView v-else :client="client" />

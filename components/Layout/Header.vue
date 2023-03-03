@@ -1,8 +1,11 @@
 <template>
   <v-app-bar dark color="primary" fixed app clipped-left>
+
+    <v-app-bar-nav-icon @click="toggle_diplay_menu()">
+    </v-app-bar-nav-icon>
     <v-row class="pa-2">
       <v-col cols="11
-                          ">
+                                                      ">
         <v-btn :active="false" active-class="no-active" to="/">
           <ShareTwinLogo />
         </v-btn>
@@ -28,6 +31,12 @@ const app_store = use_app_store()
 const cloud_store = use_cloud_store()
 const ws_link_store = use_ws_link_store()
 
+const { display_menu } = storeToRefs(app_store)
 const { is_cloud_running } = storeToRefs(cloud_store)
 const { busy } = storeToRefs(ws_link_store)
+
+
+function toggle_diplay_menu () {
+  app_store.$patch({ 'display_menu': !display_menu.value })
+}
 </script>
