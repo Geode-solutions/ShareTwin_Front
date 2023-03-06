@@ -18,7 +18,6 @@ const viewer = ref(null)
 const { width, height } = useElementSize(viewer)
 
 function resize () {
-  console.log('toto')
   view.getCanvasView().setSize(0, 0) // hack to fit full size
   view.resize();
 }
