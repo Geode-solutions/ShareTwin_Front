@@ -45,6 +45,14 @@ async function upload_file () {
         body: params, method: 'POST', onResponse ({ response }) {
           console.log(response)
           create_object_pipeline({ "file_name": response._data.new_file_name, "id": response._data.id })
+
+          app_store.add_object_tree_item({
+            'id': response._data.id,
+            'displayed_name': input_files[i].name,
+            'file_name': response._data.new_file_name,
+            'type': input_geode_object,
+            'is_visible': true
+          })
           ws_link_store.$patch({ busy: false })
         },
         onError ({ error }) {
