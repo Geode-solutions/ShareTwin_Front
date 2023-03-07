@@ -1,6 +1,6 @@
 import brep from '@/assets/img/geode_objects/BRep.svg'
 import cross_section from '@/assets/img/geode_objects/cross_section.svg'
-import edged_curve2d from '@/assets/imget_source_nameg/geode_objects/edged_curve2d.svg'
+import edged_curve2d from '@/assets/img/geode_objects/edged_curve2d.svg'
 import edged_curve3d from '@/assets/img/geode_objects/edged_curve3d.svg'
 import edged_curve from '@/assets/img/geode_objects/edged_curve.svg'
 import hybrid_solid from '@/assets/img/geode_objects/hybrid_solid.svg'
