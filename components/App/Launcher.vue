@@ -9,7 +9,7 @@
           @expired="is_captcha_validated = false" @verify="submit_recaptcha" align-self="center" />
       </v-col>
       <v-col v-if="!is_cloud_running && is_connexion_launched">
-        <Loading />
+        <AppLoading />
       </v-col>
     </v-row>
   </v-container>

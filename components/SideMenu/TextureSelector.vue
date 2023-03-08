@@ -24,6 +24,11 @@ const props = defineProps({
 
 const { index, input_file_name, input_geode_object } = toRefs(props)
 
+
+console.log(index)
+console.log(input_file_name)
+console.log(input_geode_object)
+
 const texture_coordinates = ref([])
 
 

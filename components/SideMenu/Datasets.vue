@@ -20,7 +20,7 @@
     </v-row>
   </v-expansion-panel-title>
   <v-expansion-panel-text>
-    <v-row>
+    <!-- <v-row>
       <v-col cols="8">
 
         <v-combobox label="Texture" :items="texture_coordinates" variant="underlined"></v-combobox>
@@ -30,7 +30,8 @@
 
         <v-btn icon flat @click="open_file_input()"><v-icon icon="mdi-file-image-plus"></v-icon></v-btn>
       </v-col>
-    </v-row>
+    </v-row> -->
+    <SideMenuTextureSelector :index="index" :input_file_name="displayed_name" :input_geode_object="displayed_name" />
 
   </v-expansion-panel-text>
 </template>
