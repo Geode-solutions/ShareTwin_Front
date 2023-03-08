@@ -41,12 +41,12 @@ async function upload_file () {
       params.append('old_file_name', input_files[i].name)
       params.append('file_size', input_files[i].size)
 
-      await api_fetch(`/convertfile`, {
-        body: params, method: 'POST', onResponse ({ response }) {
+      await api_fetch(`/convert_file`, {
+        body: params, method: 'POST', async onResponse ({ response }) {
           console.log(response)
-          create_object_pipeline({ "file_name": response._data.new_file_name, "id": response._data.id })
+          await create_object_pipeline({ "file_name": response._data.new_file_name, "id": response._data.id })
 
-          app_store.add_object_tree_item({
+          await app_store.add_object_tree_item({
             'id': response._data.id,
             'displayed_name': input_files[i].name,
             'file_name': response._data.new_file_name,

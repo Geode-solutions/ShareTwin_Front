@@ -20,6 +20,18 @@
     </v-row>
   </v-expansion-panel-title>
   <v-expansion-panel-text>
+    <v-row>
+      <v-col cols="8">
+
+        <v-combobox label="Texture" :items="texture_coordinates" variant="underlined"></v-combobox>
+      </v-col>
+      <v-spacer />
+      <v-col cols="4" class="pa-0 align-self-center">
+
+        <v-btn icon flat @click="open_file_input()"><v-icon icon="mdi-file-image-plus"></v-icon></v-btn>
+      </v-col>
+    </v-row>
+
   </v-expansion-panel-text>
 </template>
 
@@ -37,5 +49,19 @@ const props = defineProps({
   is_visible: { type: Boolean, required: true }
 })
 
+const texture_coordinates = ["Tile_+046_+026_0"]
+
 const { id, index, displayed_name, type, is_visible } = toRefs(props)
+
+
+function open_file_input () {
+  var input = document.createElement('input');
+  input.type = 'file';
+
+  input.onchange = e => {
+    var file = e.target.files[0];
+  }
+
+  input.click();
+}
 </script>
