@@ -20,18 +20,7 @@
     </v-row>
   </v-expansion-panel-title>
   <v-expansion-panel-text>
-    <!-- <v-row>
-      <v-col cols="8">
-
-        <v-combobox label="Texture" :items="texture_coordinates" variant="underlined"></v-combobox>
-      </v-col>
-      <v-spacer />
-      <v-col cols="4" class="pa-0 align-self-center">
-
-        <v-btn icon flat @click="open_file_input()"><v-icon icon="mdi-file-image-plus"></v-icon></v-btn>
-      </v-col>
-    </v-row> -->
-    <SideMenuTextureSelector :index="index" :input_file_name="displayed_name" :input_geode_object="displayed_name" />
+    <SideMenuTexture :index="index" :input_file_name="displayed_name" :input_geode_object="displayed_name" />
 
   </v-expansion-panel-text>
 </template>
@@ -49,8 +38,6 @@ const props = defineProps({
   type: { type: String, required: true },
   is_visible: { type: Boolean, required: true }
 })
-
-const texture_coordinates = ["Tile_+046_+026_0"]
 
 const { id, index, displayed_name, type, is_visible } = toRefs(props)
 
