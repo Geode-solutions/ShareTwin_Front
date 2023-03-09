@@ -10,7 +10,7 @@
         </v-btn>
       </v-col>
       <v-col cols="auto" class="pa-0 align-self-center">
-        <v-img :src="geode_objects[type].image" width="35" />
+        <v-img :src="geode_objects[geode_object].image" width="35" />
       </v-col>
       <v-col cols="8" class="align-self-center">
         <h4 class="overflow-x-hidden">
@@ -20,8 +20,7 @@
     </v-row>
   </v-expansion-panel-title>
   <v-expansion-panel-text>
-    <SideMenuTexture :index="index" :input_file_name="displayed_name" :input_geode_object="displayed_name" />
-
+    <SideMenuTexture :index="index" />
   </v-expansion-panel-text>
 </template>
 
@@ -32,24 +31,16 @@ import geode_objects from '@/assets/geode_objects'
 const app_store = use_app_store()
 
 const props = defineProps({
-  id: { type: String, required: true },
-  index: { type: Number, required: true },
-  displayed_name: { type: String, required: true },
-  type: { type: String, required: true },
-  is_visible: { type: Boolean, required: true }
+  index: { type: Number, required: true }
 })
 
-const { id, index, displayed_name, type, is_visible } = toRefs(props)
+const { index } = props
+const object_tree = inject('object_tree')
+const current_object = object_tree.value.items[index]
 
-
-function open_file_input () {
-  var input = document.createElement('input');
-  input.type = 'file';
-
-  input.onchange = e => {
-    var file = e.target.files[0];
-  }
-
-  input.click();
-}
+const id = current_object['id']
+const displayed_name = current_object['displayed_name']
+const file_name = current_object['file_name']
+const geode_object = current_object['geode_object']
+const is_visible = current_object['is_visible']
 </script>

@@ -14,6 +14,8 @@ export const use_app_store = defineStore('app', {
   actions: {
     add_object_tree_item (item) {
       this.object_tree.items.push(item)
+      console.log('add_object_tree_item')
+      console.log(this.object_tree.items)
     },
     remove_object_tree_item (index) {
       this.object_tree.items.arr.splice(index, 1)

@@ -44,13 +44,14 @@ async function upload_file () {
       await api_fetch(`/convert_file`, {
         body: params, method: 'POST', async onResponse ({ response }) {
           console.log(response)
-          await create_object_pipeline({ "file_name": response._data.new_file_name, "id": response._data.id })
+          create_object_pipeline({ "file_name": response._data.new_file_name, "id": response._data.id })
 
-          await app_store.add_object_tree_item({
+          app_store.add_object_tree_item({
             'id': response._data.id,
-            'displayed_name': input_files[i].name,
-            'file_name': response._data.new_file_name,
-            'type': input_geode_object,
+            'model_name': response._data.model_name,
+            'native_model_file_name': response._data.native_model_file_name,
+            'viewable_model_file_name': response._data.viewable_model_file_name,
+            'geode_object': input_geode_object,
             'is_visible': true
           })
           ws_link_store.$patch({ busy: false })
