@@ -36,6 +36,7 @@ export default defineNuxtConfig({
   // ** Nuxt.js modules
   modules:
     [
+      '@vueuse/nuxt',
       ['@dargmuesli/nuxt-cookie-control',
         {
           controlButton: true,

@@ -1,9 +1,10 @@
 /* eslint-disable arrow-body-style */
 export default function createMethods (session) {
   return {
+    create_object_pipeline: (params) => session.call('create_object_pipeline', [params]),
     create_visualization: () => session.call('create_visualization', []),
-    reset_camera: () => session.call('reset_camera', []),
-    send_filenames: (file_names) => session.call('send_filenames', [file_names]),
     reset: () => session.call('reset'),
+    reset_camera: () => session.call('reset_camera', []),
+    toggle_object_visibility: (params) => session.call('toggle_object_visibility', [params]),
   };
 }

@@ -1,11 +1,8 @@
 <template>
-  <v-container class="pa-0 fill-height">
+  <v-container class="pa-0 fill-height" fluid>
     <v-row no-gutters class="fill-height">
-
-      <!-- <div class="appContent" style="position: relative; width: 100%; height: 100%"> -->
-      <Launcher v-if="!is_cloud_running || !is_client_created" class="pa-5" />
-      <RemoteRenderingView v-else :client="client" />
-      <!-- </div> -->
+      <AppLauncher v-if="!is_cloud_running || !is_client_created" class="pa-5" />
+      <AppRemoteRenderingView v-else :client="client" />
     </v-row>
   </v-container>
 </template>
@@ -21,25 +18,3 @@ const { is_cloud_running } = storeToRefs(cloud_store)
 const { client, is_client_created } = storeToRefs(ws_link_store)
 </script>
 
-<style scoped>
-.content--wrap {
-  position: relative;
-}
-
-.appContent {
-  height: 0;
-}
-
-.logo {
-  height: 35px;
-  padding-right: 10px;
-}
-
-.switch {
-  max-width: 100px;
-  width: auto;
-  flex: 0;
-  padding-left: 20px;
-  padding-top: 20px !important;
-}
-</style>

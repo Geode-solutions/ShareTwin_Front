@@ -4,7 +4,7 @@ const { ID } = storeToRefs(cloud_store)
 
 export async function api_fetch (request, options) {
   const config = useRuntimeConfig()
-  const base_url = `${config.GEODE_PROTOCOL}://${config.API_URL}/${ID.value}`
+  const base_url = `${config.GEODE_PROTOCOL}://${config.API_URL}/${ID.value}/geode`
   return useFetch(request, { baseURL: base_url, ...options })
 }
 

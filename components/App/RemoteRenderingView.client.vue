@@ -1,14 +1,31 @@
 <template>
-  <v-col style="overflow: hidden; position: relative; z-index: 1; height: 100%" ref="viewer" class="viewer">
+  <v-col v-element-size="resize" style="overflow: hidden; position: relative; z-index: 1; height: 100%; width: 100%"
+    ref="viewer" class="viewer">
   </v-col>
 </template>
 
 <script setup>
 import vtkRemoteView from '@kitware/vtk.js/Rendering/Misc/RemoteView';
 
+import { vElementSize } from '@vueuse/components'
+
 const props = defineProps({
   viewId: { type: String, default: '-1' },
   client: { type: Object, required: true }
+})
+
+const viewer = ref(null)
+const { width, height } = useElementSize(viewer)
+
+function resize () {
+  view.getCanvasView().setSize(0, 0) // hack to fit full size
+  view.resize();
+}
+watch(width, value => {
+  resize()
+})
+watch(height, value => {
+  resize()
 })
 const { client, viewId } = toRefs(props)
 const connected = ref(false)
@@ -18,7 +35,6 @@ const view = vtkRemoteView.newInstance({ rpcWheelEvent: 'viewport.mouse.zoom.whe
 if (location.hostname.split('.')[0] === 'localhost') {
   view.setInteractiveRatio(1)
 }
-const viewer = ref(null)
 
 
 watch(client, (new_client) => {
@@ -32,10 +48,7 @@ watch(viewId, (id) => {
   }
 })
 
-function resize () {
-  view.getCanvasView().setSize(0, 0) // hack to fit full size
-  view.resize();
-}
+
 
 
 onMounted(async () => {
