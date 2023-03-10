@@ -27,6 +27,8 @@
 <script setup>
 import { use_app_store } from '@/stores/app'
 import geode_objects from '@/assets/geode_objects'
+import { storeToRefs } from 'pinia';
+import { watch } from 'fs';
 
 const app_store = use_app_store()
 
@@ -35,10 +37,15 @@ const props = defineProps({
 })
 
 const { index } = props
-const object_tree = inject('object_tree')
-const current_object = object_tree.value.items[index]
+const { object_tree } = storeToRefs(app_store)
 
-const name = current_object['name']
-const geode_object = current_object['geode_object']
-const is_visible = toRefs(current_object['is_visible'])
+watch(object_tree, new_value => {
+  console.log('new_value', new_value)
+
+  const current_object = object_tree.value.items[index]
+  const name = current_object['name']
+  const geode_object = current_object['geode_object']
+  const is_visible = current_object['is_visible']
+})
+
 </script>

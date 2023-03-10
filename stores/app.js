@@ -6,10 +6,7 @@ export const use_app_store = defineStore('app', {
   state: () => ({
     display_menu: true,
     display_object_selector: false,
-    object_tree:
-    {
-      'items': []
-    }
+    object_tree: []
   }),
   actions: {
     add_object_tree_item (item) {
@@ -25,6 +22,7 @@ export const use_app_store = defineStore('app', {
       this.object_tree.items[index]['is_visible'] = !this.object_tree.items[index]['is_visible']
       const id = this.object_tree.items[index]['id']
       const is_visible = this.object_tree.items[index]['is_visible']
+      console.log('is_visible', is_visible)
       vtk_store.toggle_object_visibility({ "id": id, "is_visible": is_visible })
     },
 
