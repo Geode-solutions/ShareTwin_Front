@@ -26,6 +26,14 @@ export const use_app_store = defineStore('app', {
       const id = this.object_tree.items[index]['id']
       const is_visible = this.object_tree.items[index]['is_visible']
       vtk_store.toggle_object_visibility({ "id": id, "is_visible": is_visible })
+    },
+
+    add_texture_to_item (index, texture_object) {
+      console.log('From add_texture_to_item !')
+      const id = this.object_tree.items[index]['id']
+      const texture_name = this.object_tree.items[index]['texture_name']
+      const texture_file_name = this.object_tree.items[index]['texture_file_name']
+      vtk_store.add_object_texture({ "id": id, "texture_name": texture_name, "texture_file_name": texture_file_name })
     }
   }
 })

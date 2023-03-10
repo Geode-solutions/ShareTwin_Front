@@ -14,7 +14,7 @@
       </v-col>
       <v-col cols="8" class="align-self-center">
         <h4 class="overflow-x-hidden">
-          {{ displayed_name }}
+          {{ name }}
         </h4>
       </v-col>
     </v-row>
@@ -38,9 +38,7 @@ const { index } = props
 const object_tree = inject('object_tree')
 const current_object = object_tree.value.items[index]
 
-const id = current_object['id']
-const displayed_name = current_object['displayed_name']
-const file_name = current_object['file_name']
+const name = current_object['name']
 const geode_object = current_object['geode_object']
-const is_visible = current_object['is_visible']
+const is_visible = toRefs(current_object['is_visible'])
 </script>

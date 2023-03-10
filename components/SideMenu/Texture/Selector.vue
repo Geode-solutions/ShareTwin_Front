@@ -12,19 +12,20 @@ const props = defineProps({
 })
 
 const { index } = props
+const emits = defineEmits('add_object_texture')
 const object_tree = inject('object_tree')
 
 const current_object = object_tree.value.items[index]
-const file_name = current_object['file_name']
+const native_file_name = current_object['native_file_name']
 const geode_object = current_object['geode_object']
 
-const texture_coordinates = ref(['Texture_name'])
+const texture_coordinates = ref([])
 
 async function get_texture_coordinates () {
   const params = new FormData()
-  params.append('file_name', file_name)
+  params.append('native_file_name', native_file_name)
   params.append('geode_object', geode_object)
-  console.log(file_name)
+  console.log(native_file_name)
   console.log(geode_object)
   await api_fetch(`/get_texture_coordinates`, {
     body: params, method: 'POST', async onResponse ({ response }) {
