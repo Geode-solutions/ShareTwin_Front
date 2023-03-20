@@ -4,7 +4,10 @@
 
 
 <script setup>
+import { use_app_store } from '@/stores/app'
 import { use_ws_link_store } from '@/stores/ws_link'
+
+const app_store = use_app_store()
 const ws_link_store = use_ws_link_store()
 
 const props = defineProps({
@@ -12,10 +15,11 @@ const props = defineProps({
 })
 
 const { index } = props
-const emits = defineEmits('add_object_texture')
-const object_tree = inject('object_tree')
+const { object_tree } = storeToRefs(app_store)
 
-const current_object = object_tree.value.items[index]
+const emits = defineEmits('add_object_texture')
+
+const current_object = object_tree.value[index]
 const native_file_name = current_object['native_file_name']
 const geode_object = current_object['geode_object']
 

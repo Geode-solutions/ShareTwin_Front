@@ -6,5 +6,6 @@ export default function createMethods (session) {
     reset: () => session.call('reset'),
     reset_camera: () => session.call('reset_camera', []),
     toggle_object_visibility: (params) => session.call('toggle_object_visibility', [params]),
+    add_object_texture: (params) => session.call('add_object_texture', [params]),
   };
 }

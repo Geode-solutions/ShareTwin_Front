@@ -44,7 +44,9 @@ async function upload_file () {
       await api_fetch(`/convert_file`, {
         body: params, method: 'POST', async onResponse ({ response }) {
           console.log(response)
-          create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
+
+          vtk_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
+          console.log("create_object_pipeline")
 
           app_store.add_object_tree_item({
             'id': response._data.id,
@@ -54,6 +56,8 @@ async function upload_file () {
             'geode_object': input_geode_object,
             'is_visible': true
           })
+          console.log("add_object_tree_item")
+
           ws_link_store.$patch({ busy: false })
         },
         onError ({ error }) {
@@ -70,10 +74,4 @@ async function upload_file () {
   loading.value = false
   app_store.$patch({ display_object_selector: false })
 }
-
-async function create_object_pipeline (params) {
-  console.log('params', params)
-  vtk_store.create_object_pipeline(params)
-}
-
 </script>
