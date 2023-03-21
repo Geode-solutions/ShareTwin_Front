@@ -19,16 +19,15 @@ function get_raster_image_ () {
 }
 
 const texture_file = ref([])
+const viewable_file_name = ref('')
 
-watch(texture_file, new_value => {
-
+watch(texture_file, async new_value => {
   convert_raster_image()
+})
 
-  app_store.add_object_texture(index, { "texture_file_name": new_value[0].name })
-
-
-
-
+watch(viewable_file_name, async new_value => {
+  console.log('viewable_file_name', new_value)
+  app_store.add_object_texture(index, { "texture_file_name": new_value })
 })
 
 
@@ -44,6 +43,8 @@ function convert_raster_image () {
     await api_fetch(`/convert_file`, {
       body: params, method: 'POST', async onResponse ({ response }) {
         console.log(response)
+        console.log(response._data.viewable_file_name)
+        viewable_file_name.value = response._data.viewable_file_name
         ws_link_store.$patch({ busy: false })
       },
       onError ({ error }) {
