@@ -31,7 +31,7 @@ export const use_app_store = defineStore('app', {
     add_object_texture (index, texture_object) {
       console.log('From add_texture_to_item !')
       const id = this.object_tree[index].id
-      this.object_tree[index].texture_name = texture_object.texture_name
+      // this.object_tree[index].texture_name = texture_object.texture_name
       this.object_tree[index].texture_file_name = texture_object.texture_file_name
 
       vtk_store.add_object_texture({ "id": id, ...texture_object })
