@@ -20,7 +20,7 @@
     </v-row>
   </v-expansion-panel-title>
   <v-expansion-panel-text>
-    <SideMenuTexture :index="index" />
+    <SideMenuTextureSelector :index="index" />
   </v-expansion-panel-text>
 </template>
 
