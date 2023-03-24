@@ -25,6 +25,8 @@ const props = defineProps({
 const { input_files,
   input_geode_object } = props.component_options
 
+const stepper_tree = inject('stepper_tree')
+
 const loading = ref(false)
 
 async function upload_file () {
@@ -43,10 +45,8 @@ async function upload_file () {
 
       await api_fetch(`/convert_file`, {
         body: params, method: 'POST', async onResponse ({ response }) {
-          console.log(response)
 
           vtk_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
-          console.log("create_object_pipeline")
 
           app_store.add_object_tree_item({
             'id': response._data.id,
@@ -56,7 +56,10 @@ async function upload_file () {
             'geode_object': input_geode_object,
             'is_visible': true
           })
-          console.log("add_object_tree_item")
+
+          stepper_tree.current_step_index = 0
+          stepper_tree.files = []
+          stepper_tree.geode_object = ''
 
           ws_link_store.$patch({ busy: false })
         },
