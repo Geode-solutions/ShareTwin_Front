@@ -31,13 +31,14 @@ const loading = ref(false)
 
 async function convert_file () {
   loading.value = true
-  ws_link_store.$patch({ busy: true })
-  console.log('busy true')
 
   for (let i = 0; i < input_files.length; i++) {
 
     const reader = new FileReader()
     reader.onload = async function (event) {
+      ws_link_store.$patch({ busy: true })
+      console.log('busy true')
+
       const params = new FormData()
       params.append('object_type', input_geode_object)
       params.append('file', event.target.result)
@@ -67,11 +68,12 @@ async function convert_file () {
           console.log(response)
         }
       })
+      ws_link_store.$patch({ busy: false })
     }
     reader.readAsDataURL(input_files[i])
   }
   loading.value = false
-  ws_link_store.$patch({ busy: false })
+  // ws_link_store.$patch({ busy: false })
   console.log('busy false')
   app_store.$patch({ display_object_selector: false })
 }
