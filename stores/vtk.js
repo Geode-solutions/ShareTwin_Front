@@ -20,6 +20,14 @@ export const use_vtk_store = defineStore('vtk', {
           .vtk.toggle_object_visibility(params)
           .catch(console.error);
       }
+    },
+    async add_object_texture (params) {
+      if (ws_link_store.client) {
+        use_ws_link_store().client
+          .getRemote()
+          .vtk.add_object_texture(params)
+          .catch(console.error);
+      }
     }
   }
 })

@@ -1,5 +1,5 @@
 <template>
-  <v-btn :loading="loading" color="primary" @click="upload_file()">
+  <v-btn :loading="loading" color="primary" @click="convert_file()">
     Load
     <template #loader>
       <v-progress-circular indeterminate size="20" color="white" width="3" />
@@ -25,54 +25,53 @@ const props = defineProps({
 const { input_files,
   input_geode_object } = props.component_options
 
+const stepper_tree = inject('stepper_tree')
+
 const loading = ref(false)
 
-async function upload_file () {
+async function convert_file () {
   loading.value = true
-  ws_link_store.$patch({ busy: true })
 
   for (let i = 0; i < input_files.length; i++) {
 
     const reader = new FileReader()
     reader.onload = async function (event) {
+      ws_link_store.$patch({ busy: true })
+
       const params = new FormData()
       params.append('object_type', input_geode_object)
       params.append('file', event.target.result)
       params.append('old_file_name', input_files[i].name)
       params.append('file_size', input_files[i].size)
 
-      await api_fetch(`/convertfile`, {
-        body: params, method: 'POST', onResponse ({ response }) {
-          console.log(response)
-          create_object_pipeline({ "file_name": response._data.new_file_name, "id": response._data.id })
+      await api_fetch(`/convert_file`, {
+        body: params, method: 'POST', async onResponse ({ response }) {
+
+          vtk_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
 
           app_store.add_object_tree_item({
             'id': response._data.id,
-            'displayed_name': input_files[i].name,
-            'file_name': response._data.new_file_name,
-            'type': input_geode_object,
+            'name': response._data.name,
+            'native_file_name': response._data.native_file_name,
+            'viewable_file_name': response._data.viewable_file_name,
+            'geode_object': input_geode_object,
             'is_visible': true
           })
-          ws_link_store.$patch({ busy: false })
+
+          stepper_tree.current_step_index = 0
+          stepper_tree.files = []
+          stepper_tree.geode_object = ''
         },
         onError ({ error }) {
           console.log(error)
           console.log(response)
-          loading.value = false
-          ws_link_store.$patch({ busy: false })
-          app_store.$patch({ display_object_selector: false })
         }
       })
+      ws_link_store.$patch({ busy: false })
     }
     reader.readAsDataURL(input_files[i])
   }
   loading.value = false
   app_store.$patch({ display_object_selector: false })
 }
-
-async function create_object_pipeline (params) {
-  console.log('params', params)
-  vtk_store.create_object_pipeline(params)
-}
-
 </script>
