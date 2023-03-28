@@ -33,7 +33,6 @@ export const use_app_store = defineStore('app', {
       this.object_tree[index].texture_file_name = texture_object.texture_file_name
       ws_link_store.$patch({ busy: true })
       vtk_store.add_object_texture({ "id": id, ...texture_object })
-      console.log('add_object_texture', this.object_tree[index])
       ws_link_store.$patch({ busy: false })
     }
   }

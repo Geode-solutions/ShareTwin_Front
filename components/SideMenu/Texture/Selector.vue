@@ -49,7 +49,6 @@ function open_file_input () {
 
   input.onchange = e => {
     texture_file.value = e.target.files;
-    console.log(e.target.files[0].name)
   }
   input.click();
 }
@@ -67,7 +66,6 @@ function convert_raster_image () {
     await api_fetch(`/convert_file`, {
       body: params, method: 'POST', async onResponse ({ response }) {
         viewable_file_name.value = response._data.viewable_file_name
-        console.log('Converted')
       },
       onError ({ error }) {
         console.log(error)
@@ -81,7 +79,6 @@ function convert_raster_image () {
 
 async function get_texture_coordinates () {
   loading.value = true
-  console.log('loading true')
   const params = new FormData()
   params.append('native_file_name', native_file_name)
   params.append('geode_object', geode_object)
@@ -96,7 +93,6 @@ async function get_texture_coordinates () {
     }
   })
   loading.value = false
-  console.log('busy false')
 }
 
 async function get_raster_image_input_extensions () {
@@ -125,13 +121,8 @@ watch(texture_file, () => {
   convert_raster_image()
 })
 
-watch(texture_name, new_value => {
-  console.log('texture_name', new_value)
-})
 watch(viewable_file_name, async new_value => {
-  console.log('viewable_file_name', new_value)
   app_store.add_object_texture(index, { "texture_name": texture_name.value, "texture_file_name": new_value })
-  console.log('Selctor add_object_texture')
 })
 </script>
       

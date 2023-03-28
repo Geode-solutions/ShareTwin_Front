@@ -37,7 +37,6 @@ async function convert_file () {
     const reader = new FileReader()
     reader.onload = async function (event) {
       ws_link_store.$patch({ busy: true })
-      console.log('busy true')
 
       const params = new FormData()
       params.append('object_type', input_geode_object)
@@ -73,8 +72,6 @@ async function convert_file () {
     reader.readAsDataURL(input_files[i])
   }
   loading.value = false
-  // ws_link_store.$patch({ busy: false })
-  console.log('busy false')
   app_store.$patch({ display_object_selector: false })
 }
 </script>
