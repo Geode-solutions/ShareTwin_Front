@@ -32,7 +32,7 @@ const allowed_objects = ref([])
 async function get_allowed_objects (input_files) {
   const params = new FormData()
   params.append('filename', input_files[0].name)
-  const { data } = await api_fetch(`/get_allowed_objects`, { body: params, method: 'POST' })
+  const { data } = await api_fetch(`/allowed_objects`, { body: params, method: 'POST' })
   allowed_objects.value = data.value.objects
 }
 
