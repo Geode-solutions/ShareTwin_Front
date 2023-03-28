@@ -1,5 +1,5 @@
 <template>
-  <v-btn :loading="loading" color="primary" @click="upload_file()">
+  <v-btn :loading="loading" color="primary" @click="convert_file()">
     Load
     <template #loader>
       <v-progress-circular indeterminate size="20" color="white" width="3" />
@@ -29,9 +29,10 @@ const stepper_tree = inject('stepper_tree')
 
 const loading = ref(false)
 
-async function upload_file () {
+async function convert_file () {
   loading.value = true
   ws_link_store.$patch({ busy: true })
+  console.log('busy true')
 
   for (let i = 0; i < input_files.length; i++) {
 
@@ -60,21 +61,18 @@ async function upload_file () {
           stepper_tree.current_step_index = 0
           stepper_tree.files = []
           stepper_tree.geode_object = ''
-
-          ws_link_store.$patch({ busy: false })
         },
         onError ({ error }) {
           console.log(error)
           console.log(response)
-          loading.value = false
-          ws_link_store.$patch({ busy: false })
-          app_store.$patch({ display_object_selector: false })
         }
       })
     }
     reader.readAsDataURL(input_files[i])
   }
   loading.value = false
+  ws_link_store.$patch({ busy: false })
+  console.log('busy false')
   app_store.$patch({ display_object_selector: false })
 }
 </script>

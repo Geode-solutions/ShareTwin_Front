@@ -51,6 +51,7 @@ function open_file_input () {
 }
 
 function convert_raster_image () {
+  ws_link_store.$patch({ busy: true })
   const reader = new FileReader()
   reader.onload = async function (event) {
     const params = new FormData()
@@ -61,40 +62,37 @@ function convert_raster_image () {
 
     await api_fetch(`/convert_file`, {
       body: params, method: 'POST', async onResponse ({ response }) {
-        console.log(response)
-        console.log(response._data.viewable_file_name)
         viewable_raster_image_file_name.value = response._data.viewable_file_name
-        ws_link_store.$patch({ busy: false })
       },
       onError ({ error }) {
         console.log(error)
         console.log(response)
         loading.value = false
-        ws_link_store.$patch({ busy: false })
       }
     })
   }
   reader.readAsDataURL(texture_file.value[0])
+  ws_link_store.$patch({ busy: false })
 }
 
 async function get_texture_coordinates () {
+  ws_link_store.$patch({ busy: true })
+  console.log('busy true')
   const params = new FormData()
   params.append('native_file_name', native_file_name)
   params.append('geode_object', geode_object)
-  // console.log(native_file_name)
-  // console.log(geode_object)
-  await api_fetch(`/get_texture_coordinates`, {
+  await api_fetch(`/texture_coordinates`, {
     body: params, method: 'POST', async onResponse ({ response }) {
       console.log(response)
       texture_coordinates.value = response._data.texture_coordinates
-      ws_link_store.$patch({ busy: false })
     },
     onError ({ response, error }) {
       console.log(error)
       console.log(response)
-      ws_link_store.$patch({ busy: false })
     }
   })
+  ws_link_store.$patch({ busy: false })
+  console.log('busy false')
 }
 
 onMounted(() => {
