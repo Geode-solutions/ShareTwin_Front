@@ -1,5 +1,14 @@
 <template>
   <v-row>
+    <v-col cols="1" class="pa-0 align-self-center">
+      <v-tooltip text="Remove the texture">
+        <template v-slot:activator="{ props }">
+          <v-btn icon size="20" v-bind="props">
+            <v-icon icon="mdi-minus-circle" size="20"></v-icon>
+          </v-btn>
+        </template>
+      </v-tooltip>
+    </v-col>
     <v-col cols="8">
       <v-combobox label="Texture" :loading="loading" :items="texture_coordinates" variant="underlined"
         v-model="texture_name"></v-combobox>
@@ -12,6 +21,10 @@
         </v-btn>
       </v-badge>
     </v-col>
+  </v-row>
+  <!-- v-if="texture_index = last_texture_index" -->
+  <v-row>
+    <SideMenuTextureAddButton />
   </v-row>
 </template>
 

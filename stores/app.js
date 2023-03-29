@@ -12,7 +12,6 @@ export const use_app_store = defineStore('app', {
   }),
   actions: {
     add_object_tree_item (item) {
-      console.log(item)
       this.object_tree.push(item)
     },
     remove_object_tree_item (index) {
@@ -26,11 +25,13 @@ export const use_app_store = defineStore('app', {
       vtk_store.toggle_object_visibility({ "id": id, "is_visible": is_visible })
       ws_link_store.$patch({ busy: false })
     },
-
-    add_object_texture (index, texture_object) {
+    add_object_texture_item (index, texture_item) {
+      his.object_tree[index].textures.push(texture_item)
+    },
+    add_object_texture (index, texture_object, texture_index) {
       const id = this.object_tree[index].id
-      this.object_tree[index].texture_name = texture_object.texture_name
-      this.object_tree[index].texture_file_name = texture_object.texture_file_name
+      this.object_tree[index].textures[texture_index].texture_name = texture_object.texture_name
+      this.object_tree[index].textures[texture_index].texture_file_name = texture_object.texture_file_name
       ws_link_store.$patch({ busy: true })
       vtk_store.add_object_texture({ "id": id, ...texture_object })
       ws_link_store.$patch({ busy: false })
