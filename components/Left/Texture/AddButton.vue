@@ -1,5 +1,5 @@
 <template>
-  <v-tooltip text="Add a texture">
+  <v-tooltip text="Add a texture" location="right">
     <template v-slot:activator="{ props }">
       <v-btn icon size="20">
         <v-icon icon="mdi-plus-circle" size="20" v-bind="props"></v-icon>
@@ -7,8 +7,6 @@
     </template>
   </v-tooltip>
 </template>
-
-
 
 <script setup>
 

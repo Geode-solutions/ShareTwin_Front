@@ -1,7 +1,7 @@
-<template>
-  <v-row>
-    <v-col cols="1" class="pa-0 align-self-center">
-      <v-tooltip text="Remove the texture">
+<template class="pa-0">
+  <v-row class="pa-0 align-self-center">
+    <v-col cols="auto" class="pa-0 align-self-center">
+      <v-tooltip text="Remove the texture" location="right">
         <template v-slot:activator="{ props }">
           <v-btn icon size="20" v-bind="props">
             <v-icon icon="mdi-minus-circle" size="20"></v-icon>
@@ -9,9 +9,9 @@
         </template>
       </v-tooltip>
     </v-col>
-    <v-col cols="8">
+    <v-col cols="8" class="pa-0 align-self-center">
       <v-combobox label="Texture" :loading="loading" :items="texture_coordinates" variant="underlined"
-        v-model="texture_name"></v-combobox>
+        v-model="texture_name" class="pa-0"></v-combobox>
     </v-col>
     <v-spacer />
     <v-col cols="2" class="pa-0 align-self-center">
@@ -22,9 +22,8 @@
       </v-badge>
     </v-col>
   </v-row>
-  <!-- v-if="texture_index = last_texture_index" -->
-  <v-row>
-    <SideMenuTextureAddButton />
+  <v-row v-if="texture_index == object_tree[object_tree_index].textures.length - 1" class="pa-0">
+    <LeftTextureAddButton />
   </v-row>
 </template>
 
@@ -36,13 +35,15 @@ const app_store = use_app_store()
 const ws_link_store = use_ws_link_store()
 
 const props = defineProps({
-  index: { type: Number, required: true }
+  object_tree_index: { type: Number, required: true },
+  texture_index: { type: Number, required: true }
 })
 
-const { index } = props
+// const { object_tree_index } = props
+const object_tree_index = 0
 const { object_tree } = storeToRefs(app_store)
 
-const current_object = object_tree.value[index]
+const current_object = object_tree.value[object_tree_index]
 const native_file_name = current_object['native_file_name']
 const geode_object = current_object['geode_object']
 
@@ -135,7 +136,14 @@ watch(texture_file, () => {
 })
 
 watch(viewable_file_name, async new_value => {
-  app_store.add_object_texture(index, { "texture_name": texture_name.value, "texture_file_name": new_value })
+  app_store.add_object_texture(object_tree_index, { "texture_name": texture_name.value, "texture_file_name": new_value })
 })
 </script>
+
+
+<style>
+.v-expansion-panel-content__wrap {
+  padding: 0 !important;
+}
+</style>
       
