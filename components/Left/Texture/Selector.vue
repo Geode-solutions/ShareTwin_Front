@@ -1,13 +1,10 @@
 <template class="pa-0">
   <v-row class="pa-0 align-self-center">
-    <v-col cols="auto" class="pa-0 align-self-center">
-      <v-tooltip text="Remove the texture" location="right">
-        <template v-slot:activator="{ props }">
-          <v-btn icon size="20" v-bind="props">
-            <v-icon icon="mdi-minus-circle" size="20"></v-icon>
-          </v-btn>
-        </template>
-      </v-tooltip>
+    <v-col cols="1" class="pa-0 align-self-center">
+      <v-container v-if="object_tree[object_tree_index].textures.length > 1" class="pa-0">
+
+        <LeftTextureDeleteButton :object_tree_index="object_tree_index" :texture_index="texture_index" />
+      </v-container>
     </v-col>
     <v-col cols="8" class="pa-0 align-self-center">
       <v-combobox label="Texture" :loading="loading" :items="texture_coordinates" variant="underlined"
@@ -23,7 +20,10 @@
     </v-col>
   </v-row>
   <v-row v-if="texture_index == object_tree[object_tree_index].textures.length - 1" class="pa-0">
-    <LeftTextureAddButton />
+    <v-col cols="1" class="pa-0 align-self-center">
+
+      <LeftTextureAddButton :object_tree_index="object_tree_index" />
+    </v-col>
   </v-row>
 </template>
 

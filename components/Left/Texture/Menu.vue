@@ -15,7 +15,7 @@
       </v-expansion-panel-title>
       <v-expansion-panel-text clas="pa-0">
         <v-container v-for="(item, texture_index) in object_tree[object_tree_index].textures" :key="object_tree_index"
-          class="pr-3">
+          class="pa-3">
           <LeftTextureSelector :object_tree_index="object_tree_index" :texture_index="texture_index" />
         </v-container>
       </v-expansion-panel-text>
