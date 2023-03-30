@@ -8,7 +8,7 @@
     </v-col>
     <v-col cols="8" class="pa-0 align-self-center">
       <v-combobox label="Texture" :loading="loading" :items="texture_coordinates" variant="underlined"
-        v-model="texture_name" class="pa-0"></v-combobox>
+        v-model="object_tree[object_tree_index].textures[texture_index].texture_name" class="pa-0"></v-combobox>
     </v-col>
     <v-spacer />
     <v-col cols="2" class="pa-0 align-self-center">
@@ -133,6 +133,10 @@ onMounted(() => {
 
 watch(texture_file, () => {
   convert_raster_image()
+})
+
+watch(object_tree[object_tree_index].textures[texture_index].texture_name, new_value => {
+  console.log('texture_name', new_value)
 })
 
 watch(viewable_file_name, async new_value => {
