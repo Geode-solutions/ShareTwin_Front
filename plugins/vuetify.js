@@ -15,7 +15,7 @@ const light_theme = {
     accent: colors.amber.accent4,
     error: colors.red.accent4,
     info: colors.yellow.accent4,
-    success: colors.green.accent4,
+    success: colors.green.darken4,
     warning: colors.orange.accent4,
   }
 }

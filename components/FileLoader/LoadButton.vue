@@ -56,7 +56,7 @@ async function convert_file () {
             'viewable_file_name': response._data.viewable_file_name,
             'geode_object': input_geode_object,
             'is_visible': true,
-            'textures': [{ 'texture_name': '', 'texture_file_name': '' }]
+            'textures': [{ 'texture_name': '', 'texture_file_name': '', 'is_visible': false, 'is_applicable': false }]
           })
 
           stepper_tree.current_step_index = 0
