@@ -72,9 +72,13 @@ export const use_app_store = defineStore('app', {
       const id = current_item.id
       const current_texture = this.object_tree[object_tree_index].textures[texture_index]
 
+      const texture_name = current_texture.texture_name
+      const texture_file_name = current_texture.texture_file_name
+
       ws_link_store.$patch({ busy: true })
-      vtk_store.add_object_texture({ "id": id, ...texture_object })
+      vtk_store.add_object_texture({ "id": id, "texture_name": texture_name, "texture_file_name": texture_file_name })
       current_texture.is_applicable = false
+      console.log('current_texture = ', this.object_tree[object_tree_index].textures[texture_index].is_applicable)
       ws_link_store.$patch({ busy: false })
     }
   }
