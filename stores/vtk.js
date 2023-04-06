@@ -21,12 +21,15 @@ export const use_vtk_store = defineStore('vtk', {
           .catch(console.error);
       }
     },
-    async add_object_texture (params) {
+    async apply_textures (params) {
       if (ws_link_store.client) {
+        ws_link_store.$patch({ busy: true })
         use_ws_link_store().client
           .getRemote()
-          .vtk.add_object_texture(params)
+          .vtk.apply_textures(params)
           .catch(console.error);
+
+        ws_link_store.$patch({ busy: false })
       }
     }
   }

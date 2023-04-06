@@ -1,5 +1,5 @@
 <template>
-  <v-tooltip text="Add a texture" location="right">
+  <v-tooltip text="Add a new texture" location="right">
     <template v-slot:activator="{ props }">
       <v-btn icon flat size="30" @click="add_texture(object_tree_index)" v-bind="props">
         <v-icon icon="mdi-plus-circle" size="20" color="success"></v-icon>

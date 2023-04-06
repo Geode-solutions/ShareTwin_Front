@@ -1,6 +1,6 @@
 <template>
   <v-combobox label="Texture" :loading="loading" :items="texture_coordinates" variant="underlined" v-model="texture_name"
-    class="pa-0"></v-combobox>
+    :error="error" class="pa-0" @click:clear="error = true" @click:append-outer="error = false" clearable></v-combobox>
 </template>
 
 
@@ -22,6 +22,7 @@ const current_object = object_tree.value[object_tree_index]
 const native_file_name = current_object['native_file_name']
 const geode_object = current_object['geode_object']
 
+const error = ref(false)
 const loading = ref(false)
 const texture_coordinates = ref([])
 const texture_name = ref([])

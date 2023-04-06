@@ -12,15 +12,17 @@
       <LeftTextureFileSelector :object_tree_index="object_tree_index" :texture_index="texture_index" />
     </v-col>
     <v-spacer />
-    <v-col v-if="object_tree[object_tree_index].textures[texture_index].is_applicable == true" cols="1"
-      class="pa-0 align-self-center">
-      <LeftTextureApplyButton :object_tree_index="object_tree_index" :texture_index="texture_index" />
-    </v-col>
+
   </v-row>
   <v-row v-if="texture_index == object_tree[object_tree_index].textures.length - 1" class="pa-0">
     <v-col cols="1" class="pa-0 align-self-center">
       <LeftTextureAddButton :object_tree_index="object_tree_index" />
     </v-col>
+    <v-spacer />
+    <v-col cols="auto" class="pa-0 align-self-center">
+      <LeftTextureApplyButton :object_tree_index="object_tree_index" :texture_index="texture_index" />
+    </v-col>
+
   </v-row>
 </template>
 

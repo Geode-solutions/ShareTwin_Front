@@ -64,21 +64,41 @@ export const use_app_store = defineStore('app', {
       if ((current_texture.texture_name != '' && current_texture.texture_name != undefined) &&
         (current_texture.texture_file_name != '' && current_texture.texture_file_name != undefined)) {
         console.log('4')
-        current_texture.is_applicable = true
+        console.log('4')
+        console.log('4')
+
+        // current_texture.is_applicable = true
+        console.log('5')
       }
     },
-    apply_texture (object_tree_index, texture_index) {
+    apply_textures (object_tree_index) {
+      // texture_index
+      console.log('object_tree_index')
+      console.log(object_tree_index)
+      console.log('apply_textures')
       const current_item = this.object_tree[object_tree_index]
-      const id = current_item.id
-      const current_texture = this.object_tree[object_tree_index].textures[texture_index]
+      // const id = current_item.id
+      // const current_texture = this.object_tree[object_tree_index].textures[texture_index]
 
-      const texture_name = current_texture.texture_name
-      const texture_file_name = current_texture.texture_file_name
+      // const texture_name = current_texture.texture_name
+      // const texture_file_name = current_texture.texture_file_name
+
+      console.log(current_item)
+
+
+      const textures_array = current_item.textures.filter(texture => {
+        return texture.is_applicable == true
+      })
+
+
+      console.log(textures_array)
+
 
       ws_link_store.$patch({ busy: true })
-      vtk_store.add_object_texture({ "id": id, "texture_name": texture_name, "texture_file_name": texture_file_name })
-      current_texture.is_applicable = false
-      console.log('current_texture = ', this.object_tree[object_tree_index].textures[texture_index].is_applicable)
+      // vtk_store.apply_textures({ "textures_array": textures_array })
+      // vtk_store.apply_textures({ "id": id, "texture_name": texture_name, "texture_file_name": texture_file_name })
+      // current_texture.is_applicable = false
+      // console.log('current_texture = ', this.object_tree[object_tree_index].textures[texture_index].is_applicable)
       ws_link_store.$patch({ busy: false })
     }
   }
