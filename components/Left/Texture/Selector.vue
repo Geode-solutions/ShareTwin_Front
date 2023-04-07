@@ -19,7 +19,7 @@
       <LeftTextureAddButton :object_tree_index="object_tree_index" />
     </v-col>
     <v-spacer />
-    <v-col cols="auto" class="pa-0 align-self-center">
+    <v-col cols="auto" v-if="show_apply_textures_button == true" class="pa-0 align-self-center">
       <LeftTextureApplyButton :object_tree_index="object_tree_index" :texture_index="texture_index" />
     </v-col>
 
@@ -37,5 +37,5 @@ const props = defineProps({
 })
 
 const { object_tree_index, texture_index } = props
-const { object_tree } = storeToRefs(app_store)
+const { object_tree, show_apply_textures_button } = storeToRefs(app_store)
 </script>

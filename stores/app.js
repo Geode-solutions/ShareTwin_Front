@@ -19,7 +19,8 @@ export const use_app_store = defineStore('app', {
       //   'textures': [{ 'texture_name': 'toto', 'texture_file_name': '', 'is_visible': false, 'is_applicable': false },
       //   { 'texture_name': '', 'texture_file_name': '', 'is_visible': false, 'is_applicable': false }]
       // }
-    ]
+    ],
+    show_apply_textures_button: false
   }),
   actions: {
     add_object_tree_item (item) {
@@ -66,7 +67,8 @@ export const use_app_store = defineStore('app', {
         console.log('4')
         console.log('4')
         console.log('4')
-
+        this.show_apply_textures_button = true
+        console.log('show_apply_textures_button', this.show_apply_textures_button)
         // current_texture.is_applicable = true
         console.log('5')
       }
@@ -99,6 +101,7 @@ export const use_app_store = defineStore('app', {
       // vtk_store.apply_textures({ "id": id, "texture_name": texture_name, "texture_file_name": texture_file_name })
       // current_texture.is_applicable = false
       // console.log('current_texture = ', this.object_tree[object_tree_index].textures[texture_index].is_applicable)
+      this.show_apply_textures_button = false
       ws_link_store.$patch({ busy: false })
     }
   }
