@@ -3,8 +3,6 @@
     :error="error" class="pa-0" @click:clear="error = true" @click:append-outer="error = false" clearable></v-combobox>
 </template>
 
-
-
 <script setup>
 import { use_app_store } from '@/stores/app'
 

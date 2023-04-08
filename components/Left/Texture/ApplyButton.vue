@@ -1,7 +1,8 @@
 <template>
   <v-tooltip text="Apply the texture" location="right">
     <template v-slot:activator="{ props }">
-      <v-btn flat @click="app_store.apply_textures(object_tree_index)" color="primary">
+      <v-btn :loading="loading" class="btn" flat @click="validate_textures" color="primary">
+        <!-- app_store.apply_textures(object_tree_index) -->
         <!-- <v-btn flat @click="app_store.apply_textures(object_tree_index, texture_index)" color="primary"> -->
         <!-- <v-icon icon="mdi-check-circle" size="20" v-bind="props" color="success" /> -->
         Apply
@@ -22,8 +23,16 @@ const props = defineProps({
 
 const { object_tree_index, texture_index } = props
 
+const loading = ref(false)
+
 
 function validate_textures () {
-
+  loading.value = true
 }
 </script>
+
+<style>
+.btn {
+  text-transform: unset !important;
+}
+</style>
