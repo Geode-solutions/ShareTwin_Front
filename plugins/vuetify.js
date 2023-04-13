@@ -34,7 +34,7 @@ export default defineNuxtPlugin(nuxtApp => {
     icons: {
       defaultSet: 'mdi'
     },
-    ssr: true
+    ssr: false
   })
 
   nuxtApp.vueApp.use(vuetify)
