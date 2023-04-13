@@ -23,7 +23,7 @@ export default defineNuxtConfig({
       ]
     }
   },
-  devtools: true,
+  devtools: process.env.NODE_ENV === 'production' ? false : true,
   ssr: false,
   target: 'static',
 
