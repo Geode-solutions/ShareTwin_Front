@@ -48,7 +48,20 @@ onMounted(() => {
 })
 
 watch(texture_name, async new_value => {
-  app_store.modify_texture_object(object_tree_index, texture_index, { "texture_name": new_value })
+  console.log('texture_name : ', new_value)
+  const is_valid = ref(true)
+  if (new_value != null && new_value != undefined) {
+    is_valid.value = true
+  } else {
+    is_valid.value = false
+  }
+
+  app_store.modify_texture_object(object_tree_index, texture_index, {
+    'texture_name': {
+      'value': new_value,
+      'is_valid': is_valid.value
+    }
+  })
 })
 
 </script>
