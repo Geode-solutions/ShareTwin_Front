@@ -37,10 +37,10 @@ export const use_app_store = defineStore('app', {
       vtk_store.toggle_object_visibility({ "id": id, "is_visible": is_visible })
       ws_link_store.$patch({ busy: false })
     },
-    add_texture (object_tree_index, texture_item) {
+    add_texture_object (object_tree_index, texture_item) {
       this.object_tree[object_tree_index].textures.push(texture_item)
     },
-    remove_texture (object_tree_index, texture_index) {
+    remove_texture_object (object_tree_index, texture_index) {
       this.object_tree[object_tree_index].textures.splice(texture_index, 1)
     },
     modify_texture_object (object_tree_index, texture_index, texture_object) {

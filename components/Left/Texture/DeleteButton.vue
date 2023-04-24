@@ -1,7 +1,8 @@
 <template>
   <v-tooltip text="Remove the texture" location="right">
     <template v-slot:activator="{ props }">
-      <v-btn icon flat size="30" v-bind="props" @click="app_store.remove_texture(object_tree_index, texture_index)">
+      <v-btn icon flat size="30" v-bind="props"
+        @click="app_store.remove_texture_object(object_tree_index, texture_index)">
         <v-icon icon="mdi-minus-circle" size="20" color="error"></v-icon>
       </v-btn>
     </template>

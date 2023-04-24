@@ -1,7 +1,7 @@
 <template>
   <v-tooltip text="Add a new texture" location="right">
     <template v-slot:activator="{ props }">
-      <v-btn icon flat size="30" @click="add_texture(object_tree_index)" v-bind="props">
+      <v-btn icon flat size="30" @click="add_texture_object(object_tree_index)" v-bind="props">
         <v-icon icon="mdi-plus-circle" size="20" color="success"></v-icon>
       </v-btn>
     </template>
@@ -18,8 +18,13 @@ const props = defineProps({
 
 const { object_tree_index } = props
 
-function add_texture (object_tree_index) {
-  const texture_item = { 'texture_name': '', 'texture_file_name': '', 'is_visible': false, 'is_applicable': false }
-  app_store.add_texture(object_tree_index, texture_item)
+function add_texture_object (object_tree_index) {
+  const texture_item = {
+    'texture_name':
+      { 'value': '', 'is_valid': true },
+    'texture_file_name':
+      { 'value': '', 'is_valid': true }
+  }
+  app_store.add_texture_object(object_tree_index, texture_item)
 }
 </script>
