@@ -43,6 +43,12 @@ export const use_app_store = defineStore('app', {
     remove_texture_object (object_tree_index, texture_index) {
       this.object_tree[object_tree_index].textures.splice(texture_index, 1)
     },
+
+    set_texture_is_valid (object_tree_index, texture_index, value) {
+      this.object_tree[object_tree_index].textures[texture_index].is_valid = value
+    },
+
+
     modify_texture_object (object_tree_index, texture_index, texture_object) {
       console.log('modify_texture_object texture_object', texture_object)
 
@@ -50,34 +56,35 @@ export const use_app_store = defineStore('app', {
       const id = current_item.id
       const current_texture = this.object_tree[object_tree_index].textures[texture_index]
 
-      console.log('1')
+      // console.log('1')
       for (const [key, value] of Object.entries(texture_object)) {
-        console.log(`${key}: ${value}`);
+        // console.log(`${key}: ${value}`);
         current_texture[key] = value
-        console.log('2')
+        // console.log('2')
+        console.log('current_texture', current_texture)
       }
 
-      console.log('3')
+      // console.log('3')
 
 
-      console.log('current_texture', current_texture)
+      // console.log('current_texture', current_texture)
 
       if ((current_texture.texture_name != '' && current_texture.texture_name != undefined) &&
         (current_texture.texture_file_name != '' && current_texture.texture_file_name != undefined)) {
-        console.log('4')
-        console.log('4')
-        console.log('4')
+        // console.log('4')
+        // console.log('4')
+        // console.log('4')
         this.show_apply_textures_button = true
-        console.log('show_apply_textures_button', this.show_apply_textures_button)
+        // console.log('show_apply_textures_button', this.show_apply_textures_button)
         // current_texture.is_applicable = true
-        console.log('5')
+        // console.log('5')
       }
     },
     apply_textures (object_tree_index) {
       // texture_index
-      console.log('object_tree_index')
-      console.log(object_tree_index)
-      console.log('apply_textures')
+      // console.log('object_tree_index')
+      // console.log(object_tree_index)
+      // console.log('apply_textures')
       const current_item = this.object_tree[object_tree_index]
       // const id = current_item.id
       // const current_texture = this.object_tree[object_tree_index].textures[texture_index]
@@ -85,7 +92,7 @@ export const use_app_store = defineStore('app', {
       // const texture_name = current_texture.texture_name
       // const texture_file_name = current_texture.texture_file_name
 
-      console.log(current_item)
+      // console.log(current_item)
 
 
       const textures_array = current_item.textures.filter(texture => {
@@ -93,7 +100,7 @@ export const use_app_store = defineStore('app', {
       })
 
 
-      console.log(textures_array)
+      // console.log(textures_array)
 
 
       ws_link_store.$patch({ busy: true })
