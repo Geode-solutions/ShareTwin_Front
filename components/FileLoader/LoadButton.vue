@@ -49,15 +49,15 @@ async function convert_file () {
 
           vtk_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
 
-          app_store.add_object_tree_item({
-            'id': response._data.id,
-            'name': response._data.name,
-            'native_file_name': response._data.native_file_name,
-            'viewable_file_name': response._data.viewable_file_name,
-            'geode_object': input_geode_object,
-            'is_visible': true,
-            'textures': [{ 'texture_name': '', 'texture_file_name': '', 'is_visible': false, 'is_applicable': false }]
-          })
+          app_store.add_object_tree_item(
+            response._data.id,
+            response._data.name,
+            response._data.native_file_name,
+            response._data.viewable_file_name,
+            input_geode_object,
+          )
+
+          console.log('coucou')
 
           stepper_tree.current_step_index = 0
           stepper_tree.files = []

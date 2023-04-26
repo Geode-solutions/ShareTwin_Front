@@ -9,22 +9,77 @@ export const use_app_store = defineStore('app', {
     display_menu: true,
     display_object_selector: false,
     object_tree: [
-      // {
-      //   'id': 'response._data.id',
-      //   'name': 'response._data.name',
-      //   'native_file_name': 'response._data.native_file_name',
-      //   'viewable_file_name': 'response._data.viewable_file_name',
-      //   'geode_object': 'BRep',
-      //   'is_visible': true,
-      //   'textures': [{ 'texture_name': 'toto', 'texture_file_name': '', 'is_visible': false, 'is_applicable': false },
-      //   { 'texture_name': '', 'texture_file_name': '', 'is_visible': false, 'is_applicable': false }]
-      // }
-    ],
-    show_apply_textures_button: false
+      {
+        'id': 'id',
+        'name': 'name',
+        'native_file_name': 'native_file_name',
+        'viewable_file_name': 'viewable_file_name',
+        'geode_object': 'BRep',
+        'is_visible': true,
+        'textures': [{
+          'items': [{
+            'texture_name':
+            {
+              'value': '',
+              'is_valid': computed(() => {
+                if (this.value === '' && this.value != null && this.value != undefined) {
+                  return true
+                } else {
+                  return false
+                }
+              })
+            },
+            'texture_file_name':
+            {
+              'value': '',
+              'is_valid': computed(() => {
+                if (this.value === '' && this.value != null && this.value != undefined) {
+                  return true
+                } else {
+                  return false
+                }
+              })
+            }
+          }],
+          'is_valid': computed(() => {
+            for (i = 0; i < this.items.length; i++) {
+              console.log(i)
+              const item = this.items[i]
+              if (item.texture_name.is_valid == false || item.texture_file_name.is_valid == false) {
+                return false
+              }
+            }
+            return true
+          })
+        }]
+      }
+    ]
   }),
   actions: {
-    add_object_tree_item (item) {
-      this.object_tree.push(item)
+    add_object_tree_item (id,
+      name,
+      native_file_name,
+      viewable_file_name,
+      geode_object) {
+      console.log('1')
+
+      let object_tree_item = {
+        'id': id,
+        'name': name,
+        'native_file_name': native_file_name,
+        'viewable_file_name': viewable_file_name,
+        'geode_object': geode_object,
+        'is_visible': true,
+        'textures': []
+      }
+      console.log('2')
+
+      console.log(object_tree_item)
+
+      this.object_tree.push(object_tree_item)
+      console.log(this.object_tree)
+      this.add_texture_object(this.object_tree.length - 1)
+
     },
     remove_object_tree_item (object_tree_index) {
       this.object_tree.splice(object_tree_index, 1)
@@ -37,70 +92,67 @@ export const use_app_store = defineStore('app', {
       vtk_store.toggle_object_visibility({ "id": id, "is_visible": is_visible })
       ws_link_store.$patch({ busy: false })
     },
-    add_texture_object (object_tree_index, texture_item) {
-      this.object_tree[object_tree_index].textures.push(texture_item)
+    add_texture_object (object_tree_index) {
+
+      let texture_object = {
+        'items': [{
+          'texture_name':
+          {
+            'value': '',
+            'is_valid': computed(() => {
+              if (this.value === '' && this.value != null && this.value != undefined) {
+                return true
+              } else {
+                return false
+              }
+            })
+          },
+          'texture_file_name':
+          {
+            'value': '',
+            'is_valid': computed(() => {
+              if (this.value === '' && this.value != null && this.value != undefined) {
+                return true
+              } else {
+                return false
+              }
+            })
+          }
+        }],
+        'is_valid': computed(() => {
+          for (i = 0; i < this.items.length; i++) {
+            const item = this.items[i]
+            if (item.texture_name.is_valid == false || item.texture_file_name.is_valid == false) {
+              return false
+            }
+          }
+          return true
+        })
+      }
+
+      console.log(texture_object)
+      this.object_tree[object_tree_index].textures.push(texture_object)
     },
     remove_texture_object (object_tree_index, texture_index) {
       this.object_tree[object_tree_index].textures.splice(texture_index, 1)
     },
 
-    set_texture_is_valid (object_tree_index, texture_index, value) {
-      this.object_tree[object_tree_index].textures[texture_index].is_valid = value
-    },
+    modify_texture_object (object_tree_index, texture_index, key, value) {
 
-
-    modify_texture_object (object_tree_index, texture_index, texture_object) {
-      console.log('modify_texture_object texture_object', texture_object)
-
-      const current_item = this.object_tree[object_tree_index]
-      const id = current_item.id
-      const current_texture = this.object_tree[object_tree_index].textures[texture_index]
-
-      // console.log('1')
-      for (const [key, value] of Object.entries(texture_object)) {
-        // console.log(`${key}: ${value}`);
-        current_texture[key] = value
-        // console.log('2')
-        console.log('current_texture', current_texture)
-      }
-
-      // console.log('3')
-
-
-      // console.log('current_texture', current_texture)
-
-      if ((current_texture.texture_name != '' && current_texture.texture_name != undefined) &&
-        (current_texture.texture_file_name != '' && current_texture.texture_file_name != undefined)) {
-        // console.log('4')
-        // console.log('4')
-        // console.log('4')
-        this.show_apply_textures_button = true
-        // console.log('show_apply_textures_button', this.show_apply_textures_button)
-        // current_texture.is_applicable = true
-        // console.log('5')
-      }
-    },
-    apply_textures (object_tree_index) {
-      // texture_index
-      // console.log('object_tree_index')
-      // console.log(object_tree_index)
-      // console.log('apply_textures')
       const current_item = this.object_tree[object_tree_index]
       // const id = current_item.id
-      // const current_texture = this.object_tree[object_tree_index].textures[texture_index]
+      console.log('texture_index', texture_index)
+      console.log('object_tree', this.object_tree)
+      const current_texture = current_item.textures.items[texture_index]
+      console.log(current_texture)
 
-      // const texture_name = current_texture.texture_name
-      // const texture_file_name = current_texture.texture_file_name
-
-      // console.log(current_item)
-
-
+      current_texture[key].value = value
+    },
+    apply_textures (object_tree_index) {
+      const current_item = this.object_tree[object_tree_index]
       const textures_array = current_item.textures.filter(texture => {
         return texture.is_applicable == true
       })
-
-
-      // console.log(textures_array)
 
 
       ws_link_store.$patch({ busy: true })

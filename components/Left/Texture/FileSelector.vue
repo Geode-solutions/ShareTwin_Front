@@ -89,7 +89,8 @@ watch(texture_file, () => {
   convert_raster_image()
 })
 watch(viewable_file_name, async new_value => {
-  app_store.modify_texture_object(object_tree_index, texture_index, { "texture_file_name": new_value })
+  console.log('viewable_file_name value: ', new_value)
+  app_store.modify_texture_object(object_tree_index, texture_index, "texture_file_name", new_value)
 })
 
 </script>
