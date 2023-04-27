@@ -8,78 +8,44 @@ export const use_app_store = defineStore('app', {
   state: () => ({
     display_menu: true,
     display_object_selector: false,
-    object_tree: [
-      {
-        'id': 'id',
-        'name': 'name',
-        'native_file_name': 'native_file_name',
-        'viewable_file_name': 'viewable_file_name',
-        'geode_object': 'BRep',
-        'is_visible': true,
-        'textures': [{
-          'items': [{
-            'texture_name':
-            {
-              'value': '',
-              'is_valid': computed(() => {
-                if (this.value === '' && this.value != null && this.value != undefined) {
-                  return true
-                } else {
-                  return false
-                }
-              })
-            },
-            'texture_file_name':
-            {
-              'value': '',
-              'is_valid': computed(() => {
-                if (this.value === '' && this.value != null && this.value != undefined) {
-                  return true
-                } else {
-                  return false
-                }
-              })
-            }
-          }],
-          'is_valid': computed(() => {
-            for (i = 0; i < this.items.length; i++) {
-              console.log(i)
-              const item = this.items[i]
-              if (item.texture_name.is_valid == false || item.texture_file_name.is_valid == false) {
-                return false
-              }
-            }
-            return true
-          })
-        }]
-      }
-    ]
+    object_tree: []
   }),
+  getters: {
+    are_textures_valid: (state) => (object_tree_index) => {
+      const textures = state.object_tree[object_tree_index].textures
+      console.log('textures', textures)
+
+      for (let i = 0; i < textures.length; i++) {
+        const texture = textures[i]
+        console.log('texture', texture)
+        console.log('texture_name', texture.texture_name.is_valid)
+        console.log('texture_file_name', texture.texture_file_name.is_valid)
+
+        if (texture.texture_name.is_valid === false || texture.texture_file_name.is_valid === false) {
+          return false
+        }
+      }
+      return true
+    }
+  },
   actions: {
     add_object_tree_item (id,
       name,
       native_file_name,
       viewable_file_name,
       geode_object) {
-      console.log('1')
 
       let object_tree_item = {
-        'id': id,
-        'name': name,
-        'native_file_name': native_file_name,
-        'viewable_file_name': viewable_file_name,
-        'geode_object': geode_object,
+        id,
+        name,
+        native_file_name,
+        viewable_file_name,
+        geode_object,
         'is_visible': true,
-        'textures': []
+        'textures': [create_texture_item()]
       }
-      console.log('2')
-
-      console.log(object_tree_item)
 
       this.object_tree.push(object_tree_item)
-      console.log(this.object_tree)
-      this.add_texture_object(this.object_tree.length - 1)
-
     },
     remove_object_tree_item (object_tree_index) {
       this.object_tree.splice(object_tree_index, 1)
@@ -89,78 +55,31 @@ export const use_app_store = defineStore('app', {
       const id = this.object_tree[object_tree_index]['id']
       const is_visible = this.object_tree[object_tree_index].is_visible
       ws_link_store.$patch({ busy: true })
-      vtk_store.toggle_object_visibility({ "id": id, "is_visible": is_visible })
+      vtk_store.toggle_object_visibility({ id, is_visible })
       ws_link_store.$patch({ busy: false })
     },
     add_texture_object (object_tree_index) {
-
-      let texture_object = {
-        'items': [{
-          'texture_name':
-          {
-            'value': '',
-            'is_valid': computed(() => {
-              if (this.value === '' && this.value != null && this.value != undefined) {
-                return true
-              } else {
-                return false
-              }
-            })
-          },
-          'texture_file_name':
-          {
-            'value': '',
-            'is_valid': computed(() => {
-              if (this.value === '' && this.value != null && this.value != undefined) {
-                return true
-              } else {
-                return false
-              }
-            })
-          }
-        }],
-        'is_valid': computed(() => {
-          for (i = 0; i < this.items.length; i++) {
-            const item = this.items[i]
-            if (item.texture_name.is_valid == false || item.texture_file_name.is_valid == false) {
-              return false
-            }
-          }
-          return true
-        })
-      }
-
-      console.log(texture_object)
-      this.object_tree[object_tree_index].textures.push(texture_object)
+      this.object_tree[object_tree_index].textures.push(create_texture_item())
     },
     remove_texture_object (object_tree_index, texture_index) {
       this.object_tree[object_tree_index].textures.splice(texture_index, 1)
     },
 
     modify_texture_object (object_tree_index, texture_index, key, value) {
-
       const current_item = this.object_tree[object_tree_index]
-      // const id = current_item.id
-      console.log('texture_index', texture_index)
-      console.log('object_tree', this.object_tree)
-      const current_texture = current_item.textures.items[texture_index]
-      console.log(current_texture)
-
+      const current_texture = current_item.textures[texture_index]
       current_texture[key].value = value
     },
     apply_textures (object_tree_index) {
-      const current_item = this.object_tree[object_tree_index]
-      const textures_array = current_item.textures.filter(texture => {
-        return texture.is_applicable == true
-      })
-
+      const current_object = this.object_tree[object_tree_index]
+      console.log('current_object', current_object)
+      const id = current_object.id
+      console.log('id', id)
+      const textures = current_object.textures
+      console.log('textures', textures)
 
       ws_link_store.$patch({ busy: true })
-      // vtk_store.apply_textures({ "textures_array": textures_array })
-      // vtk_store.apply_textures({ "id": id, "texture_name": texture_name, "texture_file_name": texture_file_name })
-      // current_texture.is_applicable = false
-      // console.log('current_texture = ', this.object_tree[object_tree_index].textures[texture_index].is_applicable)
-      this.show_apply_textures_button = false
+      vtk_store.apply_textures({ id, textures })
       ws_link_store.$patch({ busy: false })
     }
   }

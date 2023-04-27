@@ -20,7 +20,6 @@ const current_object = object_tree.value[object_tree_index]
 const native_file_name = current_object['native_file_name']
 const geode_object = current_object['geode_object']
 
-// const error = object_tree.value[object_tree_index].textures[texture_index].texture_name.is_valid
 const error = ref(false)
 const loading = ref(false)
 const texture_coordinates = ref([])

@@ -19,8 +19,8 @@
       <LeftTextureAddButton :object_tree_index="object_tree_index" />
     </v-col>
     <v-spacer />
-    <v-col cols="auto" v-if="show_apply_textures_button == true" class="pa-0 align-self-center">
-      <LeftTextureApplyButton :object_tree_index="object_tree_index" :texture_index="texture_index" />
+    <v-col cols="auto" class="pa-0 align-self-center">
+      <LeftTextureApplyButton :object_tree_index="object_tree_index" />
     </v-col>
 
   </v-row>

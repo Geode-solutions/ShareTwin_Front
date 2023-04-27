@@ -1,12 +1,10 @@
 <template>
-  <v-badge :content="texture_file.length" :color="texture_file.length ? 'black' : 'grey'">
+  <v-badge :icon="display_badge ? 'mdi-check' : 'mdi-help'" :color="display_color ? 'black' : 'grey'">
     <v-btn icon flat @click="open_file_input()">
-      <v-icon icon="mdi-file-image-plus" :color="texture_file.length ? 'black' : 'grey'" />
+      <v-icon icon="mdi-file-image-plus" :color="display_color ? 'black' : 'grey'" />
     </v-btn>
   </v-badge>
 </template>
-
-
 
 <script setup>
 import { use_app_store } from '@/stores/app'
@@ -26,6 +24,9 @@ const raster_image_input_extensions = ref('')
 const texture_file = ref([])
 const viewable_file_name = ref('')
 
+const display_color = ref(false)
+const display_badge = ref(false)
+
 async function get_raster_image_input_extensions () {
   ws_link_store.$patch({ busy: true })
   const params = new FormData()
@@ -42,7 +43,6 @@ async function get_raster_image_input_extensions () {
   ws_link_store.$patch({ busy: false })
 }
 
-
 function open_file_input () {
   var input = document.createElement('input');
   input.type = 'file';
@@ -55,8 +55,8 @@ function open_file_input () {
   input.click();
 }
 
-
 function convert_raster_image () {
+  display_color.value = true
   ws_link_store.$patch({ busy: true })
   const reader = new FileReader()
   reader.onload = async function (event) {
@@ -69,8 +69,12 @@ function convert_raster_image () {
     await api_fetch(`/convert_file`, {
       body: params, method: 'POST', async onResponse ({ response }) {
         viewable_file_name.value = response._data.viewable_file_name
+        display_badge.value = true
+        console.log('display_badge true')
       },
       onError ({ error }) {
+        display_color.value = false
+        display_badge.value = false
         console.log(error)
         console.log(response)
       }
@@ -80,7 +84,6 @@ function convert_raster_image () {
   reader.readAsDataURL(texture_file.value[0])
 }
 
-
 onMounted(() => {
   get_raster_image_input_extensions()
 })
@@ -89,7 +92,6 @@ watch(texture_file, () => {
   convert_raster_image()
 })
 watch(viewable_file_name, async new_value => {
-  console.log('viewable_file_name value: ', new_value)
   app_store.modify_texture_object(object_tree_index, texture_index, "texture_file_name", new_value)
 })
 
