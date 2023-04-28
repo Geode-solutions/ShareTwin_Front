@@ -57,8 +57,6 @@ async function convert_file () {
             input_geode_object,
           )
 
-          console.log('coucou')
-
           stepper_tree.current_step_index = 0
           stepper_tree.files = []
           stepper_tree.geode_object = ''

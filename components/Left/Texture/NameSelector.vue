@@ -42,17 +42,11 @@ async function get_texture_coordinates () {
   loading.value = false
 }
 
-
-
-
 onMounted(() => {
   get_texture_coordinates()
 })
 
-
-
 watch(texture_name, async new_value => {
-  console.log('texture_name value: ', new_value)
   app_store.modify_texture_object(object_tree_index, texture_index, 'texture_name', new_value)
 })
 

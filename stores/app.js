@@ -13,13 +13,9 @@ export const use_app_store = defineStore('app', {
   getters: {
     are_textures_valid: (state) => (object_tree_index) => {
       const textures = state.object_tree[object_tree_index].textures
-      console.log('textures', textures)
 
       for (let i = 0; i < textures.length; i++) {
         const texture = textures[i]
-        console.log('texture', texture)
-        console.log('texture_name', texture.texture_name.is_valid)
-        console.log('texture_file_name', texture.texture_file_name.is_valid)
 
         if (texture.texture_name.is_valid === false || texture.texture_file_name.is_valid === false) {
           return false
@@ -72,11 +68,8 @@ export const use_app_store = defineStore('app', {
     },
     apply_textures (object_tree_index) {
       const current_object = this.object_tree[object_tree_index]
-      console.log('current_object', current_object)
       const id = current_object.id
-      console.log('id', id)
       const textures = current_object.textures
-      console.log('textures', textures)
 
       ws_link_store.$patch({ busy: true })
       vtk_store.apply_textures({ id, textures })

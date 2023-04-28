@@ -70,7 +70,6 @@ function convert_raster_image () {
       body: params, method: 'POST', async onResponse ({ response }) {
         viewable_file_name.value = response._data.viewable_file_name
         display_badge.value = true
-        console.log('display_badge true')
       },
       onError ({ error }) {
         display_color.value = false
@@ -93,6 +92,7 @@ watch(texture_file, () => {
 })
 watch(viewable_file_name, async new_value => {
   app_store.modify_texture_object(object_tree_index, texture_index, "texture_file_name", new_value)
+
 })
 
 </script>

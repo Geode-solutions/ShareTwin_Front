@@ -21,7 +21,6 @@ const props = defineProps({
 const { object_tree_index } = props
 
 const are_textures_valid = computed(() => app_store.are_textures_valid(object_tree_index))
-console.log('are_textures_valid', are_textures_valid)
 const loading = ref(false)
 
 
