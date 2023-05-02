@@ -94,15 +94,15 @@ export default defineNuxtConfig({
   nitro: {
     preset: 'netlify'
   }
-  // ,
-  // vite: {
-  //   server: {
-  //     fs: {
-  //       allow: [
-  //         searchForWorkspaceRoot(process.cwd()),
-  //         ".."
-  //       ]
-  //     }
-  //   }
-  // }
+  ,
+  vite: {
+    server: {
+      fs: {
+        allow: [
+          searchForWorkspaceRoot(process.cwd()),
+          ".."
+        ]
+      }
+    }
+  }
 })
