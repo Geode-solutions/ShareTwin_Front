@@ -13,7 +13,7 @@
       </v-col>
       <v-col cols="1">
         <v-btn v-if="is_cloud_running" active-class="no-active"
-          @click="app_store.$patch({ display_object_selector: true })">
+          @click="app_store.$patch({ display_object_selector: true })" class="btn">
           <v-icon icon="mdi-folder"></v-icon> Load
         </v-btn>
       </v-col>
@@ -40,3 +40,9 @@ function toggle_diplay_menu () {
   app_store.$patch({ 'display_menu': !display_menu.value })
 }
 </script>
+
+<style scoped>
+.btn {
+  text-transform: unset !important;
+}
+</style>

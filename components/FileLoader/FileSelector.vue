@@ -21,7 +21,7 @@ watch(files, (value) => {
 })
 
 async function get_allowed_files () {
-  const { data } = await api_fetch(`/allowedfiles`, { method: 'GET' })
+  const { data } = await api_fetch(`/allowed_files`, { method: 'GET' })
   const extensions = data.value.extensions.map((extension) => '.' + extension).join(',')
   accept.value = extensions
 }

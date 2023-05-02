@@ -20,6 +20,17 @@ export const use_vtk_store = defineStore('vtk', {
           .vtk.toggle_object_visibility(params)
           .catch(console.error);
       }
+    },
+    async apply_textures (params) {
+      if (ws_link_store.client) {
+        ws_link_store.$patch({ busy: true })
+        use_ws_link_store().client
+          .getRemote()
+          .vtk.apply_textures(params)
+          .catch(console.error);
+
+        ws_link_store.$patch({ busy: false })
+      }
     }
   }
 })
