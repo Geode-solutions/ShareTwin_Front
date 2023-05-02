@@ -1,4 +1,5 @@
 import colors from 'vuetify/lib/util/colors'
+import { searchForWorkspaceRoot } from 'vite'
 
 export default defineNuxtConfig({
   runtimeConfig: {
@@ -25,7 +26,7 @@ export default defineNuxtConfig({
       ]
     }
   },
-  devtools: process.env.NODE_ENV === 'production' ? false : true,
+  // devtools: process.env.NODE_ENV === 'production' ? false : true,
   ssr: false,
   target: 'static',
 
@@ -92,13 +93,16 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'netlify'
-  },
-  vite: {
-    server: {
-      fs: {
-        // Allow serving files from one level up to the project root
-        allow: ['..'],
-      },
-    },
   }
+  // ,
+  // vite: {
+  //   server: {
+  //     fs: {
+  //       allow: [
+  //         searchForWorkspaceRoot(process.cwd()),
+  //         ".."
+  //       ]
+  //     }
+  //   }
+  // }
 })
