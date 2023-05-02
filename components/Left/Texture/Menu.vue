@@ -14,8 +14,7 @@
         </v-row>
       </v-expansion-panel-title>
       <v-expansion-panel-text clas="pa-0">
-        <v-container v-for="(item, texture_index) in object_tree[object_tree_index].textures" :key="object_tree_index"
-          class="pa-3">
+        <v-container v-for="(item, texture_index) in textures" :key="object_tree_index" class="pa-3">
           <LeftTextureSelector :object_tree_index="object_tree_index" :texture_index="texture_index" />
         </v-container>
       </v-expansion-panel-text>
@@ -33,5 +32,7 @@ const props = defineProps({
 
 const { object_tree_index } = props
 const { object_tree } = storeToRefs(app_store)
+
+const textures = object_tree[object_tree_index].textures
 
 </script>

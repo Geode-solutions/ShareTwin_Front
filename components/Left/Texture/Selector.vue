@@ -1,7 +1,7 @@
 <template>
   <v-row class="pa-0 align-self-center">
     <v-col cols="1" class="pa-0 align-self-center">
-      <v-container v-if="object_tree[object_tree_index].textures.length > 1" class="pa-0">
+      <v-container v-if="textures.length > 1" class="pa-0">
         <LeftTextureDeleteButton :object_tree_index="object_tree_index" :texture_index="texture_index" />
       </v-container>
     </v-col>
@@ -14,7 +14,7 @@
     <v-spacer />
 
   </v-row>
-  <v-row v-if="texture_index == object_tree[object_tree_index].textures.length - 1" class="pa-0">
+  <v-row v-if="texture_index == textures.length - 1" class="pa-0">
     <v-col cols="1" class="pa-0 align-self-center">
       <LeftTextureAddButton :object_tree_index="object_tree_index" />
     </v-col>
@@ -37,5 +37,7 @@ const props = defineProps({
 })
 
 const { object_tree_index, texture_index } = props
-const { object_tree, show_apply_textures_button } = storeToRefs(app_store)
+const { object_tree } = storeToRefs(app_store)
+
+const textures = object_tree[object_tree_index].textures
 </script>
