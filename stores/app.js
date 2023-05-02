@@ -25,21 +25,9 @@ export const use_app_store = defineStore('app', {
     }
   },
   actions: {
-    add_object_tree_item (id,
-      name,
-      native_file_name,
-      viewable_file_name,
-      geode_object) {
-
-      let object_tree_item = {
-        id,
-        name,
-        native_file_name,
-        viewable_file_name,
-        geode_object,
-        'is_visible': true,
-        'textures': [create_texture_item()]
-      }
+    add_object_tree_item (object_tree_item) {
+      object_tree_item.is_visible = true
+      object_tree_item.textures = [create_texture_item()]
 
       this.object_tree.push(object_tree_item)
     },

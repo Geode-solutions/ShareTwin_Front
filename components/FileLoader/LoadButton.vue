@@ -49,13 +49,14 @@ async function convert_file () {
 
           vtk_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
 
-          app_store.add_object_tree_item(
-            response._data.id,
-            response._data.name,
-            response._data.native_file_name,
-            response._data.viewable_file_name,
-            input_geode_object,
-          )
+          const object_tree_item = {
+            'id': response._data.id,
+            'name': response._data.name,
+            'native_file_name': response._data.native_file_name,
+            'viewable_file_name': response._data.viewable_file_name,
+            'geode_object': input_geode_object
+          }
+          app_store.add_object_tree_item(object_tree_item)
 
           stepper_tree.current_step_index = 0
           stepper_tree.files = []
