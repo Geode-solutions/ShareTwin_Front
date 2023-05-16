@@ -39,5 +39,5 @@ const props = defineProps({
 const { object_tree_index, texture_index } = props
 const { object_tree } = storeToRefs(app_store)
 
-const textures = object_tree[object_tree_index].textures
+const textures = object_tree.value[object_tree_index].textures
 </script>
