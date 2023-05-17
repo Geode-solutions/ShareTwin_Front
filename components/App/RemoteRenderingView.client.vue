@@ -48,16 +48,14 @@ watch(viewId, (id) => {
   }
 })
 
-
-
-
 onMounted(async () => {
-  window.addEventListener('resize', resize)
-  await nextTick()
-  view.setContainer(viewer.value.$el)
-  connect()
-  resize()
-
+  if (process.client) {
+    window.addEventListener('resize', resize)
+    await nextTick()
+    view.setContainer(viewer.value.$el)
+    connect()
+    resize()
+  }
 })
 
 function connect () {

@@ -1,4 +1,5 @@
 import colors from 'vuetify/lib/util/colors'
+import { searchForWorkspaceRoot } from 'vite'
 
 export default defineNuxtConfig({
   runtimeConfig: {
@@ -18,12 +19,14 @@ export default defineNuxtConfig({
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-        { hid: 'description', name: 'description', content: 'Platform for urban and geological data visualization' },
-        { link: [{ rel: 'icon', type: 'image/svg+xml', href: '/icon_share_twin.svg' }] }
+        { hid: 'description', name: 'description', content: 'Platform for urban and geological data visualization' }
+      ],
+      link: [
+        { rel: 'icon', type: 'image/ico', href: '/icon_share_twin.ico' }
       ]
     }
   },
-
+  // devtools: process.env.NODE_ENV === 'production' ? false : true,
   ssr: false,
   target: 'static',
 
@@ -90,5 +93,16 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'netlify'
+  }
+  ,
+  vite: {
+    server: {
+      fs: {
+        allow: [
+          searchForWorkspaceRoot(process.cwd()),
+          ".."
+        ]
+      }
+    }
   }
 })

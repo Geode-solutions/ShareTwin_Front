@@ -1,7 +1,7 @@
 <template>
   <v-card class="card">
-    <div v-for="(step, index) in steps" :key="index" class="pa-3">
-      <FileLoaderStep :step_index="index" />
+    <div v-for="(step, step_index) in steps" :key="step_index" class="pa-3">
+      <FileLoaderStep :step_index="step_index" />
     </div>
   </v-card>
 </template>
