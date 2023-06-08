@@ -1,14 +1,15 @@
 import { defineStore } from 'pinia'
 import { use_vtk_store } from './vtk'
 import { use_ws_link_store } from './ws_link'
-const vtk_store = use_vtk_store()
-const ws_link_store = use_ws_link_store()
 
 export const use_app_store = defineStore('app', {
   state: () => ({
     display_menu: true,
     display_object_selector: false,
-    object_tree: []
+    display_point_picker: false,
+    // display_right_drawer: true,
+    object_tree: [],
+    points: []
   }),
   getters: {
     are_textures_valid: (state) => (object_tree_index) => {
@@ -35,6 +36,8 @@ export const use_app_store = defineStore('app', {
       this.object_tree.splice(object_tree_index, 1)
     },
     toggle_object_visibility (object_tree_index) {
+      const vtk_store = use_vtk_store()
+      const ws_link_store = use_ws_link_store()
       this.object_tree[object_tree_index].is_visible = !this.object_tree[object_tree_index].is_visible
       const id = this.object_tree[object_tree_index]['id']
       const is_visible = this.object_tree[object_tree_index].is_visible
@@ -55,6 +58,8 @@ export const use_app_store = defineStore('app', {
       current_texture[key].value = value
     },
     apply_textures (object_tree_index) {
+      const ws_link_store = use_ws_link_store()
+      const vtk_store = use_vtk_store()
       const current_object = this.object_tree[object_tree_index]
       const id = current_object.id
       const textures = current_object.textures
@@ -62,6 +67,15 @@ export const use_app_store = defineStore('app', {
       ws_link_store.$patch({ busy: true })
       vtk_store.apply_textures({ id, textures })
       ws_link_store.$patch({ busy: false })
+    },
+    set_display_point_picker (value) {
+
+      this.display_point_picker = value
+    },
+    add_point (x, y) {
+      const point = { x, y }
+      this.points.push(point)
+      console.log('this.points', this.points)
     }
   }
 })

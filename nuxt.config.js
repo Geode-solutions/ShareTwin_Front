@@ -1,5 +1,4 @@
 import colors from 'vuetify/lib/util/colors'
-import { searchForWorkspaceRoot } from 'vite'
 
 export default defineNuxtConfig({
   runtimeConfig: {
@@ -69,8 +68,9 @@ export default defineNuxtConfig({
             'storeToRefs',
           ],
         }],
-    ],
 
+      '@nuxt/devtools'
+    ],
   cookies: {
     necessary: [
       {
@@ -93,16 +93,9 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'netlify'
-  }
-  ,
-  vite: {
-    server: {
-      fs: {
-        allow: [
-          searchForWorkspaceRoot(process.cwd()),
-          ".."
-        ]
-      }
-    }
+  },
+
+  devtools: {
+    enabled: process.env.NODE_ENV === 'production' ? false : true
   }
 })
