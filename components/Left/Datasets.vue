@@ -21,6 +21,7 @@
   </v-expansion-panel-title>
   <v-expansion-panel-text>
     <LeftTextureMenu :object_tree_index="object_tree_index" />
+    <LeftGeoReferencingActivator></LeftGeoReferencingActivator>
   </v-expansion-panel-text>
 </template>
 

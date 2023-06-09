@@ -4,6 +4,8 @@
     <LayoutSideMenu />
     <FileLoaderWrapper />
 
+    <RightDrawer />
+
     <v-main class="secondary">
       <slot />
     </v-main>

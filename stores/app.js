@@ -6,10 +6,13 @@ export const use_app_store = defineStore('app', {
   state: () => ({
     display_menu: true,
     display_object_selector: false,
-    display_point_picker: false,
-    // display_right_drawer: true,
+    display_georeferencing_drawer: true,
+    picking_mode: false,
     object_tree: [],
-    points: []
+    picked_points: [
+      { x: 2, y: 5 },
+      { x: 48, y: 10 },
+      { x: 15, y: 478 },]
   }),
   getters: {
     are_textures_valid: (state) => (object_tree_index) => {
@@ -68,14 +71,16 @@ export const use_app_store = defineStore('app', {
       vtk_store.apply_textures({ id, textures })
       ws_link_store.$patch({ busy: false })
     },
-    set_display_point_picker (value) {
-
-      this.display_point_picker = value
+    toggle_picking_mode (value) {
+      this.picking_mode = value
     },
-    add_point (x, y) {
-      const point = { x, y }
-      this.points.push(point)
-      console.log('this.points', this.points)
+    toggle_display_georeferencing_drawer (value) {
+      this.display_georeferencing_drawer = value
+    },
+    set_picked_point (x, y) {
+      this.picked_point = { x, y }
+      this.display_point_picker = false
+      console.log('this.picked_point', this.picked_point)
     }
   }
 })
