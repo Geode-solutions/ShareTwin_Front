@@ -1,6 +1,6 @@
 <template>
   <v-col v-element-size="resize" style="overflow: hidden; position: relative; z-index: 1; height: 100%; width: 100%"
-    ref="viewer" class="viewer" @click="get_x_y">
+    ref="viewer" class="viewer" @click="get_x_y" @keydown.esc="app_store.toggle_picking_mode(false)">
   </v-col>
 </template>
 
@@ -70,7 +70,7 @@ onMounted(async () => {
     view.setContainer(viewer.value.$el)
     connect()
     resize()
-    app_store.toggle_picking_mode(true)
+    // app_store.toggle_picking_mode(true)
   }
 })
 

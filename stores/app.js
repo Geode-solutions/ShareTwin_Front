@@ -9,10 +9,11 @@ export const use_app_store = defineStore('app', {
     display_georeferencing_drawer: true,
     picking_mode: false,
     object_tree: [],
+    picked_point_index: 0,
     picked_points: [
-      { x: 2, y: 5 },
-      { x: 48, y: 10 },
-      { x: 15, y: 478 },]
+      { x: null, y: null },
+      { x: null, y: null },
+      { x: null, y: null },]
   }),
   getters: {
     are_textures_valid: (state) => (object_tree_index) => {
@@ -73,14 +74,24 @@ export const use_app_store = defineStore('app', {
     },
     toggle_picking_mode (value) {
       this.picking_mode = value
+      console.log('picking_mode', this.picking_mode)
     },
     toggle_display_georeferencing_drawer (value) {
       this.display_georeferencing_drawer = value
+      console.log('display_georeferencing_drawer', this.display_georeferencing_drawer)
+    },
+    set_picked_point_index (index) {
+      this.picked_point_index = index
+      console.log('picked_point_index ', this.picked_point_index)
     },
     set_picked_point (x, y) {
-      this.picked_point = { x, y }
-      this.display_point_picker = false
-      console.log('this.picked_point', this.picked_point)
+      console.log('set_picked_point')
+      console.log('picked_point_index', this.picked_point_index)
+      this.picked_points[this.picked_point_index].x = x
+      this.picked_points[this.picked_point_index].y = y
+      this.picking_mode = false
+      console.log('picking_mode', this.picking_mode)
+      console.log('picked_points', this.picked_points)
     }
   }
 })
