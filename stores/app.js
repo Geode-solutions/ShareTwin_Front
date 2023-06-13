@@ -74,23 +74,21 @@ export const use_app_store = defineStore('app', {
     },
     toggle_picking_mode (value) {
       this.picking_mode = value
-      console.log('picking_mode', this.picking_mode)
     },
     toggle_display_georeferencing_drawer (value) {
       this.display_georeferencing_drawer = value
-      console.log('display_georeferencing_drawer', this.display_georeferencing_drawer)
     },
     set_picked_point_index (index) {
       this.picked_point_index = index
-      console.log('picked_point_index ', this.picked_point_index)
     },
     set_picked_point (x, y) {
-      console.log('set_picked_point')
-      console.log('picked_point_index', this.picked_point_index)
+      const vtk_store = use_vtk_store()
+      console.log('camera x', x)
+      console.log('camera y', y)
+      vtk_store.get_point_position({ x, y })
       this.picked_points[this.picked_point_index].x = x
       this.picked_points[this.picked_point_index].y = y
       this.picking_mode = false
-      console.log('picking_mode', this.picking_mode)
       console.log('picked_points', this.picked_points)
     }
   }
