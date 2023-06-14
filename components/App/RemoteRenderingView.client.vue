@@ -5,7 +5,6 @@
 </template>
 
 <script setup>
-import { use_app_store } from '@/stores/app'
 import vtkRemoteView from '@kitware/vtk.js/Rendering/Misc/RemoteView';
 import { vElementSize } from '@vueuse/components'
 

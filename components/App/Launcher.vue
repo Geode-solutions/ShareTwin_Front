@@ -16,8 +16,6 @@
 </template>
 
 <script setup>
-import { use_cloud_store } from '@/stores/cloud'
-import { use_ws_link_store } from '@/stores/ws_link'
 import { VueRecaptcha } from "vue-recaptcha"
 
 const ws_link_store = use_ws_link_store()
