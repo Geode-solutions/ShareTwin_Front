@@ -9,11 +9,8 @@ export const use_app_store = defineStore('app', {
     display_georeferencing_drawer: true,
     picking_mode: false,
     object_tree: [],
-    picked_point_index: 0,
-    picked_points: [
-      { x: null, y: null },
-      { x: null, y: null },
-      { x: null, y: null },]
+    picked_point: { x: null, y: null }
+
   }),
   getters: {
     are_textures_valid: (state) => (object_tree_index) => {
@@ -78,18 +75,16 @@ export const use_app_store = defineStore('app', {
     toggle_display_georeferencing_drawer (value) {
       this.display_georeferencing_drawer = value
     },
-    set_picked_point_index (index) {
-      this.picked_point_index = index
-    },
-    set_picked_point (x, y) {
+    async set_picked_point (x, y) {
       const vtk_store = use_vtk_store()
       console.log('camera x', x)
       console.log('camera y', y)
-      vtk_store.get_point_position({ x, y })
-      this.picked_points[this.picked_point_index].x = x
-      this.picked_points[this.picked_point_index].y = y
+      const response = await vtk_store.get_point_position({ x, y })
+      console.log('response', response)
+      const { x: world_x, y: world_y } = response
+      this.picked_points[this.picked_point_index].x = world_x
+      this.picked_points[this.picked_point_index].y = world_y
       this.picking_mode = false
-      console.log('picked_points', this.picked_points)
     }
   }
 })

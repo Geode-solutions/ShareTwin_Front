@@ -38,12 +38,13 @@ export const use_vtk_store = defineStore('vtk', {
       const ws_link_store = use_ws_link_store()
       if (ws_link_store.client) {
         ws_link_store.$patch({ busy: true })
-        use_ws_link_store().client
+        const response = await use_ws_link_store().client
           .getRemote()
           .vtk.get_point_position(params)
           .catch(console.error);
-
+        console.log('response', response)
         ws_link_store.$patch({ busy: false })
+        return response
       }
     }
   }

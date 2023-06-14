@@ -8,7 +8,7 @@
         <v-btn flat icon="mdi-close" size="25" @click="app_store.toggle_display_georeferencing_drawer(false)" />
       </v-row>
     </v-container>
-    <v-card v-for="(picked_point, index) in picked_points" elevation="2" class="pa-2">
+    <v-card v-for="(picked_point, index) in real_picked_points" elevation="2" class="pa-2">
       <v-card-title>
         <v-row>
           <v-col>
@@ -62,15 +62,29 @@
 import { use_app_store } from '@/stores/app'
 const app_store = use_app_store()
 
-
-const real_picked_points = []
-
-function test (point_index) {
-  app_store.set_picked_point_index(point_index)
-  app_store.toggle_picking_mode(true)
+function create_data () {
+  const world_x = ref(null)
+  const world_y = ref(null)
+  const real_x = ref(null)
+  const real_y = ref(null)
+  return { world_x, world_y, real_x, real_y }
 }
 
-const { display_georeferencing_drawer, picked_points } = storeToRefs(app_store)
+const real_picked_points = [create_data(), create_data(), create_data()]
+const { display_georeferencing_drawer, picking_mode } = storeToRefs(app_store)
+
+function test (point_index) {
+  // app_store.set_picked_point_index(point_index)
+  app_store.toggle_picking_mode(true)
+
+
+  watchOnce(picking_mode, (value) => {
+    // triggers only once
+    console.log('source changed!')
+  })
+
+}
+
 
 
 </script>
