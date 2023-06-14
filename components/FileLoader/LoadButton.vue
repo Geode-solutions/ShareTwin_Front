@@ -11,9 +11,6 @@
 </template>
 
 <script setup>
-import { use_app_store } from '@/stores/app'
-import { use_ws_link_store } from '@/stores/ws_link'
-import { use_vtk_store } from '@/stores/vtk'
 
 const app_store = use_app_store()
 const vtk_store = use_vtk_store()

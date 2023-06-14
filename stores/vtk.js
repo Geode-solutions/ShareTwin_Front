@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { use_ws_link_store } from './ws_link'
 
 export const use_vtk_store = defineStore('vtk', {
   state: () => ({}),

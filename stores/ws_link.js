@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { use_cloud_store } from '@/stores/cloud'
 import _ from 'lodash'
 
 import vtkWSLinkClient from '@kitware/vtk.js/IO/Core/WSLinkClient'

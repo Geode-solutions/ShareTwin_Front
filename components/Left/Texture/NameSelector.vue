@@ -4,7 +4,6 @@
 </template>
 
 <script setup>
-import { use_app_store } from '@/stores/app'
 
 const app_store = use_app_store()
 

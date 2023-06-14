@@ -3,6 +3,8 @@
     <LayoutHeader />
     <LayoutSideMenu />
     <FileLoaderWrapper />
+    <ErrorsBanner />
+    <ErrorsSnackers />
 
     <RightDrawer />
 

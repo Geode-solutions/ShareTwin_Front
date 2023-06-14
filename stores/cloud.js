@@ -6,8 +6,6 @@ export const use_cloud_store = defineStore('cloud', {
     is_captcha_validated: false,
     is_cloud_running: false,
     is_connexion_launched: false,
-    is_under_maintenance: false,
-    internal_error: false,
     request_counter: 0
   }),
   getters: {
@@ -48,7 +46,9 @@ export const use_cloud_store = defineStore('cloud', {
       }
     },
     async create_backend () {
-      const { data, error } = await useFetch(`${this.geode_url}/sharetwin/createbackend`, { method: 'POST' })
+      const public_runtime_config = useRuntimeConfig().public
+      const errors_store = use_errors_store()
+      const { data, error } = await useFetch(`${public_runtime_config.GEODE_PROTOCOL}://${public_runtime_config.API_URL}:${public_runtime_config.GEODE_PORT}/sharetwin/createbackend`, { method: 'POST' })
       if (data.value !== null) {
         this.ID = data.value.ID
         localStorage.setItem('ID', data.value.ID)
@@ -56,7 +56,7 @@ export const use_cloud_store = defineStore('cloud', {
         return this.ping_task()
       } else {
         console.log("error : ", error)
-        this.internal_error = true
+        errors_store.server_error = true
       }
     },
 
@@ -64,12 +64,12 @@ export const use_cloud_store = defineStore('cloud', {
       setInterval(() => this.do_ping(), 10 * 1000)
     },
     async do_ping () {
+      const errors_store = use_errors_store()
       const { data, error } = await useFetch(`${this.geode_url}/ping`, { method: 'POST' })
       if (data.value !== null) {
         this.is_cloud_running = true
       } else {
-        this.is_cloud_running = false
-        this.internal_error = true
+        errors_store.server_error = true
         console.log("error : ", error)
       }
     },

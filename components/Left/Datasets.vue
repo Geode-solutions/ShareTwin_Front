@@ -26,7 +26,6 @@
 </template>
 
 <script setup>
-import { use_app_store } from '@/stores/app'
 import geode_objects from '@/assets/geode_objects'
 import { storeToRefs } from 'pinia'
 
