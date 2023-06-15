@@ -32,8 +32,12 @@ const allowed_objects = ref([])
 async function get_allowed_objects (input_files) {
   const params = new FormData()
   params.append('filename', input_files[0].name)
-  const { data } = await api_fetch(`/allowed_objects`, { body: params, method: 'POST' })
-  allowed_objects.value = data.value.objects
+  await api_fetch(`/allowed_objects`, { method: 'POST', body: params },
+    {
+      'response_function': (response) => {
+        allowed_objects.value = response._data.allowed_objects
+      }
+    })
 }
 
 function set_geode_object (geode_object) {
