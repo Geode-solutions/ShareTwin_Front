@@ -41,29 +41,29 @@ async function convert_file () {
       params.append('old_file_name', input_files[i].name)
       params.append('file_size', input_files[i].size)
 
-      await api_fetch(`/convert_file`, {
-        body: params, method: 'POST', async onResponse ({ response }) {
 
-          vtk_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
+      await api_fetch(`/convert_file`, { method: 'POST', body: params },
+        {
+          'response_function': (response) => {
 
-          const object_tree_item = {
-            'id': response._data.id,
-            'name': response._data.name,
-            'native_file_name': response._data.native_file_name,
-            'viewable_file_name': response._data.viewable_file_name,
-            'geode_object': input_geode_object
+            vtk_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
+
+            const object_tree_item = {
+              'id': response._data.id,
+              'name': response._data.name,
+              'native_file_name': response._data.native_file_name,
+              'viewable_file_name': response._data.viewable_file_name,
+              'geode_object': input_geode_object
+            }
+            app_store.add_object_tree_item(object_tree_item)
+
+            stepper_tree.current_step_index = 0
+            stepper_tree.files = []
+            stepper_tree.geode_object = ''
           }
-          app_store.add_object_tree_item(object_tree_item)
-
-          stepper_tree.current_step_index = 0
-          stepper_tree.files = []
-          stepper_tree.geode_object = ''
-        },
-        onError ({ error }) {
-          console.log(error)
-          console.log(response)
         }
-      })
+      )
+
       ws_link_store.$patch({ busy: false })
     }
     reader.readAsDataURL(input_files[i])

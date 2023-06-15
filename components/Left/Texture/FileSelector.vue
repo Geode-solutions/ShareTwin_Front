@@ -30,13 +30,11 @@ async function get_raster_image_input_extensions () {
   const params = new FormData()
   params.append('geode_object', 'RasterImage2D')
   await api_fetch(`/object_allowed_files`, {
-    body: params, method: 'POST', async onResponse ({ response }) {
+    body: params, method: 'POST'
+  }, {
+    'response_function': (response) => {
       raster_image_input_extensions.value = response._data.extensions.map((extension) => '.' + extension).join(',')
     },
-    onError ({ response, error }) {
-      console.log(error)
-      console.log(response)
-    }
   })
   ws_link_store.$patch({ busy: false })
 }
@@ -65,17 +63,18 @@ function convert_raster_image () {
     params.append('file_size', texture_file.value[0].size)
 
     await api_fetch(`/convert_file`, {
-      body: params, method: 'POST', async onResponse ({ response }) {
-        viewable_file_name.value = response._data.viewable_file_name
-        display_badge.value = true
-      },
-      onError ({ error }) {
-        display_color.value = false
-        display_badge.value = false
-        console.log(error)
-        console.log(response)
-      }
-    })
+      body: params, method: 'POST'
+    },
+      {
+        'response_function': (response) => {
+          viewable_file_name.value = response._data.viewable_file_name
+          display_badge.value = true
+        },
+        'response_error_function': () => {
+          display_color.value = false
+          display_badge.value = false
+        }
+      })
     ws_link_store.$patch({ busy: false })
   }
   reader.readAsDataURL(texture_file.value[0])

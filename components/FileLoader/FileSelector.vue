@@ -25,12 +25,12 @@ function fill_extensions (response) {
   accept.value = extensions
 }
 
-async function get_allowed_files (tool_route) {
-  const route = `${tool_route}/allowed_files`
+async function get_allowed_files () {
+  const route = `/allowed_files`
   await api_fetch(route, { method: 'GET' },
     {
-      'response_function': () => {
-        fill_extensions()
+      'response_function': (response) => {
+        fill_extensions(response)
       }
     })
 }
