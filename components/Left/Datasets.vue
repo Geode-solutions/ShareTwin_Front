@@ -21,7 +21,7 @@
   </v-expansion-panel-title>
   <v-expansion-panel-text>
     <LeftTextureMenu :object_tree_index="object_tree_index" />
-    <LeftGeoReferencingActivator></LeftGeoReferencingActivator>
+    <LeftCoordinateSystems :object_tree_index="object_tree_index"></LeftCoordinateSystems>
   </v-expansion-panel-text>
 </template>
 

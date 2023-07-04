@@ -9,7 +9,6 @@
 </template>
 
 <script setup>
-
 const app_store = use_app_store()
 const cloud_store = use_cloud_store()
 

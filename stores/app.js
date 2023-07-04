@@ -4,9 +4,17 @@ export const use_app_store = defineStore('app', {
   state: () => ({
     display_menu: true,
     display_object_selector: false,
-    display_georeferencing_drawer: true,
+    display_georeferencing_drawer: false,
     picking_mode: false,
-    object_tree: [],
+    object_tree: [{
+      'id': 'response._data.id',
+      'name': 'response._data.name',
+      'native_file_name': 'response._data.native_file_name',
+      'viewable_file_name': 'response._data.viewable_file_name',
+      'geode_object': 'input_geode_object',
+      'crs': [{ 'name': 'data', 'is_geo': true, 'is_active': true },
+      { 'name': 'data', 'is_geo': false, 'is_active': true }]
+    }],
     picked_point: { x: null, y: null }
 
   }),
