@@ -90,8 +90,8 @@ export const use_app_store = defineStore('app', {
       const response = await vtk_store.get_point_position({ x, y })
       console.log('response', response)
       const { x: world_x, y: world_y } = response
-      this.picked_points[this.picked_point_index].x = world_x
-      this.picked_points[this.picked_point_index].y = world_y
+      this.picked_point.x = world_x
+      this.picked_point.y = world_y
       this.picking_mode = false
     }
   }

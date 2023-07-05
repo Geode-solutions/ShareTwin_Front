@@ -16,8 +16,6 @@
       <v-expansion-panel-text class="pa-0">
         <v-row>
           <v-col align-self-center>
-
-
             <v-radio-group v-model="id">
               <v-row v-for="(coordinate_system, index) in coordinate_systems" align="center" class="pa-0">
                 <v-col class="pa-1">
