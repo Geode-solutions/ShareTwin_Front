@@ -54,7 +54,7 @@ async function convert_file () {
               'native_file_name': response._data.native_file_name,
               'viewable_file_name': response._data.viewable_file_name,
               'geode_object': input_geode_object,
-              'crs': [{ 'name': 'data', 'is_geo': true, 'is_active': true },
+              'coordinate_systems': [{ 'name': 'data', 'is_geo': true, 'is_active': true },
               { 'name': 'data', 'is_geo': false, 'is_active': true }]
             }
             app_store.add_object_tree_item(object_tree_item)

@@ -13,20 +13,30 @@
           </v-col>
         </v-row>
       </v-expansion-panel-title>
-      <v-expansion-panel-text clas="pa-0">
-
-        <v-radio-group v-model="id">
-          {{ id }}
-          <v-radio label="Radio 1" value="1"></v-radio>
-          <v-radio label="Radio 2" value="2"></v-radio>
-          <v-radio label="Radio 3" value="3"></v-radio>
-        </v-radio-group>
+      <v-expansion-panel-text class="pa-0">
         <v-row>
           <v-col align-self-center>
 
-            <v-btn text="Georeference" @click="app_store.toggle_display_georeferencing_drawer(true)" color="primary">
 
-            </v-btn>
+            <v-radio-group v-model="id">
+              <v-row v-for="(coordinate_system, index) in coordinate_systems" align="center" class="pa-0">
+                <v-col class="pa-1">
+                  <v-radio :label=coordinate_system.name :value=index />
+                </v-col>
+                <v-spacer />
+                <v-col align-self-center class="text-center justify-center pa-0">
+                  <v-btn v-if="coordinate_system.is_geo" text="Convert" color="primary" rounded density='compact' />
+                  <v-btn v-else text="Assign" color="primary" rounded density='compact' />
+                </v-col>
+              </v-row>
+            </v-radio-group>
+          </v-col>
+        </v-row>
+        <v-divider class="pa-2" />
+        <v-row>
+          <v-col cols="12" align="center">
+            <v-btn text="Georeference" @click="app_store.toggle_display_georeferencing_drawer(true)" color="primary"
+              rounded />
           </v-col>
         </v-row>
       </v-expansion-panel-text>
@@ -37,6 +47,7 @@
 <script setup>
 
 const app_store = use_app_store()
+const ws_link_store = use_ws_link_store()
 
 const props = defineProps({
   object_tree_index: { type: Number, required: true }
@@ -51,26 +62,29 @@ const native_file_name = current_object['native_file_name']
 const geode_object = current_object['geode_object']
 
 const id = ref(0)
+const coordinate_systems = ref([])
 
 async function get_coordinate_systems () {
-  loading.value = true
+  ws_link_store.$patch({ busy: true })
   const params = new FormData()
   params.append('native_file_name', native_file_name)
   params.append('geode_object', geode_object)
   await api_fetch(`/coordinate_systems`, { body: params, method: 'POST' }, {
     'response_function': (response) => {
+      console.log(response)
       coordinate_systems.value = response._data.coordinate_systems
     }
   })
-  loading.value = false
+  ws_link_store.$patch({ busy: false })
 }
 
 
 onMounted(() => {
   get_coordinate_systems()
 })
-
-// const { object_tree_index } = props
-// const { object_tree } = storeToRefs(app_store)
 </script>
-<style scoped></style>
+<style scoped>
+.v-btn {
+  text-transform: unset !important;
+}
+</style>
