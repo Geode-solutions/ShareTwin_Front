@@ -1,58 +1,69 @@
 <template>
   <v-navigation-drawer v-model="display_georeferencing_drawer" clipped permanent app fixed disable-resize-watcher
     width="300" location="right">
-    <v-container>
-      <v-row>
-        <v-spacer />
-        <v-col></v-col>
-        <v-btn flat icon="mdi-close" size="25" @click="app_store.toggle_display_georeferencing_drawer(false)" />
-      </v-row>
-    </v-container>
-    <v-card v-for="(picked_point, index) in real_picked_points" elevation="2" class="pa-5">
-      <v-card-title>
-        <v-row>
-          <v-col>
-            Point {{ index + 1 }}
-          </v-col>
-        </v-row>
+    <v-row>
+      <v-col>
 
-      </v-card-title>
-      <v-card-text>
-        <v-row>
-          <v-col cols="4">
-            x : {{ picked_point.x }}
-          </v-col>
-          <v-col cols="4">
-            y : {{ picked_point.y }}
-          </v-col>
-          <v-spacer />
-          <v-col>
-            <v-tooltip text="Toggle picking mode" location="left">
-              <template v-slot:activator="{ props }">
-                <v-btn flat icon size="20" @click="test(index)">
-                  <v-icon size="20" color="primary" v-bind="props">mdi-crosshairs-gps</v-icon>
-                </v-btn>
-              </template>
-            </v-tooltip>
-          </v-col>
-        </v-row>
-        <v-row>
+        <v-container>
+          <v-row>
+            <v-spacer />
+            <v-col></v-col>
+            <v-btn flat icon="mdi-close" size="25" @click="app_store.toggle_display_georeferencing_drawer(false)" />
+          </v-row>
+        </v-container>
+      </v-col>
+    </v-row>
+    <v-row>
 
-        </v-row>
-        <v-row>
-          <v-col>
-            <v-text-field label="X" density='compact' />
-          </v-col>
-          <v-col>
-            <v-text-field label="Y" density='compact' />
-          </v-col>
-        </v-row>
-        <v-row>
+      <v-card v-for="(picked_point, index) in real_picked_points" elevation="2" class="pa-0">
+        <v-card-title>
+          Point {{ index + 1 }}
+        </v-card-title>
+        <v-card-text>
+          <v-row align="center">
+            <v-col cols="8">
+              <v-row>
+                <v-col cols="6">
+                  <v-chip>
+                    Picked x : {{ picked_point.x }}
+                  </v-chip>
+                </v-col>
+                <v-col cols="6">
+                  <v-chip>
+                    Picked y : {{ picked_point.y }}
+                  </v-chip>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-spacer />
+            <v-col cols="auto">
+              <v-tooltip text="Toggle picking mode" location="left">
+                <template v-slot:activator="{ props }">
+                  <v-btn flat icon size="20" @click="test(index)">
+                    <v-icon size="20" color="primary" v-bind="props">mdi-crosshairs-gps</v-icon>
+                  </v-btn>
+                </template>
+              </v-tooltip>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col class="py-0">
+              <v-text-field label="Real x" type="number" step="0.01" density='compact' />
+            </v-col>
+            <v-col class="py-0">
+              <v-text-field label="Real y" type="number" step="0.01" density='compact' />
+            </v-col>
+          </v-row>
+        </v-card-text>
+        <v-divider v-if="index <= real_picked_points.length" />
+      </v-card>
+    </v-row>
+    <v-row align="center">
+      <v-col class='text-center'>
 
-        </v-row>
-      </v-card-text>
-      <v-divider v-if="index <= real_picked_points.length" />
-    </v-card>
+        <v-btn text="Apply georeferecing" :disabled="!are_textures_valid" color="primary" rounded />
+      </v-col>
+    </v-row>
 
   </v-navigation-drawer>
 </template>
@@ -90,4 +101,8 @@ function test (point_index) {
 
 
 
-<style scoped></style>
+<style scoped>
+.v-btn {
+  text-transform: unset !important;
+}
+</style>
