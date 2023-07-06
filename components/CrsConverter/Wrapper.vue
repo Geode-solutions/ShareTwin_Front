@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="display_object_selector" width="70%" class="dialog" transition="dialog-top-transition">
+  <v-dialog v-model="display_crs_assign_panel" width="70%" class="dialog" transition="dialog-top-transition">
     <v-row>
       <v-col cols="11" class="pa-0">
       </v-col>
@@ -18,7 +18,6 @@
 
 <script setup>
 import CrsConverterCrsSelector from '@/components/CrsConverter/CrsSelector.vue'
-import FileLoaderObjectSelector from '@/components/CrsConverter/ObjectSelector.vue'
 import FileLoaderLoadButton from '@/components/FileLoader/LoadButton.vue'
 
 const app_store = use_app_store()

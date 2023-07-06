@@ -7,6 +7,7 @@ export default function createMethods (session) {
     reset_camera: () => session.call('reset_camera', []),
     toggle_object_visibility: (params) => session.call('toggle_object_visibility', [params]),
     apply_textures: (params) => session.call('apply_textures', [params]),
-    get_point_position: (params) => session.call('get_point_position', [params])
+    get_point_position: (params) => session.call('get_point_position', [params]),
+    update_data: (params) => session.call('get_poupdate_dataint_position', [params])
   };
 }
