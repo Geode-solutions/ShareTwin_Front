@@ -14,7 +14,6 @@
             </v-btn>
           </template>
         </v-tooltip>
-
       </v-col>
       <v-col cols="auto" class="pa-0 align-self-center">
         <v-tooltip :text="object_tree[object_tree_index].geode_object" location="bottom">

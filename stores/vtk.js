@@ -45,6 +45,19 @@ export const use_vtk_store = defineStore('vtk', {
         ws_link_store.$patch({ busy: false })
         return response
       }
+    },
+    async update_data (params) {
+      const ws_link_store = use_ws_link_store()
+      if (ws_link_store.client) {
+        ws_link_store.$patch({ busy: true })
+        const response = await use_ws_link_store().client
+          .getRemote()
+          .vtk.update_data(params)
+          .catch(console.error);
+        console.log('response', response)
+        ws_link_store.$patch({ busy: false })
+        return response
+      }
     }
   }
 })
