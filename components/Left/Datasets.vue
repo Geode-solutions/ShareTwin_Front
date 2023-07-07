@@ -32,7 +32,7 @@
   </v-expansion-panel-title>
   <v-expansion-panel-text>
     <LeftTextureMenu :object_tree_index="object_tree_index" />
-    <LeftCoordinateSystems :object_tree_index="object_tree_index"></LeftCoordinateSystems>
+    <LeftCoordinateSystems :object_tree_index="object_tree_index" />
   </v-expansion-panel-text>
 </template>
 

@@ -33,8 +33,8 @@
         <v-divider class="pa-2" />
         <v-row>
           <v-col cols="12" align="center">
-            <v-btn text="Georeference" @click="app_store.toggle_display_georeferencing_drawer(true)" color="primary"
-              rounded />
+            <v-btn text="Georeference" @click="app_store.toggle_display_georeferencing_drawer(true, object_tree_index)"
+              color="primary" rounded />
           </v-col>
         </v-row>
       </v-expansion-panel-text>

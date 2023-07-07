@@ -83,7 +83,7 @@ function create_data () {
 }
 
 const real_picked_points = [create_data(), create_data(), create_data()]
-const { display_georeferencing_drawer, picking_mode, picked_point } = storeToRefs(app_store)
+const { display_georeferencing_drawer, picking_mode, picked_point, object_tree, object_tree_index } = storeToRefs(app_store)
 
 function pick_point (point_index) {
   // app_store.set_picked_point_index(point_index)
@@ -114,10 +114,11 @@ function real_picked_points_valid () {
 
 async function apply_georeferencing () {
   ws_link_store.$patch({ busy: true })
+  console.log('object_tree_index', object_tree_index.value)
   const params = new FormData()
-  params.append('geode_object', geode_object)
-  params.append('id', id)
-  params.append('filename', filename)
+  params.append('geode_object', object_tree.value[object_tree_index.value].geode_object)
+  params.append('id', object_tree.value[object_tree_index.value].id)
+  params.append('filename', object_tree.value[object_tree_index.value].native_file_name)
   params.append('coordinate_system_name', coordinate_system_name)
   params.append('input_origin_x', real_picked_points[0].world_x)
   params.append('input_origin_y', real_picked_points[0].world_y)

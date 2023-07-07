@@ -17,6 +17,7 @@ export const use_app_store = defineStore('app', {
       //   { 'name': 'data', 'is_geo': false, 'is_active': true }]
       // }
     ],
+    object_tree_index: null,
     picked_point: { x: null, y: null }
 
   }),
@@ -80,8 +81,9 @@ export const use_app_store = defineStore('app', {
     toggle_picking_mode (value) {
       this.picking_mode = value
     },
-    toggle_display_georeferencing_drawer (value) {
+    toggle_display_georeferencing_drawer (value, object_tree_index) {
       this.display_georeferencing_drawer = value
+      this.object_tree_index = object_tree_index
     },
     async set_picked_point (x, y) {
       const vtk_store = use_vtk_store()
