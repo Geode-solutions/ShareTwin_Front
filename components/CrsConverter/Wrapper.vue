@@ -18,7 +18,7 @@
 
 <script setup>
 import CrsConverterCrsSelector from '@/components/CrsConverter/CrsSelector.vue'
-import FileLoaderLoadButton from '@/components/FileLoader/LoadButton.vue'
+import CrsConverterConvertButton from '@/components/CrsConverter/Convert/Button.vue'
 
 const app_store = use_app_store()
 const { display_object_selector } = storeToRefs(app_store)
@@ -60,7 +60,7 @@ const stepper_tree = reactive({
     {
       step_title: 'Convert your file',
       component: {
-        component_name: shallowRef(ToolsCrsSelectorConversionButton),
+        component_name: shallowRef(CrsConverterConvertButton),
         component_options: {
           input_files: files,
           input_geode_object: geode_object,

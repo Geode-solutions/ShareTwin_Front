@@ -4,6 +4,8 @@ export const use_app_store = defineStore('app', {
   state: () => ({
     display_menu: true,
     display_object_selector: false,
+    display_crs_assigner: false,
+    display_crs_converter: false,
     display_georeferencing_drawer: false,
     picking_mode: false,
     object_tree: [
@@ -83,6 +85,16 @@ export const use_app_store = defineStore('app', {
     },
     toggle_display_georeferencing_drawer (value, object_tree_index) {
       this.display_georeferencing_drawer = value
+      this.object_tree_index = object_tree_index
+    },
+    toggle_display_crs_assigner (value, object_tree_index) {
+      console.log('toggle_display_crs_assigner', value)
+      this.display_crs_assigner = value
+      this.object_tree_index = object_tree_index
+    },
+    toggle_display_crs_converter (value, object_tree_index) {
+      console.log('toggle_display_crs_converter', value)
+      this.display_crs_converter = value
       this.object_tree_index = object_tree_index
     },
     async set_picked_point (x, y) {

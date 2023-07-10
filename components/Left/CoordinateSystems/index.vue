@@ -23,8 +23,10 @@
                 </v-col>
                 <v-spacer />
                 <v-col align-self-center class="text-center justify-center pa-0">
-                  <v-btn v-if="coordinate_system.is_geo" text="Convert" color="primary" rounded density='compact' />
-                  <v-btn v-else text="Assign" color="primary" rounded density='compact' />
+                  <v-btn v-if="coordinate_system.is_geo" text="Convert" color="primary" rounded density='compact'
+                    @click="app_store.toggle_display_crs_assigner(true, object_tree_index)" />
+                  <v-btn v-else text="Assign" color="primary" rounded density='compact'
+                    @click="app_store.toggle_display_crs_converter(true, object_tree_index)" />
                 </v-col>
               </v-row>
             </v-radio-group>
