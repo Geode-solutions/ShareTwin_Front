@@ -56,7 +56,7 @@ async function get_crs_table () {
   params.append('geode_object', geode_object)
   const route = `/geographic_coordinate_systems`
   toggle_loading()
-  await api_fetch(route, { method: 'POST', body: params },
+  await api_fetch(route, { method: 'GET', body: params },
     {
       'request_error_function': () => { toggle_loading() },
       'response_function': (response) => {
