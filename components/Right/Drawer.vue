@@ -47,10 +47,12 @@
           </v-row>
           <v-row>
             <v-col class="py-0">
-              <v-text-field label="Real x" type="number" step="0.01" density='compact' />
+              <v-text-field label="Real x" type="number" step="0.01" density='compact'
+                :model-value="real_picked_points[index].real_x" />
             </v-col>
             <v-col class="py-0">
-              <v-text-field label="Real y" type="number" step="0.01" density='compact' />
+              <v-text-field label="Real y" type="number" step="0.01" density='compact'
+                :model-value="real_picked_points[index].real_y" />
             </v-col>
           </v-row>
         </v-card-text>
@@ -115,11 +117,14 @@ function real_picked_points_valid () {
 async function apply_georeferencing () {
   ws_link_store.$patch({ busy: true })
   console.log('object_tree_index', object_tree_index.value)
+  console.log('real_picked_points', real_picked_points)
+
   const params = new FormData()
+
   params.append('geode_object', object_tree.value[object_tree_index.value].geode_object)
   params.append('id', object_tree.value[object_tree_index.value].id)
   params.append('filename', object_tree.value[object_tree_index.value].native_file_name)
-  params.append('coordinate_system_name', coordinate_system_name)
+  params.append('coordinate_system_name', 'test')
   params.append('input_origin_x', real_picked_points[0].world_x)
   params.append('input_origin_y', real_picked_points[0].world_y)
   params.append('input_point_1_x', real_picked_points[1].world_x)
@@ -133,7 +138,7 @@ async function apply_georeferencing () {
   params.append('output_point_2_x', real_picked_points[2].real_x)
   params.append('output_point_2_y', real_picked_points[2].real_y)
 
-  await api_fetch(`/create_coordinate_system`, { body: params, method: 'POST' }, {
+  await api_fetch(`/georeference`, { body: params, method: 'POST' }, {
     'response_function': (response) => {
       console.log(response)
       vtk_store.update_data()
