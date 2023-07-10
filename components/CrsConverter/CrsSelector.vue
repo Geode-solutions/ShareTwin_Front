@@ -8,14 +8,19 @@
 <script setup>
 import { useToggle } from '@vueuse/core'
 
+const app_store = use_app_store()
+
 const props = defineProps({
   component_options: { type: Object, required: true },
 })
 
-const { input_geode_object, crs_key } = props.component_options
+const { crs_key } = props.component_options
+
+const { object_tree, object_tree_index } = storeToRefs(app_store)
 
 const stepper_tree = inject('stepper_tree')
-const { tool_route } = stepper_tree
+
+const geode_object = object_tree.value[object_tree_index.value].geode_object
 
 const search = ref('')
 const data_table_loading = ref(false)
@@ -46,8 +51,9 @@ function get_selected_crs (crs_code) {
 
 async function get_crs_table () {
   let params = new FormData()
-  params.append('geode_object', input_geode_object)
-  const route = `${tool_route}/geographic_coordinate_systems`
+  console.log('geode_object', geode_object)
+  params.append('geode_object', geode_object)
+  const route = `/geographic_coordinate_systems`
   toggle_loading()
   await api_fetch(route, { method: 'POST', body: params },
     {
@@ -75,6 +81,7 @@ const headers = [
 
 
 onMounted(() => {
+  console.log(object_tree.value)
   get_crs_table()
 })
 

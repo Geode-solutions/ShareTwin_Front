@@ -3,6 +3,8 @@
     <LayoutHeader />
     <LayoutSideMenu />
     <FileLoaderWrapper />
+    <CrsConverterWrapper />
+    <CrsAssignerWrapper />
     <ErrorsBanner />
     <ErrorsSnackers />
 
