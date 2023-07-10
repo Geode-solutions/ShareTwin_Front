@@ -131,17 +131,17 @@ async function apply_georeferencing () {
   params.append('input_point_1_y', real_picked_points[1].world_y)
   params.append('input_point_2_x', real_picked_points[2].world_x)
   params.append('input_point_2_y', real_picked_points[2].world_y)
-  params.append('output_origin_x', real_picked_points[0].real_x)
-  params.append('output_origin_y', real_picked_points[0].real_y)
-  params.append('output_point_1_x', real_picked_points[1].real_x)
-  params.append('output_point_1_y', real_picked_points[1].real_y)
-  params.append('output_point_2_x', real_picked_points[2].real_x)
-  params.append('output_point_2_y', real_picked_points[2].real_y)
+  params.append('output_origin_x', real_picked_points[0].real_x.value)
+  params.append('output_origin_y', real_picked_points[0].real_y.value)
+  params.append('output_point_1_x', real_picked_points[1].real_x.value)
+  params.append('output_point_1_y', real_picked_points[1].real_y.value)
+  params.append('output_point_2_x', real_picked_points[2].real_x.value)
+  params.append('output_point_2_y', real_picked_points[2].real_y.value)
 
   await api_fetch(`/georeference`, { body: params, method: 'POST' }, {
     'response_function': (response) => {
       console.log(response)
-      vtk_store.update_data()
+      vtk_store.update_data({ id: object_tree.value[object_tree_index.value].id })
     }
   })
   ws_link_store.$patch({ busy: false })

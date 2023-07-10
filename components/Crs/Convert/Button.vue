@@ -14,6 +14,7 @@
 import { useToggle } from '@vueuse/core'
 
 const app_store = use_app_store()
+const vtk_store = use_vtk_store()
 
 const props = defineProps({
   component_options: { type: Object, required: true }
@@ -49,6 +50,8 @@ async function convert_files () {
         stepper_tree.current_step_index = 0
         stepper_tree.input_crs = {}
         stepper_tree.output_crs = {}
+
+        vtk_store.update_data({ id: object_tree_item.id })
       },
       'response_error_function': () => { toggle_loading() }
     }
