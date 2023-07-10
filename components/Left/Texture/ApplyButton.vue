@@ -30,7 +30,7 @@ function apply_textures (object_tree_index) {
 }
 </script>
 
-<style>
+<style scoped>
 .btn {
   text-transform: unset !important;
 }

@@ -21,7 +21,7 @@ import CrsSelector from '@/components/Crs/Selector.vue'
 import CrsConvertButton from '@/components/Crs/Convert/Button.vue'
 
 const app_store = use_app_store()
-const { display_crs_converter } = storeToRefs(app_store)
+const { display_crs_converter, object_tree_index } = storeToRefs(app_store)
 
 const input_crs = ref({})
 const output_crs = ref({})
@@ -60,6 +60,7 @@ const stepper_tree = reactive({
       component: {
         component_name: shallowRef(CrsConvertButton),
         component_options: {
+          object_tree_index: object_tree_index,
           input_crs: input_crs,
           output_crs: output_crs
         }
@@ -72,7 +73,7 @@ const stepper_tree = reactive({
 provide('stepper_tree', stepper_tree)
 
 </script>
-<style>
+<style scoped>
 .dialog {
   border-radius: 15px
 }

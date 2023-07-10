@@ -5,7 +5,7 @@
       <v-progress-circular indeterminate size="20" color="white" width="3" />
     </template>
   </v-btn>
-  <v-btn variant="text" @click="current_step = 3">
+  <v-btn variant="text" @click="stepper_tree.current_step_index = 3">
     Cancel
   </v-btn>
 </template>

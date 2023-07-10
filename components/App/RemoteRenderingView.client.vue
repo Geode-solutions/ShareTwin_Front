@@ -69,7 +69,6 @@ onMounted(async () => {
     view.setContainer(viewer.value.$el)
     connect()
     resize()
-    // app_store.toggle_picking_mode(true)
   }
 })
 

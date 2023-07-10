@@ -78,7 +78,7 @@ const stepper_tree = reactive({
 provide('stepper_tree', stepper_tree)
 
 </script>
-<style>
+<style scoped>
 .dialog {
   border-radius: 15px
 }
