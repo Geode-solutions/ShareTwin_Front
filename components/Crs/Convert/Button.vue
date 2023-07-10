@@ -13,21 +13,22 @@
 <script setup>
 import { useToggle } from '@vueuse/core'
 
+const app_store = use_app_store()
+
 const props = defineProps({
-  object_tree_index: { type: Number, required: true }
+  component_options: { type: Object, required: true }
 })
-const { object_tree_index } = props
+
+const { object_tree_index, output_crs } = props.component_options
 const stepper_tree = inject('stepper_tree')
-
 const loading = ref(false)
-
 const toggle_loading = useToggle(loading)
 
 async function convert_files () {
   for (let i = 0; i < input_files.length; i++) {
     let params = new FormData()
 
-    params.append('geode_object', input_geode_object)
+    params.append('geode_object', app_store.object_tree[object_tree_index].geode_object)
     params.append('filename', input_files[i].name)
     params.append('input_crs_authority', input_crs['authority'])
     params.append('input_crs_code', input_crs['code'])
@@ -46,6 +47,9 @@ async function convert_files () {
         'request_error_function': () => { toggle_loading() },
         'response_function': () => {
           toggle_loading()
+          stepper_tree.current_step_index = 0
+          stepper_tree.input_crs = {}
+          stepper_tree.output_crs = {}
         },
         'response_error_function': () => { toggle_loading() }
       }

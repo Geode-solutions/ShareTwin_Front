@@ -30,6 +30,7 @@ const toggle_loading = useToggle(data_table_loading)
 
 watch(selected_crs, (new_value) => {
   const crs = get_selected_crs(new_value[0])
+  console.log(crs_key)
   set_crs(crs_key, crs)
 })
 
@@ -81,7 +82,6 @@ const headers = [
 
 
 onMounted(() => {
-  console.log(object_tree.value)
   get_crs_table()
 })
 

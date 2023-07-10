@@ -1,10 +1,10 @@
 <template>
-  <v-dialog v-model="display_crs_assigner" width="70%" class="dialog" transition="dialog-top-transition">
+  <v-dialog v-model="display_crs_converter" width="70%" class="dialog" transition="dialog-top-transition">
     <v-row>
       <v-col cols="11" class="pa-0">
       </v-col>
       <v-col cols="1" class="pa-0">
-        <v-btn color="primary" width="5" @click="app_store.$patch({ display_crs_assigner: false })"><v-icon
+        <v-btn color="primary" width="5" @click="app_store.$patch({ display_crs_converter: false })"><v-icon
             icon="mdi-close" color="white" /></v-btn>
       </v-col>
     </v-row>
@@ -17,24 +17,24 @@
 </template>
 
 <script setup>
-import CrsConverterCrsSelector from '@/components/CrsConverter/CrsSelector.vue'
-import CrsConverterConvertButton from '@/components/CrsConverter/Convert/Button.vue'
+import CrsSelector from '@/components/Crs/Selector.vue'
+import CrsConvertButton from '@/components/Crs/Convert/Button.vue'
 
 const app_store = use_app_store()
-const { display_crs_assigner } = storeToRefs(app_store)
+const { display_crs_converter } = storeToRefs(app_store)
 
-const files = ref([])
 const input_crs = ref({})
 const output_crs = ref({})
 
 const stepper_tree = reactive({
   current_step_index: ref(0),
-  files: files,
+  input_crs: input_crs,
+  output_crs: output_crs,
   steps: [
     {
       step_title: 'Select an input coordinate reference system',
       component: {
-        component_name: shallowRef(CrsConverterCrsSelector),
+        component_name: shallowRef(CrsSelector),
         component_options: {
           crs_key: 'input_crs'
         }
@@ -46,7 +46,7 @@ const stepper_tree = reactive({
     {
       step_title: 'Select an output coordinate reference system',
       component: {
-        component_name: shallowRef(CrsConverterCrsSelector),
+        component_name: shallowRef(CrsSelector),
         component_options: {
           crs_key: 'output_crs'
         }
@@ -58,7 +58,7 @@ const stepper_tree = reactive({
     {
       step_title: 'Convert your file',
       component: {
-        component_name: shallowRef(CrsConverterConvertButton),
+        component_name: shallowRef(CrsConvertButton),
         component_options: {
           input_crs: input_crs,
           output_crs: output_crs
