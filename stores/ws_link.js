@@ -23,10 +23,7 @@ export const use_ws_link_store = defineStore('ws_link', {
     ws_connect () {
       const config = { application: 'cone' };
       const cloud_store = use_cloud_store()
-      const { ID } = storeToRefs(cloud_store)
-      const app_config = useRuntimeConfig()
-      const base_url = `${app_config.public.VIEWER_PROTOCOL}://${app_config.public.API_URL}:${app_config.public.VIEWER_PORT}`
-      config.sessionURL = `${base_url}/ws`
+      config.sessionURL = cloud_store.viewer_url
 
       const { client } = this
       if (this.is_client_created && client.isConnected()) {
