@@ -5,15 +5,12 @@
       <v-progress-circular indeterminate size="20" color="white" width="3" />
     </template>
   </v-btn>
-  <v-btn variant="text" @click="current_step = 3">
+  <v-btn variant="text" @click="stepper_tree.current_step_index = 3">
     Cancel
   </v-btn>
 </template>
 
 <script setup>
-import { use_app_store } from '@/stores/app'
-import { use_ws_link_store } from '@/stores/ws_link'
-import { use_vtk_store } from '@/stores/vtk'
 
 const app_store = use_app_store()
 const vtk_store = use_vtk_store()
@@ -44,29 +41,31 @@ async function convert_file () {
       params.append('old_file_name', input_files[i].name)
       params.append('file_size', input_files[i].size)
 
-      await api_fetch(`/convert_file`, {
-        body: params, method: 'POST', async onResponse ({ response }) {
 
-          vtk_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
+      await api_fetch(`/convert_file`, { method: 'POST', body: params },
+        {
+          'response_function': (response) => {
 
-          const object_tree_item = {
-            'id': response._data.id,
-            'name': response._data.name,
-            'native_file_name': response._data.native_file_name,
-            'viewable_file_name': response._data.viewable_file_name,
-            'geode_object': input_geode_object
+            vtk_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
+
+            const object_tree_item = {
+              'id': response._data.id,
+              'name': response._data.name,
+              'native_file_name': response._data.native_file_name,
+              'viewable_file_name': response._data.viewable_file_name,
+              'geode_object': input_geode_object,
+              'coordinate_systems': [{ 'name': 'data', 'is_geo': true, 'is_active': true },
+              { 'name': 'data', 'is_geo': false, 'is_active': true }]
+            }
+            app_store.add_object_tree_item(object_tree_item)
+
+            stepper_tree.current_step_index = 0
+            stepper_tree.files = []
+            stepper_tree.geode_object = ''
           }
-          app_store.add_object_tree_item(object_tree_item)
-
-          stepper_tree.current_step_index = 0
-          stepper_tree.files = []
-          stepper_tree.geode_object = ''
-        },
-        onError ({ error }) {
-          console.log(error)
-          console.log(response)
         }
-      })
+      )
+
       ws_link_store.$patch({ busy: false })
     }
     reader.readAsDataURL(input_files[i])

@@ -20,10 +20,19 @@ watch(files, (value) => {
   stepper_tree.current_step_index++
 })
 
-async function get_allowed_files () {
-  const { data } = await api_fetch(`/allowed_files`, { method: 'GET' })
-  const extensions = data.value.extensions.map((extension) => '.' + extension).join(',')
+function fill_extensions (response) {
+  const extensions = response._data.extensions.map((extension) => '.' + extension).join(',')
   accept.value = extensions
+}
+
+async function get_allowed_files () {
+  const route = `/allowed_files`
+  await api_fetch(route, { method: 'GET' },
+    {
+      'response_function': (response) => {
+        fill_extensions(response)
+      }
+    })
 }
 
 onMounted(() => {

@@ -3,6 +3,12 @@
     <LayoutHeader />
     <LayoutSideMenu />
     <FileLoaderWrapper />
+    <CrsConvertWrapper />
+    <CrsAssignWrapper />
+    <ErrorsBanner />
+    <ErrorsSnackers />
+
+    <RightDrawer />
 
     <v-main class="secondary">
       <slot />
@@ -18,10 +24,9 @@
 * {
   text-transform: none !important;
 }
-</style>
 
-<style>
 .card {
   border-radius: 15px
 }
 </style>
+

@@ -40,7 +40,7 @@ function set_current_step (step_index) {
 }
 </script>
 
-<style>
+<style scoped>
 .card {
   border-radius: 15px;
 }

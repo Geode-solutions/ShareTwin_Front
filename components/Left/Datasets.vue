@@ -3,14 +3,25 @@
     <v-row>
       <v-col cols="auto" class="pa-0 align-self-center">
 
-        <v-btn flat icon small v-on:click.stop="app_store.toggle_object_visibility(object_tree_index)">
-          <v-icon>
-            {{ object_tree[object_tree_index].is_visible ? 'mdi-checkbox-marked-outline' : 'mdi-checkbox-blank-outline' }}
-          </v-icon>
-        </v-btn>
+
+        <v-tooltip text="Toggle object's visibility" location="bottom">
+          <template v-slot:activator="{ props }">
+            <v-btn flat icon small v-on:click.stop="app_store.toggle_object_visibility(object_tree_index)" v-bind="props">
+              <v-icon>
+                {{ object_tree[object_tree_index].is_visible ? 'mdi-checkbox-marked-outline' :
+                  'mdi-checkbox-blank-outline' }}
+              </v-icon>
+            </v-btn>
+          </template>
+        </v-tooltip>
       </v-col>
       <v-col cols="auto" class="pa-0 align-self-center">
-        <v-img :src="geode_objects[object_tree[object_tree_index].geode_object].image" width="35" />
+        <v-tooltip :text="object_tree[object_tree_index].geode_object" location="bottom">
+          <template v-slot:activator="{ props }">
+            <v-img :src="geode_objects[object_tree[object_tree_index].geode_object].image" width="35" v-bind="props" />
+          </template>
+        </v-tooltip>
+
       </v-col>
       <v-col cols="8" class="align-self-center">
         <h4 class="overflow-x-hidden">
@@ -21,11 +32,11 @@
   </v-expansion-panel-title>
   <v-expansion-panel-text>
     <LeftTextureMenu :object_tree_index="object_tree_index" />
+    <LeftCoordinateSystems :object_tree_index="object_tree_index" />
   </v-expansion-panel-text>
 </template>
 
 <script setup>
-import { use_app_store } from '@/stores/app'
 import geode_objects from '@/assets/geode_objects'
 import { storeToRefs } from 'pinia'
 

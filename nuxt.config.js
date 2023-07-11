@@ -1,12 +1,13 @@
 import colors from 'vuetify/lib/util/colors'
-import { searchForWorkspaceRoot } from 'vite'
 
 export default defineNuxtConfig({
   runtimeConfig: {
     public: {
-      API_URL: process.env.NODE_ENV === 'production' ? 'api.share-twin.com:443' : 'localhost:80',
+      API_URL: process.env.NODE_ENV === 'production' ? 'api.share-twin.com' : 'localhost',
       VIEWER_PROTOCOL: process.env.NODE_ENV === 'production' ? 'wss' : 'ws',
       GEODE_PROTOCOL: process.env.NODE_ENV === 'production' ? 'https' : 'http',
+      VIEWER_PORT: process.env.NODE_ENV === 'production' ? '443' : '1234',
+      GEODE_PORT: process.env.NODE_ENV === 'production' ? '443' : '5000',
       SITE_URL: process.env.SITE_URL,
       SITE_BRANCH: process.env.NODE_ENV === 'production' ? process.env.SITE_BRANCH : '',
       NODE_ENV: process.env.NODE_ENV,
@@ -69,8 +70,9 @@ export default defineNuxtConfig({
             'storeToRefs',
           ],
         }],
-    ],
 
+      '@nuxt/devtools'
+    ],
   cookies: {
     necessary: [
       {
@@ -80,6 +82,10 @@ export default defineNuxtConfig({
         isSecureContext: true
       }
     ]
+  },
+
+  imports: {
+    dirs: ['stores']
   },
 
   // ** Build configuration
@@ -93,16 +99,9 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: 'netlify'
-  }
-  ,
-  vite: {
-    server: {
-      fs: {
-        allow: [
-          searchForWorkspaceRoot(process.cwd()),
-          ".."
-        ]
-      }
-    }
+  },
+
+  devtools: {
+    enabled: process.env.NODE_ENV === 'production' ? false : true
   }
 })

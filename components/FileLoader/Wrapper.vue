@@ -21,7 +21,6 @@ import geode_objects from '@/assets/geode_objects'
 import FileLoaderFileSelector from '@/components/FileLoader/FileSelector.vue'
 import FileLoaderObjectSelector from '@/components/FileLoader/ObjectSelector.vue'
 import FileLoaderLoadButton from '@/components/FileLoader/LoadButton.vue'
-import { use_app_store } from '@/stores/app'
 
 const app_store = use_app_store()
 const { display_object_selector } = storeToRefs(app_store)
@@ -79,7 +78,7 @@ const stepper_tree = reactive({
 provide('stepper_tree', stepper_tree)
 
 </script>
-<style>
+<style scoped>
 .dialog {
   border-radius: 15px
 }

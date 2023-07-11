@@ -4,7 +4,6 @@
 </template>
 
 <script setup>
-import { use_app_store } from '@/stores/app'
 
 const app_store = use_app_store()
 
@@ -30,13 +29,9 @@ async function get_texture_coordinates () {
   const params = new FormData()
   params.append('native_file_name', native_file_name)
   params.append('geode_object', geode_object)
-  await api_fetch(`/texture_coordinates`, {
-    body: params, method: 'POST', async onResponse ({ response }) {
+  await api_fetch(`/texture_coordinates`, { body: params, method: 'POST' }, {
+    'response_function': (response) => {
       texture_coordinates.value = response._data.texture_coordinates
-    },
-    onError ({ response, error }) {
-      console.log(error)
-      console.log(response)
     }
   })
   loading.value = false

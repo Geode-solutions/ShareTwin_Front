@@ -10,7 +10,6 @@
 </template>
 
 <script setup>
-import { use_app_store } from '@/stores/app'
 
 const app_store = use_app_store()
 
@@ -31,7 +30,7 @@ function apply_textures (object_tree_index) {
 }
 </script>
 
-<style>
+<style scoped>
 .btn {
   text-transform: unset !important;
 }

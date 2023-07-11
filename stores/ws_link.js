@@ -1,5 +1,4 @@
 import { defineStore } from 'pinia'
-import { use_cloud_store } from '@/stores/cloud'
 import _ from 'lodash'
 
 import vtkWSLinkClient from '@kitware/vtk.js/IO/Core/WSLinkClient'
@@ -26,8 +25,8 @@ export const use_ws_link_store = defineStore('ws_link', {
       const cloud_store = use_cloud_store()
       const { ID } = storeToRefs(cloud_store)
       const app_config = useRuntimeConfig()
-      const base_url = `${app_config.public.VIEWER_PROTOCOL}://${app_config.public.API_URL}/${ID.value}`
-      config.sessionURL = `${base_url}/viewer/ws`
+      const base_url = `${app_config.public.VIEWER_PROTOCOL}://${app_config.public.API_URL}:${app_config.public.VIEWER_PORT}`
+      config.sessionURL = `${base_url}/ws`
 
       const { client } = this
       if (this.is_client_created && client.isConnected()) {
