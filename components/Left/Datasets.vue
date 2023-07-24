@@ -32,7 +32,7 @@
   </v-expansion-panel-title>
   <v-expansion-panel-text>
     <LeftTextureMenu :object_tree_index="object_tree_index" />
-    <LeftCoordinateSystems :object_tree_index="object_tree_index" />
+    <LeftCoordinateSystems :object_tree_index="object_tree_index" ref="toto" />
   </v-expansion-panel-text>
 </template>
 
@@ -48,6 +48,11 @@ const props = defineProps({
 
 const { object_tree_index } = props
 const { object_tree } = storeToRefs(app_store)
+
+const toto = ref(null)
+onMounted(() => {
+  toto.value.focus()
+})
 </script>
 
 <style scoped>

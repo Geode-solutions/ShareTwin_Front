@@ -82,6 +82,10 @@ async function get_coordinate_systems () {
 onMounted(() => {
   get_coordinate_systems()
 })
+
+
+console.log('this', this)
+// this.$refs.coordinate_system = this
 </script>
 <style scoped>
 .v-btn {
