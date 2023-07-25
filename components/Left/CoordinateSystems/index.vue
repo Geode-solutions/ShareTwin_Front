@@ -45,48 +45,29 @@
 </template>
 
 <script setup>
-
 const app_store = use_app_store()
-const ws_link_store = use_ws_link_store()
 
 const props = defineProps({
   object_tree_index: { type: Number, required: true }
 })
 
-
 const { object_tree_index } = props
 const { object_tree } = storeToRefs(app_store)
 
 const current_object = object_tree.value[object_tree_index]
-const native_file_name = current_object['native_file_name']
-const geode_object = current_object['geode_object']
+const coordinate_systems = current_object.coordinate_systems
 
 const id = ref(0)
-const coordinate_systems = ref([])
-
-async function get_coordinate_systems () {
-  ws_link_store.$patch({ busy: true })
-  const params = new FormData()
-  params.append('native_file_name', native_file_name)
-  params.append('geode_object', geode_object)
-  await api_fetch(`/coordinate_systems`, { body: params, method: 'POST' }, {
-    'response_function': (response) => {
-      console.log(response)
-      coordinate_systems.value = response._data.coordinate_systems
-    }
-  })
-  ws_link_store.$patch({ busy: false })
-}
-
 
 onMounted(() => {
-  get_coordinate_systems()
+  app_store.get_coordinate_systems(object_tree_index)
 })
 
-
-console.log('this', this)
-// this.$refs.coordinate_system = this
+onActivated(() => {
+  app_store.get_coordinate_systems(object_tree_index)
+})
 </script>
+
 <style scoped>
 .v-btn {
   text-transform: unset !important;

@@ -46,8 +46,8 @@ async function convert_files () {
 
         stepper_tree.current_step_index = 0
         stepper_tree.input_crs = {}
+        app_store.get_coordinate_systems(object_tree_index)
         app_store.$patch({ display_crs_assigner: false })
-        this.$root.$refs.coordinate_system.get_coordinate_systems()
       },
       'response_error_function': () => { toggle_loading() }
     }

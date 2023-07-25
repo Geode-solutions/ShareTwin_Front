@@ -11,7 +11,6 @@ export const use_app_store = defineStore('app', {
     object_tree: [],
     object_tree_index: null,
     picked_point: { x: null, y: null }
-
   }),
   getters: {
     are_textures_valid: (state) => (object_tree_index) => {
@@ -97,6 +96,21 @@ export const use_app_store = defineStore('app', {
       this.picked_point.x = world_x
       this.picked_point.y = world_y
       this.picking_mode = false
+    },
+
+    async get_coordinate_systems (object_tree_index) {
+      const ws_link_store = use_ws_link_store()
+      ws_link_store.$patch({ busy: true })
+      const params = new FormData()
+      console.log(this.object_tree)
+      params.append('native_file_name', this.object_tree[object_tree_index].native_file_name)
+      params.append('geode_object', this.object_tree[object_tree_index].geode_object)
+      await api_fetch(`/coordinate_systems`, { body: params, method: 'POST' }, {
+        'response_function': (response) => {
+          this.object_tree[object_tree_index].coordinate_systems = response._data.coordinate_systems
+        }
+      })
+      ws_link_store.$patch({ busy: false })
     }
   }
 })

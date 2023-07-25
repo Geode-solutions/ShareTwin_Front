@@ -52,8 +52,8 @@ async function convert_files () {
         stepper_tree.output_crs = {}
 
         vtk_store.update_data({ id: object_tree_item.id })
+        app_store.get_coordinate_systems(object_tree_index)
         app_store.$patch({ display_crs_converter: false })
-        this.$root.$refs.coordinate_system.get_coordinate_systems()
       },
       'response_error_function': () => { toggle_loading() }
     }
