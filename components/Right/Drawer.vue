@@ -94,14 +94,8 @@ function pick_point (point_index) {
 
   watchOnce(picking_mode, (value) => {
     // triggers only once
-    console.log(value)
-    console.log(picked_point)
-    console.log(picked_point.value.x)
-    console.log(picked_point.value.y)
-
     real_picked_points[point_index].world_x = picked_point.value.x
     real_picked_points[point_index].world_y = picked_point.value.y
-    console.log('source changed!')
   })
 }
 

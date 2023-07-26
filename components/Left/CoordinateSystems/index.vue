@@ -17,7 +17,8 @@
         <v-row>
           <v-col align-self-center>
             <v-radio-group v-model="id">
-              <v-row v-for="(coordinate_system, index) in coordinate_systems" align="center" class="pa-0">
+              <v-row v-for="(coordinate_system, index) in object_tree[object_tree_index].coordinate_systems"
+                align="center" class="pa-0">
                 <v-col class="pa-1">
                   <v-radio :label=coordinate_system.name :value=index />
                 </v-col>
@@ -53,9 +54,6 @@ const props = defineProps({
 
 const { object_tree_index } = props
 const { object_tree } = storeToRefs(app_store)
-
-const current_object = object_tree.value[object_tree_index]
-const coordinate_systems = current_object.coordinate_systems
 
 const id = ref(0)
 

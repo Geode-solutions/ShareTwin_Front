@@ -44,7 +44,7 @@ async function convert_file () {
 
       await api_fetch(`/convert_file`, { method: 'POST', body: params },
         {
-          'response_function': (response) => {
+          'response_function': async (response) => {
 
             vtk_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
 
@@ -56,11 +56,12 @@ async function convert_file () {
               'geode_object': input_geode_object,
               'coordinate_systems': []
             }
-            app_store.add_object_tree_item(object_tree_item)
+            await app_store.add_object_tree_item(object_tree_item)
 
             stepper_tree.current_step_index = 0
             stepper_tree.files = []
             stepper_tree.geode_object = ''
+
           }
         }
       )

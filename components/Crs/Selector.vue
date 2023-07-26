@@ -30,16 +30,12 @@ const toggle_loading = useToggle(data_table_loading)
 
 watch(selected_crs, (new_value) => {
   const crs = get_selected_crs(new_value[0])
-  console.log(crs_key)
   set_crs(crs_key, crs)
 })
 
 function set_crs (crs_key, crs_value) {
   stepper_tree[crs_key] = crs_value
-  console.log('crs_key', crs_key)
-  console.log('crs_value', crs_value)
   stepper_tree.current_step_index++
-  console.log('stepper_tree', stepper_tree)
 }
 
 function get_selected_crs (crs_code) {
@@ -52,7 +48,6 @@ function get_selected_crs (crs_code) {
 
 async function get_crs_table () {
   let params = new FormData()
-  console.log('geode_object', geode_object)
   params.append('geode_object', geode_object)
   const route = `/geographic_coordinate_systems`
   toggle_loading()
