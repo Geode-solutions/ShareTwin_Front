@@ -45,13 +45,15 @@ async function convert_files () {
   await api_fetch(route, { method: 'POST', body: params },
     {
       'request_error_function': () => { toggle_loading() },
-      'response_function': () => {
+      'response_function': async () => {
         toggle_loading()
         stepper_tree.current_step_index = 0
         stepper_tree.input_crs = {}
         stepper_tree.output_crs = {}
 
         vtk_store.update_data({ id: object_tree_item.id })
+        await app_store.get_coordinate_systems(object_tree_index)
+        app_store.$patch({ display_crs_converter: false })
       },
       'response_error_function': () => { toggle_loading() }
     }

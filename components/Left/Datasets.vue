@@ -48,6 +48,7 @@ const props = defineProps({
 
 const { object_tree_index } = props
 const { object_tree } = storeToRefs(app_store)
+
 </script>
 
 <style scoped>

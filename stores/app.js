@@ -11,7 +11,6 @@ export const use_app_store = defineStore('app', {
     object_tree: [],
     object_tree_index: null,
     picked_point: { x: null, y: null }
-
   }),
   getters: {
     are_textures_valid: (state) => (object_tree_index) => {
@@ -28,11 +27,13 @@ export const use_app_store = defineStore('app', {
     }
   },
   actions: {
-    add_object_tree_item (object_tree_item) {
+    async add_object_tree_item (object_tree_item) {
       object_tree_item.is_visible = true
       object_tree_item.textures = [create_texture_item()]
 
       this.object_tree.push(object_tree_item)
+
+      await this.get_coordinate_systems(this.object_tree.length - 1)
     },
     remove_object_tree_item (object_tree_index) {
       this.object_tree.splice(object_tree_index, 1)
@@ -89,14 +90,29 @@ export const use_app_store = defineStore('app', {
     },
     async set_picked_point (x, y) {
       const vtk_store = use_vtk_store()
-      console.log('camera x', x)
-      console.log('camera y', y)
       const response = await vtk_store.get_point_position({ x, y })
-      console.log('response', response)
       const { x: world_x, y: world_y } = response
       this.picked_point.x = world_x
       this.picked_point.y = world_y
       this.picking_mode = false
+    },
+
+    async get_coordinate_systems (object_tree_index) {
+      console.log('get_coordinate_systems', object_tree_index)
+      const ws_link_store = use_ws_link_store()
+      ws_link_store.$patch({ busy: true })
+      const params = new FormData()
+      console.log('object_tree', this.object_tree)
+      params.append('native_file_name', this.object_tree[object_tree_index].native_file_name)
+      params.append('geode_object', this.object_tree[object_tree_index].geode_object)
+      await api_fetch(`/coordinate_systems`, { body: params, method: 'POST' }, {
+        'response_function': (response) => {
+          console.log(response)
+          this.object_tree[object_tree_index].coordinate_systems = response._data.coordinate_systems
+          console.log('object_tree', this.object_tree)
+        }
+      })
+      ws_link_store.$patch({ busy: false })
     }
   }
 })
