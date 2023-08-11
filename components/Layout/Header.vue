@@ -23,9 +23,6 @@
 </template>
 
 <script setup>
-import { use_app_store } from '@/stores/app'
-import { use_cloud_store } from '@/stores/cloud'
-import { use_ws_link_store } from '@/stores/ws_link'
 
 const app_store = use_app_store()
 const cloud_store = use_cloud_store()

@@ -9,9 +9,6 @@
 </template>
 
 <script setup>
-import { use_app_store } from '@/stores/app'
-import { use_cloud_store } from '@/stores/cloud'
-
 const app_store = use_app_store()
 const cloud_store = use_cloud_store()
 

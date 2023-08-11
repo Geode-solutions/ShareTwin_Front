@@ -1,13 +1,22 @@
 <template>
   <v-col v-element-size="resize" style="overflow: hidden; position: relative; z-index: 1; height: 100%; width: 100%"
-    ref="viewer" class="viewer">
+    ref="viewer" class="viewer" @click="get_x_y" @keydown.esc="app_store.toggle_picking_mode(false)">
   </v-col>
 </template>
 
 <script setup>
 import vtkRemoteView from '@kitware/vtk.js/Rendering/Misc/RemoteView';
-
 import { vElementSize } from '@vueuse/components'
+
+const app_store = use_app_store()
+const { picking_mode } = storeToRefs(app_store)
+
+function get_x_y (event) {
+  if (picking_mode.value === true) {
+    const { offsetX, offsetY } = event
+    app_store.set_picked_point(offsetX, offsetY)
+  }
+}
 
 const props = defineProps({
   viewId: { type: String, default: '-1' },
@@ -21,6 +30,11 @@ function resize () {
   view.getCanvasView().setSize(0, 0) // hack to fit full size
   view.resize();
 }
+
+watch(picking_mode, value => {
+  const cursor = value == true ? 'crosshair' : 'pointer'
+  view.getCanvasView().setCursor(cursor)
+})
 watch(width, value => {
   resize()
 })
