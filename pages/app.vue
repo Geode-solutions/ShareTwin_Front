@@ -1,10 +1,10 @@
 <template>
   <v-container class="pa-0 fill-height" fluid>
-    {{ app_store.accepted_gtcu }}
-    <v-row v-if="!accepted_gtcu" no-gutters class="fill-height">
+    <!-- {{ app_store.accepted_gtcu }} -->
+    <!-- <v-row v-if="!accepted_gtcu" no-gutters class="fill-height">
       Please accept the CGU first
-    </v-row>
-    <v-row v-else no-gutters class="fill-height">
+    </v-row> -->
+    <v-row no-gutters class="fill-height">
       <AppLauncher v-if="!is_cloud_running || !is_client_created" class="pa-5" />
       <AppRemoteRenderingView v-else :client="client" />
     </v-row>

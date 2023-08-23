@@ -2,18 +2,14 @@
   <v-navigation-drawer v-model="display_georeferencing_drawer" clipped permanent app fixed disable-resize-watcher
     width="300" location="right">
     <v-row>
-      <v-col>
-        <v-container>
-          <v-row>
-            <v-spacer />
-            <v-col></v-col>
-            <v-btn flat icon="mdi-close" size="25" @click="app_store.toggle_display_georeferencing_drawer(false)" />
-          </v-row>
-        </v-container>
+      <v-col cols="10" class="pa-2">
+        <v-btn text="Reset" @click="reset_real_picked_points()" class="pa-2" color="primary" />
+      </v-col>
+      <v-col cols="2">
+        <v-btn flat icon="mdi-close" size="25" @click="app_store.toggle_display_georeferencing_drawer(false)" />
       </v-col>
     </v-row>
     <v-row>
-
       <v-card v-for="(real_picked_point, index) in real_picked_points" elevation="2" class="pa-0">
         <v-card-title>
           Point {{ index + 1 }}
@@ -59,14 +55,17 @@
         <v-divider v-if="index <= real_picked_points.length" />
       </v-card>
     </v-row>
-    <v-row align="center">
-      <v-col class='text-center'>
-
-        <v-btn text="Apply georeferecing" :disabled="!real_picked_points_valid" color="primary" rounded
+    <v-row class="text-center pa-3">
+      <v-col cols=" 12" class="text-center px-2 py-0">
+        <v-text-field label=" Name of the coordinate system" v-model="coordinate_system_name" />
+      </v-col>
+    </v-row>
+    <v-row class="text-center pa-0">
+      <v-col class="text-center pa-0">
+        <v-btn text="Apply georeferecing" :disabled="!coordinate_system_valid()" color="primary" rounded
           @click="apply_georeferencing" />
       </v-col>
     </v-row>
-
   </v-navigation-drawer>
 </template>
 
@@ -84,26 +83,36 @@ function create_data () {
   return { world_x, world_y, real_x, real_y }
 }
 
-const real_picked_points = [create_data(), create_data(), create_data()]
+var real_picked_points = [create_data(), create_data(), create_data()]
+const coordinate_system_name = ref('')
 const { display_georeferencing_drawer, picking_mode, picked_point, object_tree, object_tree_index } = storeToRefs(app_store)
 
+
+function reset_real_picked_points () {
+  real_picked_points = [create_data(), create_data(), create_data()]
+  coordinate_system_name.value = ''
+}
 function pick_point (point_index) {
   // app_store.set_picked_point_index(point_index)
   app_store.toggle_picking_mode(true)
 
 
-  watchOnce(picking_mode, (value) => {
+  watchOnce(picking_mode, () => {
     // triggers only once
+    console.log(picked_point)
     real_picked_points[point_index].world_x = picked_point.value.x
     real_picked_points[point_index].world_y = picked_point.value.y
   })
 }
 
-function real_picked_points_valid () {
+function coordinate_system_valid () {
   for (let i = 0; i < real_picked_points.length; i++) {
     if (!real_picked_points[i].real_x.value == null || !real_picked_points[i].real_y.value == null || !real_picked_points[i].world_x.value == null || !real_picked_points[i].world_y.value == null) {
       return false
     }
+  }
+  if (coordinate_system_name.value === '') {
+    return false
   }
   return true
 }
@@ -118,7 +127,7 @@ async function apply_georeferencing () {
   params.append('geode_object', object_tree.value[object_tree_index.value].geode_object)
   params.append('id', object_tree.value[object_tree_index.value].id)
   params.append('filename', object_tree.value[object_tree_index.value].native_file_name)
-  params.append('coordinate_system_name', 'test')
+  params.append('coordinate_system_name', coordinate_system_name.value)
   params.append('input_origin_x', real_picked_points[0].world_x)
   params.append('input_origin_y', real_picked_points[0].world_y)
   params.append('input_point_1_x', real_picked_points[1].world_x)
