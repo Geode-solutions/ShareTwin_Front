@@ -1,4 +1,5 @@
 import { defineStore } from 'pinia'
+import { useLocalStorage } from "@vueuse/core"
 
 export const use_app_store = defineStore('app', {
   state: () => ({
@@ -11,7 +12,7 @@ export const use_app_store = defineStore('app', {
     object_tree: [],
     object_tree_index: null,
     picked_point: { x: null, y: null },
-    accepted_gtcu: false
+    accepted_gtcu: useLocalStorage('accepted_gtcu', false)
   }),
   getters: {
     are_textures_valid: (state) => (object_tree_index) => {
@@ -30,6 +31,7 @@ export const use_app_store = defineStore('app', {
   actions: {
     accept_gtcu () {
       this.accepted_gtcu = true
+      localStorage.setItem('accepted_gtcu', true)
       this.display_menu = true
       window.location.href = "/app"
 

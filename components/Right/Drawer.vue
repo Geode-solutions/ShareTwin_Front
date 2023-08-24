@@ -1,37 +1,20 @@
 <template>
   <v-navigation-drawer v-model="display_georeferencing_drawer" clipped permanent app fixed disable-resize-watcher
     width="300" location="right">
-    <v-row>
-      <v-col cols="10" class="pa-2">
-        <v-btn text="Reset" @click="reset_real_picked_points()" class="pa-2" color="primary" />
+    <v-row class="ma-0">
+      <v-col cols="auto" class="pa-2">
+        <v-btn text="Reset all" @click="reset_real_picked_points()" class="pa-2" color="primary" />
       </v-col>
-      <v-col cols="2">
+      <v-spacer />
+      <v-col cols="auto">
         <v-btn flat icon="mdi-close" size="25" @click="app_store.toggle_display_georeferencing_drawer(false)" />
       </v-col>
     </v-row>
-    <v-row>
+    <v-row class="ma-0">
       <v-card v-for="(real_picked_point, index) in real_picked_points" elevation="2" class="pa-0">
         <v-card-title>
-          Point {{ index + 1 }}
-        </v-card-title>
-        <v-card-text>
           <v-row align="center">
-            <v-col cols="10">
-              <v-row>
-                <v-col cols="6">
-                  <v-chip class="overflow-x-hidden">
-                    x : {{ real_picked_point.world_x }}
-                  </v-chip>
-                </v-col>
-                <v-col cols="6">
-                  <v-chip class="overflow-x-hidden">
-                    y : {{ real_picked_point.world_y }}
-                  </v-chip>
-                </v-col>
-              </v-row>
-            </v-col>
-            <v-spacer />
-            <v-col cols="auto">
+            <v-col cols="auto" class="pa-0">
               <v-tooltip text="Toggle picking mode" location="left">
                 <template v-slot:activator="{ props }">
                   <v-btn flat icon size="20" @click="pick_point(index)">
@@ -40,6 +23,28 @@
                 </template>
               </v-tooltip>
             </v-col>
+            <v-col cols="auto">
+              Point {{ index + 1 }}
+            </v-col>
+          </v-row>
+        </v-card-title>
+        <v-card-text>
+          <v-row align="center">
+            <v-col cols="12">
+              <v-row>
+                <v-col cols="6" class="pl-2 py-1">
+                  <v-chip class="overflow-x-hidden">
+                    x : {{ real_picked_point.world_x }}
+                  </v-chip>
+                </v-col>
+                <v-col cols="6" class="pl-2 py-1">
+                  <v-chip class="overflow-x-hidden">
+                    y : {{ real_picked_point.world_y }}
+                  </v-chip>
+                </v-col>
+              </v-row>
+            </v-col>
+            <v-spacer />
           </v-row>
           <v-row>
             <v-col class="py-0">
@@ -55,12 +60,12 @@
         <v-divider v-if="index <= real_picked_points.length" />
       </v-card>
     </v-row>
-    <v-row class="text-center pa-3">
+    <v-row class="text-center pa-3 ma-0">
       <v-col cols=" 12" class="text-center px-2 py-0">
         <v-text-field label=" Name of the coordinate system" v-model="coordinate_system_name" />
       </v-col>
     </v-row>
-    <v-row class="text-center pa-0">
+    <v-row class="text-center pa-0 ma-0">
       <v-col class="text-center pa-0">
         <v-btn text="Apply georeferecing" :disabled="!coordinate_system_valid()" color="primary" rounded
           @click="apply_georeferencing" />
@@ -70,7 +75,6 @@
 </template>
 
 <script setup>
-
 const app_store = use_app_store()
 const vtk_store = use_vtk_store()
 const ws_link_store = use_ws_link_store()
@@ -85,6 +89,7 @@ function create_data () {
 
 var real_picked_points = [create_data(), create_data(), create_data()]
 const coordinate_system_name = ref('')
+const tooltip = ref('Please fill in all fields of the form')
 const { display_georeferencing_drawer, picking_mode, picked_point, object_tree, object_tree_index } = storeToRefs(app_store)
 
 
@@ -93,13 +98,11 @@ function reset_real_picked_points () {
   coordinate_system_name.value = ''
 }
 function pick_point (point_index) {
-  // app_store.set_picked_point_index(point_index)
   app_store.toggle_picking_mode(true)
 
 
   watchOnce(picking_mode, () => {
     // triggers only once
-    console.log(picked_point)
     real_picked_points[point_index].world_x = picked_point.value.x
     real_picked_points[point_index].world_y = picked_point.value.y
   })
@@ -119,8 +122,6 @@ function coordinate_system_valid () {
 
 async function apply_georeferencing () {
   ws_link_store.$patch({ busy: true })
-  console.log('object_tree_index', object_tree_index.value)
-  console.log('real_picked_points', real_picked_points)
 
   const params = new FormData()
 
@@ -149,7 +150,6 @@ async function apply_georeferencing () {
   })
   ws_link_store.$patch({ busy: false })
 }
-
 </script>
 
 
