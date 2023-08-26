@@ -67,7 +67,7 @@
     </v-row>
     <v-row class="text-center pa-0 ma-0">
       <v-col class="text-center pa-0">
-        <v-btn text="Apply georeferecing" :disabled="!coordinate_system_valid()" color="primary" rounded
+        <v-btn text="Apply georeferecing" :disabled="!is_coordinate_system_valid()" color="primary" rounded
           @click="apply_georeferencing" />
       </v-col>
     </v-row>
@@ -89,7 +89,6 @@ function create_data () {
 
 var real_picked_points = [create_data(), create_data(), create_data()]
 const coordinate_system_name = ref('')
-const tooltip = ref('Please fill in all fields of the form')
 const { display_georeferencing_drawer, picking_mode, picked_point, object_tree, object_tree_index } = storeToRefs(app_store)
 
 
@@ -108,16 +107,27 @@ function pick_point (point_index) {
   })
 }
 
-function coordinate_system_valid () {
+async function is_coordinate_system_valid () {
   for (let i = 0; i < real_picked_points.length; i++) {
     if (!real_picked_points[i].real_x.value == null || !real_picked_points[i].real_y.value == null || !real_picked_points[i].world_x.value == null || !real_picked_points[i].world_y.value == null) {
       return false
     }
   }
-  if (coordinate_system_name.value === '') {
+  if (coordinate_system_name.value !== '') {
+    const params = new FormData()
+    params.append('geode_object', object_tree.value[object_tree_index.value].geode_object)
+    params.append('filename', object_tree.value[object_tree_index.value].native_file_name)
+    params.append('coordinate_system_name', coordinate_system_name.value)
+
+    await api_fetch(`/coordinate_reference_system_exists`, { body: params, method: 'POST' }, {
+      'response_function': (response) => {
+        console.log(!response._data.coordinate_reference_system_exists)
+        return !response._data.coordinate_reference_system_exists
+      }
+    })
+  } else {
     return false
   }
-  return true
 }
 
 async function apply_georeferencing () {

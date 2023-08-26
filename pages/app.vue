@@ -1,4 +1,4 @@
-<template class="toto">
+<template>
   <LayoutSideMenu />
   <FileLoaderWrapper />
   <CrsConvertWrapper />
@@ -9,6 +9,7 @@
   <v-container class="pa-0 fill-height" fluid>
     <v-row v-if="!accepted_gtcu" no-gutters class="fill-height">
       The use the app, you must accept the terms and conditions of use first:
+      <a :href="'/'">Landing page</a>
     </v-row>
     <v-row v-else no-gutters class="fill-height">
       <AppLauncher v-if="!is_cloud_running || !is_client_created" class="pa-5" />
@@ -28,15 +29,9 @@ const { client, is_client_created } = storeToRefs(ws_link_store)
 
 
 onMounted(() => {
-  console.log('mounted')
-  watchOnce(accepted_gtcu, (value) => {
-    console.log('watch')
-    if (value) {
-      console.log('true')
-      app_store.$patch({ display_menu: true })
-    }
-  })
-  // app_store.$patch({ accepted_gtcu: true })
+  if (accepted_gtcu) {
+    app_store.$patch({ display_menu: true })
+  }
 })
 </script>
 

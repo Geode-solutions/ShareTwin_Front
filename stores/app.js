@@ -1,6 +1,3 @@
-import { defineStore } from 'pinia'
-import { useLocalStorage } from "@vueuse/core"
-
 export const use_app_store = defineStore('app', {
   state: () => ({
     display_menu: false,

@@ -19,7 +19,7 @@ const props = defineProps({
 })
 const { object_tree_index } = props
 
-const are_textures_valid = ref(computed(() => app_store.are_textures_valid(object_tree_index)))
+const are_textures_valid = computed(() => app_store.are_textures_valid(object_tree_index))
 
 const loading = ref(false)
 const tooltip = ref('One or more texture isn\'t valid')
