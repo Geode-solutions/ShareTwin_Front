@@ -92,16 +92,10 @@ const coordinate_system_name = ref('')
 const { display_georeferencing_drawer, picking_mode, picked_point, object_tree, object_tree_index } = storeToRefs(app_store)
 const disabled_button = computed(() => {
   for (let i = 0; i < real_picked_points.length; i++) {
-    console.log('i', i)
-    console.log(real_picked_points[i].real_x.value)
-    console.log(real_picked_points[i].real_y.value)
-    console.log(real_picked_points[i].world_x.value)
-    console.log(real_picked_points[i].world_y.value)
     if (([null, undefined, ''].includes(real_picked_points[i].real_x.value)) ||
       ([null, undefined, ''].includes(real_picked_points[i].real_y.value)) ||
       ([null, undefined, ''].includes(real_picked_points[i].world_x.value)) ||
       ([null, undefined, ''].includes(real_picked_points[i].world_y.value))) {
-      console.log('return disabled true')
       return true
     }
   }
@@ -113,8 +107,6 @@ const disabled_button = computed(() => {
 
     api_fetch(`/coordinate_reference_system_exists`, { body: params, method: 'POST' }, {
       'response_function': (response) => {
-        console.log(response)
-        // return !response._data.coordinate_reference_system_exists
         disabled_button.value = !response._data.coordinate_reference_system_exists
       }
     })
@@ -164,7 +156,6 @@ async function apply_georeferencing () {
 
   await api_fetch(`/georeference`, { body: params, method: 'POST' }, {
     'response_function': (response) => {
-      console.log(response)
       vtk_store.update_data({ id: object_tree.value[object_tree_index.value].id })
     }
   })

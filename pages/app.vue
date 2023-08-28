@@ -33,7 +33,6 @@ const { client, is_client_created } = storeToRefs(ws_link_store)
 
 
 onMounted(() => {
-  console.log('accepted_gtcu', accepted_gtcu.value)
   if (accepted_gtcu.value) {
     app_store.$patch({ display_menu: true })
   }
