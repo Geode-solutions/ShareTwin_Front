@@ -67,7 +67,7 @@
     </v-row>
     <v-row class="text-center pa-0 ma-0">
       <v-col class="text-center pa-0">
-        <v-btn text="Apply georeferecing" :disabled="is_coordinate_system_valid()" color="primary" rounded
+        <v-btn text="Apply georeferecing" :disabled="disabled_button" color="primary" rounded
           @click="apply_georeferencing" />
       </v-col>
     </v-row>
@@ -90,6 +90,38 @@ function create_data () {
 var real_picked_points = [create_data(), create_data(), create_data()]
 const coordinate_system_name = ref('')
 const { display_georeferencing_drawer, picking_mode, picked_point, object_tree, object_tree_index } = storeToRefs(app_store)
+const disabled_button = computed(() => {
+  for (let i = 0; i < real_picked_points.length; i++) {
+    console.log('i', i)
+    console.log(real_picked_points[i].real_x.value)
+    console.log(real_picked_points[i].real_y.value)
+    console.log(real_picked_points[i].world_x.value)
+    console.log(real_picked_points[i].world_y.value)
+    if (([null, undefined, ''].includes(real_picked_points[i].real_x.value)) ||
+      ([null, undefined, ''].includes(real_picked_points[i].real_y.value)) ||
+      ([null, undefined, ''].includes(real_picked_points[i].world_x.value)) ||
+      ([null, undefined, ''].includes(real_picked_points[i].world_y.value))) {
+      console.log('return disabled true')
+      return true
+    }
+  }
+  if (coordinate_system_name.value !== '') {
+    const params = new FormData()
+    params.append('geode_object', object_tree.value[object_tree_index.value].geode_object)
+    params.append('filename', object_tree.value[object_tree_index.value].native_file_name)
+    params.append('coordinate_system_name', coordinate_system_name.value)
+
+    api_fetch(`/coordinate_reference_system_exists`, { body: params, method: 'POST' }, {
+      'response_function': (response) => {
+        console.log(response)
+        // return !response._data.coordinate_reference_system_exists
+        disabled_button.value = !response._data.coordinate_reference_system_exists
+      }
+    })
+  } else {
+    return true
+  }
+})
 
 
 function reset_real_picked_points () {
@@ -102,45 +134,11 @@ function pick_point (point_index) {
 
   watchOnce(picking_mode, () => {
     // triggers only once
-    real_picked_points[point_index].world_x = picked_point.value.x
-    real_picked_points[point_index].world_y = picked_point.value.y
+    real_picked_points[point_index].world_x.value = picked_point.value.x
+    real_picked_points[point_index].world_y.value = picked_point.value.y
   })
 }
 
-function is_coordinate_system_valid () {
-  console.log('real_picked_points', real_picked_points)
-  console.log('real_picked_points.length;', real_picked_points.length)
-  for (let i = 0; i < real_picked_points.length; i++) {
-    console.log(real_picked_points[i].real_x.value)
-    console.log(real_picked_points[i].real_y.value)
-    console.log(real_picked_points[i].world_x.value)
-    console.log(real_picked_points[i].world_y.value)
-    if (([null, undefined, ''].includes(real_picked_points[i].real_x.value)) ||
-      ([null, undefined, ''].includes(real_picked_points[i].real_y.value)) ||
-      ([null, undefined, ''].includes(real_picked_points[i].world_x.value)) ||
-      ([null, undefined, ''].includes(real_picked_points[i].world_y.value))) {
-      console.log('return false')
-      return false
-    }
-  }
-  return true
-  // return true
-  // if (coordinate_system_name.value !== '') {
-  //   const params = new FormData()
-  //   params.append('geode_object', object_tree.value[object_tree_index.value].geode_object)
-  //   params.append('filename', object_tree.value[object_tree_index.value].native_file_name)
-  //   params.append('coordinate_system_name', coordinate_system_name.value)
-
-  //   await api_fetch(`/coordinate_reference_system_exists`, { body: params, method: 'POST' }, {
-  //     'response_function': (response) => {
-  //       console.log(!response._data.coordinate_reference_system_exists)
-  //       return !response._data.coordinate_reference_system_exists
-  //     }
-  //   })
-  // } else {
-  //   return false
-  // }
-}
 
 async function apply_georeferencing () {
   ws_link_store.$patch({ busy: true })
