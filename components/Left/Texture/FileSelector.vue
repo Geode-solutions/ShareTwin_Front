@@ -1,8 +1,12 @@
 <template>
   <v-badge :icon="display_badge ? 'mdi-check' : 'mdi-help'" :color="display_color ? 'black' : 'grey'">
-    <v-btn icon flat @click="open_file_input()">
-      <v-icon icon="mdi-file-image-plus" :color="display_color ? 'black' : 'grey'" />
-    </v-btn>
+    <v-tooltip v-model="show_tooltip" location="right" :text="tooltip">
+      <template v-slot:activator="{ props }">
+        <v-btn icon flat @click="open_file_input()" v-bind="props">
+          <v-icon icon="mdi-file-image-plus" :color="display_color ? 'black' : 'grey'" />
+        </v-btn>
+      </template>
+    </v-tooltip>
   </v-badge>
 </template>
 
@@ -24,6 +28,9 @@ const viewable_file_name = ref('')
 
 const display_color = ref(false)
 const display_badge = ref(false)
+
+const show_tooltip = ref(false)
+const tooltip = ref('')
 
 async function get_raster_image_input_extensions () {
   ws_link_store.$patch({ busy: true })
@@ -47,6 +54,8 @@ function open_file_input () {
 
   input.onchange = e => {
     texture_file.value = e.target.files;
+    show_tooltip.value = true
+    tooltip.value = texture_file.value[0].name
   }
   input.click();
 }

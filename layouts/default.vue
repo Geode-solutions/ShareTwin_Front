@@ -1,15 +1,6 @@
 <template>
   <v-app>
     <LayoutHeader />
-    <LayoutSideMenu />
-    <FileLoaderWrapper />
-    <CrsConvertWrapper />
-    <CrsAssignWrapper />
-    <ErrorsBanner />
-    <ErrorsSnackers />
-
-    <RightDrawer />
-
     <v-main class="secondary">
       <slot />
     </v-main>

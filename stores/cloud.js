@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-
 export const use_cloud_store = defineStore('cloud', {
   state: () => ({
     ID: '',

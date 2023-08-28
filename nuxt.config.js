@@ -67,7 +67,7 @@ export default defineNuxtConfig({
       ['@pinia/nuxt',
         {
           autoImports: [
-            'storeToRefs',
+            'storeToRefs', 'defineStore'
           ],
         }],
 
