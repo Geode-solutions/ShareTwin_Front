@@ -10,6 +10,15 @@ export const use_vtk_store = defineStore('vtk', {
           .catch(console.error);
       }
     },
+    async delete_object_pipeline (params) {
+      const ws_link_store = use_ws_link_store()
+      if (ws_link_store.client) {
+        use_ws_link_store().client
+          .getRemote()
+          .vtk.delete_object_pipeline(params)
+          .catch(console.error);
+      }
+    },
     async toggle_object_visibility (params) {
       const ws_link_store = use_ws_link_store()
       if (ws_link_store.client) {

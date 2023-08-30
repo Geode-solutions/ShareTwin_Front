@@ -41,7 +41,15 @@ export const use_app_store = defineStore('app', {
 
       await this.get_coordinate_systems(this.object_tree.length - 1)
     },
-    remove_object_tree_item (object_tree_index) {
+
+    delete_object (object_tree_index) {
+      console.log('delete_object')
+      const vtk_store = use_vtk_store()
+      const ws_link_store = use_ws_link_store()
+      const id = this.object_tree[object_tree_index]['id']
+      ws_link_store.$patch({ busy: true })
+      vtk_store.delete_object_pipeline({ id })
+      ws_link_store.$patch({ busy: false })
       this.object_tree.splice(object_tree_index, 1)
     },
     toggle_object_visibility (object_tree_index) {
