@@ -67,7 +67,7 @@
     </v-row>
     <v-row class="text-center pa-0 ma-0">
       <v-col class="text-center pa-0">
-        <v-btn text="Apply georeferecing" :disabled="disabled_button" color="primary" rounded
+        <v-btn text="Apply georeferencing" :disabled="disabled_button" color="primary" rounded
           @click="apply_georeferencing" />
       </v-col>
     </v-row>
@@ -141,18 +141,18 @@ async function apply_georeferencing () {
   params.append('id', object_tree.value[object_tree_index.value].id)
   params.append('filename', object_tree.value[object_tree_index.value].native_file_name)
   params.append('coordinate_system_name', coordinate_system_name.value)
-  params.append('input_origin_x', real_picked_points[0].world_x)
-  params.append('input_origin_y', real_picked_points[0].world_y)
-  params.append('input_point_1_x', real_picked_points[1].world_x)
-  params.append('input_point_1_y', real_picked_points[1].world_y)
-  params.append('input_point_2_x', real_picked_points[2].world_x)
-  params.append('input_point_2_y', real_picked_points[2].world_y)
-  params.append('output_origin_x', real_picked_points[0].real_x.value)
-  params.append('output_origin_y', real_picked_points[0].real_y.value)
-  params.append('output_point_1_x', real_picked_points[1].real_x.value)
-  params.append('output_point_1_y', real_picked_points[1].real_y.value)
-  params.append('output_point_2_x', real_picked_points[2].real_x.value)
-  params.append('output_point_2_y', real_picked_points[2].real_y.value)
+  params.append('input_origin_x', Number(real_picked_points[0].world_x))
+  params.append('input_origin_y', Number(real_picked_points[0].world_y))
+  params.append('input_point_1_x', Number(real_picked_points[1].world_x))
+  params.append('input_point_1_y', Number(real_picked_points[1].world_y))
+  params.append('input_point_2_x', Number(real_picked_points[2].world_x))
+  params.append('input_point_2_y', Number(real_picked_points[2].world_y))
+  params.append('output_origin_x', Number(real_picked_points[0].real_x.value))
+  params.append('output_origin_y', Number(real_picked_points[0].real_y.value))
+  params.append('output_point_1_x', Number(real_picked_points[1].real_x.value))
+  params.append('output_point_1_y', Number(real_picked_points[1].real_y.value))
+  params.append('output_point_2_x', Number(real_picked_points[2].real_x.value))
+  params.append('output_point_2_y', Number(real_picked_points[2].real_y.value))
 
   await api_fetch(`/georeference`, { body: params, method: 'POST' }, {
     'response_function': (response) => {
