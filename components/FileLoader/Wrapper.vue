@@ -10,7 +10,7 @@
     </v-row>
     <v-row>
       <v-col cols="12" class="pa-0">
-        <FileLoaderStepper />
+        <Stepper />
       </v-col>
     </v-row>
   </v-dialog>
@@ -18,8 +18,8 @@
 
 <script setup>
 import geode_objects from '@/assets/geode_objects'
-import FileLoaderFileSelector from '@/components/FileLoader/FileSelector.vue'
-import FileLoaderObjectSelector from '@/components/FileLoader/ObjectSelector.vue'
+import FileSelector from '@/components/FileSelector.vue'
+import ObjectSelector from '@/components/ObjectSelector.vue'
 import FileLoaderLoadButton from '@/components/FileLoader/LoadButton.vue'
 
 const app_store = use_app_store()
@@ -36,7 +36,7 @@ const stepper_tree = reactive({
     {
       step_title: 'Please select the file(s) to load',
       component: {
-        component_name: shallowRef(FileLoaderFileSelector),
+        component_name: shallowRef(FileSelector),
         component_options: {
           multiple: true,
           label: 'Please select a file'
@@ -47,7 +47,7 @@ const stepper_tree = reactive({
     {
       step_title: 'Confirm the data type',
       component: {
-        component_name: shallowRef(FileLoaderObjectSelector),
+        component_name: shallowRef(ObjectSelector),
         component_options: {
           geode_objects: geode_objects,
           input_files: files

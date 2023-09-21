@@ -21,7 +21,7 @@
     </v-row>
   </v-container>
 </template>
-  
+
 <script setup>
 const cloud_store = use_cloud_store()
 const websocket_store = use_websocket_store()
