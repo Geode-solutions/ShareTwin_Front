@@ -76,8 +76,8 @@
 
 <script setup>
 const app_store = use_app_store()
-const vtk_store = use_vtk_store()
-const ws_link_store = use_ws_link_store()
+const viewer_store = use_viewer_store()
+const websocket_store = use_websocket_store()
 
 function create_data () {
   const world_x = ref(null)
@@ -133,7 +133,7 @@ function pick_point (point_index) {
 
 
 async function apply_georeferencing () {
-  ws_link_store.$patch({ busy: true })
+  websocket_store.$patch({ busy: true })
 
   const params = new FormData()
 
@@ -156,10 +156,10 @@ async function apply_georeferencing () {
 
   await api_fetch(`/georeference`, { body: params, method: 'POST' }, {
     'response_function': (response) => {
-      vtk_store.update_data({ id: object_tree.value[object_tree_index.value].id })
+      viewer_store.update_data({ id: object_tree.value[object_tree_index.value].id })
     }
   })
-  ws_link_store.$patch({ busy: false })
+  websocket_store.$patch({ busy: false })
 }
 </script>
 

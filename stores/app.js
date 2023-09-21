@@ -31,7 +31,6 @@ export const use_app_store = defineStore('app', {
       localStorage.setItem('accepted_gtcu', true)
       this.display_menu = true
       window.location.href = "/app"
-
     },
     async add_object_tree_item (object_tree_item) {
       object_tree_item.is_visible = true
@@ -44,23 +43,23 @@ export const use_app_store = defineStore('app', {
 
     delete_object (object_tree_index) {
       console.log('delete_object')
-      const vtk_store = use_vtk_store()
-      const ws_link_store = use_ws_link_store()
+      const viewer_store = use_viewer_store()
+      const websocket_store = use_websocket_store()
       const id = this.object_tree[object_tree_index]['id']
-      ws_link_store.$patch({ busy: true })
-      vtk_store.delete_object_pipeline({ id })
-      ws_link_store.$patch({ busy: false })
+      websocket_store.$patch({ busy: true })
+      viewer_store.delete_object_pipeline({ id })
+      websocket_store.$patch({ busy: false })
       this.object_tree.splice(object_tree_index, 1)
     },
     toggle_object_visibility (object_tree_index) {
-      const vtk_store = use_vtk_store()
-      const ws_link_store = use_ws_link_store()
+      const viewer_store = use_viewer_store()
+      const websocket_store = use_websocket_store()
       this.object_tree[object_tree_index].is_visible = !this.object_tree[object_tree_index].is_visible
       const id = this.object_tree[object_tree_index]['id']
       const is_visible = this.object_tree[object_tree_index].is_visible
-      ws_link_store.$patch({ busy: true })
-      vtk_store.toggle_object_visibility({ id, is_visible })
-      ws_link_store.$patch({ busy: false })
+      websocket_store.$patch({ busy: true })
+      viewer_store.toggle_object_visibility({ id, is_visible })
+      websocket_store.$patch({ busy: false })
     },
     add_texture_object (object_tree_index) {
       this.object_tree[object_tree_index].textures.push(create_texture_item())
@@ -75,15 +74,15 @@ export const use_app_store = defineStore('app', {
       current_texture[key].value = value
     },
     apply_textures (object_tree_index) {
-      const ws_link_store = use_ws_link_store()
-      const vtk_store = use_vtk_store()
+      const websocket_store = use_websocket_store()
+      const viewer_store = use_viewer_store()
       const current_object = this.object_tree[object_tree_index]
       const id = current_object.id
       const textures = current_object.textures
 
-      ws_link_store.$patch({ busy: true })
-      vtk_store.apply_textures({ id, textures })
-      ws_link_store.$patch({ busy: false })
+      websocket_store.$patch({ busy: true })
+      viewer_store.apply_textures({ id, textures })
+      websocket_store.$patch({ busy: false })
     },
     toggle_picking_mode (value) {
       this.picking_mode = value
@@ -103,8 +102,8 @@ export const use_app_store = defineStore('app', {
       this.object_tree_index = object_tree_index
     },
     async set_picked_point (x, y) {
-      const vtk_store = use_vtk_store()
-      const response = await vtk_store.get_point_position({ x, y })
+      const viewer_store = use_viewer_store()
+      const response = await viewer_store.get_point_position({ x, y })
       const { x: world_x, y: world_y } = response
       this.picked_point.x = world_x
       this.picked_point.y = world_y
@@ -113,8 +112,8 @@ export const use_app_store = defineStore('app', {
 
     async get_coordinate_systems (object_tree_index) {
       console.log('get_coordinate_systems', object_tree_index)
-      const ws_link_store = use_ws_link_store()
-      ws_link_store.$patch({ busy: true })
+      const websocket_store = use_websocket_store()
+      websocket_store.$patch({ busy: true })
       const params = new FormData()
       console.log('object_tree', this.object_tree)
       params.append('native_file_name', this.object_tree[object_tree_index].native_file_name)
@@ -126,7 +125,7 @@ export const use_app_store = defineStore('app', {
           console.log('object_tree', this.object_tree)
         }
       })
-      ws_link_store.$patch({ busy: false })
+      websocket_store.$patch({ busy: false })
     }
   }
 })

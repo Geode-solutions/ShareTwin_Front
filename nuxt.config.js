@@ -10,9 +10,15 @@ export default defineNuxtConfig({
       GEODE_PORT: process.env.NODE_ENV === 'production' ? '443' : '5000',
       SITE_URL: process.env.SITE_URL,
       SITE_BRANCH: process.env.NODE_ENV === 'production' ? process.env.SITE_BRANCH : '',
+      PROJECT: 'sharetwin',
       NODE_ENV: process.env.NODE_ENV,
+      SITE_KEY: "6LdPWi8jAAAAACH7JQZcWOK1Agmqpt4h6C5DCOlw",
     }
   },
+
+  extends: [
+    '@geode/opengeodeweb-front'
+  ],
 
   app: {
     head: {
@@ -85,7 +91,7 @@ export default defineNuxtConfig({
   },
 
   imports: {
-    dirs: ['stores']
+    dirs: ['stores', '@geode/opengeodeweb-front/stores']
   },
 
   // ** Build configuration
