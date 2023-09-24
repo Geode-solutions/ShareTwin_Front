@@ -17,10 +17,10 @@ const viewer_store = use_viewer_store()
 const websocket_store = use_websocket_store()
 
 const props = defineProps({
-  component_options: { type: Object, required: true }
+  input_files: { type: Array, required: true },
+  input_geode_object: { type: String, required: true }
 })
-const { input_files,
-  input_geode_object } = props.component_options
+const { input_files, input_geode_object } = props
 
 const stepper_tree = inject('stepper_tree')
 
@@ -36,7 +36,7 @@ async function convert_file () {
       websocket_store.$patch({ busy: true })
 
       const params = new FormData()
-      params.append('object_type', input_geode_object)
+      params.append('geode_object', input_geode_object)
       params.append('file', event.target.result)
       params.append('old_file_name', input_files[i].name)
       params.append('file_size', input_files[i].size)

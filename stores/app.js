@@ -5,10 +5,8 @@ export const use_app_store = defineStore('app', {
     display_crs_assigner: false,
     display_crs_converter: false,
     display_georeferencing_drawer: false,
-    picking_mode: false,
     object_tree: [],
     object_tree_index: null,
-    picked_point: { x: null, y: null },
     accepted_gtcu: useLocalStorage('accepted_gtcu', false)
   }),
   getters: {
@@ -35,9 +33,7 @@ export const use_app_store = defineStore('app', {
     async add_object_tree_item (object_tree_item) {
       object_tree_item.is_visible = true
       object_tree_item.textures = [create_texture_item()]
-
       this.object_tree.push(object_tree_item)
-
       await this.get_coordinate_systems(this.object_tree.length - 1)
     },
 
@@ -67,7 +63,6 @@ export const use_app_store = defineStore('app', {
     remove_texture_object (object_tree_index, texture_index) {
       this.object_tree[object_tree_index].textures.splice(texture_index, 1)
     },
-
     modify_texture_object (object_tree_index, texture_index, key, value) {
       const current_item = this.object_tree[object_tree_index]
       const current_texture = current_item.textures[texture_index]
@@ -84,9 +79,6 @@ export const use_app_store = defineStore('app', {
       viewer_store.apply_textures({ id, textures })
       websocket_store.$patch({ busy: false })
     },
-    toggle_picking_mode (value) {
-      this.picking_mode = value
-    },
     toggle_display_georeferencing_drawer (value, object_tree_index) {
       this.display_georeferencing_drawer = value
       this.object_tree_index = object_tree_index
@@ -100,14 +92,6 @@ export const use_app_store = defineStore('app', {
       console.log('toggle_display_crs_converter', value)
       this.display_crs_converter = value
       this.object_tree_index = object_tree_index
-    },
-    async set_picked_point (x, y) {
-      const viewer_store = use_viewer_store()
-      const response = await viewer_store.get_point_position({ x, y })
-      const { x: world_x, y: world_y } = response
-      this.picked_point.x = world_x
-      this.picked_point.y = world_y
-      this.picking_mode = false
     },
 
     async get_coordinate_systems (object_tree_index) {

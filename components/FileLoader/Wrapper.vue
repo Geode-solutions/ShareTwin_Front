@@ -17,9 +17,8 @@
 </template>
 
 <script setup>
-import geode_objects from '@/assets/geode_objects'
-import FileSelector from '@/components/FileSelector.vue'
-import ObjectSelector from '@/components/ObjectSelector.vue'
+import FileSelector from '@geode/opengeodeweb-front/components/FileSelector.vue'
+import ObjectSelector from '@geode/opengeodeweb-front/components/ObjectSelector.vue'
 import FileLoaderLoadButton from '@/components/FileLoader/LoadButton.vue'
 
 const app_store = use_app_store()
@@ -32,6 +31,7 @@ const stepper_tree = reactive({
   current_step_index: ref(0),
   files: files,
   geode_object: geode_object,
+  route_prefix: '',
   steps: [
     {
       step_title: 'Please select the file(s) to load',
@@ -39,7 +39,9 @@ const stepper_tree = reactive({
         component_name: shallowRef(FileSelector),
         component_options: {
           multiple: true,
-          label: 'Please select a file'
+          label: 'Please select a file',
+          variable_to_update: 'files',
+          variable_to_increment: 'current_step_index'
         }
       },
       chips: computed(() => { return files.value.map((file) => file.name) })
@@ -49,8 +51,8 @@ const stepper_tree = reactive({
       component: {
         component_name: shallowRef(ObjectSelector),
         component_options: {
-          geode_objects: geode_objects,
-          input_files: files
+          variable_to_update: 'geode_object',
+          variable_to_increment: 'current_step_index'
         }
       },
       chips: computed(() => {

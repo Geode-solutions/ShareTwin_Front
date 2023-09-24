@@ -36,7 +36,7 @@ async function get_raster_image_input_extensions () {
   websocket_store.$patch({ busy: true })
   const params = new FormData()
   params.append('geode_object', 'RasterImage2D')
-  await api_fetch(`/object_allowed_files`, {
+  await api_fetch(`/geode_object_allowed_files`, {
     body: params, method: 'POST'
   }, {
     'response_function': (response) => {
@@ -66,7 +66,7 @@ function convert_raster_image () {
   const reader = new FileReader()
   reader.onload = async function (event) {
     const params = new FormData()
-    params.append('object_type', 'RasterImage2D')
+    params.append('geode_object', 'RasterImage2D')
     params.append('file', event.target.result)
     params.append('old_file_name', texture_file.value[0].name)
     params.append('file_size', texture_file.value[0].size)

@@ -17,7 +17,10 @@
     </v-row>
     <v-row v-else no-gutters class="fill-height">
       <Launcher v-if="!is_cloud_running || !is_client_created" class="pa-5" :site_key="site_key" />
-      <RemoteRenderingView v-else :client="client" />
+      <v-col v-else class="pa-0">
+
+        <RemoteRenderingView :client="client" />
+      </v-col>
     </v-row>
   </v-container>
 </template>

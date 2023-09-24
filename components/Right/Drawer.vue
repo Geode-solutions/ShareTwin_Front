@@ -89,7 +89,8 @@ function create_data () {
 
 var real_picked_points = [create_data(), create_data(), create_data()]
 const coordinate_system_name = ref('')
-const { display_georeferencing_drawer, picking_mode, picked_point, object_tree, object_tree_index } = storeToRefs(app_store)
+const { display_georeferencing_drawer, object_tree, object_tree_index } = storeToRefs(app_store)
+const { picking_mode, picked_point } = storeToRefs(viewer_store)
 const disabled_button = computed(() => {
   for (let i = 0; i < real_picked_points.length; i++) {
     if (([null, undefined, ''].includes(real_picked_points[i].real_x.value)) ||
@@ -121,7 +122,7 @@ function reset_real_picked_points () {
   coordinate_system_name.value = ''
 }
 function pick_point (point_index) {
-  app_store.toggle_picking_mode(true)
+  viewer_store.toggle_picking_mode(true)
 
 
   watchOnce(picking_mode, () => {
