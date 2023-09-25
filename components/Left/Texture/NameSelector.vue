@@ -1,6 +1,7 @@
 <template>
-  <v-combobox label="Texture" :loading="loading" :items="texture_coordinates" variant="underlined" v-model="texture_name"
-    :error="error" class="pa-0" @click:clear="error = true" @update:modelValue="error = false" clearable></v-combobox>
+  <v-combobox label="Texture coordinate" :loading="loading" :items="texture_coordinates" variant="underlined"
+    v-model="texture_name" :error="error" class="pa-0" @click:clear="error = true" @update:modelValue="error = false"
+    clearable></v-combobox>
 </template>
 
 <script setup>

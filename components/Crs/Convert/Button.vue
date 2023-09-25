@@ -20,7 +20,7 @@ const props = defineProps({
   component_options: { type: Object, required: true }
 })
 
-const { object_tree_index, input_crs, output_crs } = props.component_options
+const { object_tree_index, output_crs } = props.component_options
 const stepper_tree = inject('stepper_tree')
 const loading = ref(false)
 const toggle_loading = useToggle(loading)
@@ -32,9 +32,6 @@ async function convert_files () {
   params.append('geode_object', object_tree_item.geode_object)
   params.append('id', object_tree_item.id)
   params.append('filename', object_tree_item.native_file_name)
-  params.append('input_crs_authority', input_crs['authority'])
-  params.append('input_crs_code', input_crs['code'])
-  params.append('input_crs_name', input_crs['name'])
   params.append('output_crs_authority', output_crs['authority'])
   params.append('output_crs_code', output_crs['code'])
   params.append('output_crs_name', output_crs['name'])

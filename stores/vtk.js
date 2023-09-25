@@ -1,5 +1,3 @@
-import { defineStore } from 'pinia'
-
 export const use_vtk_store = defineStore('vtk', {
   state: () => ({}),
   actions: {
@@ -9,6 +7,15 @@ export const use_vtk_store = defineStore('vtk', {
         use_ws_link_store().client
           .getRemote()
           .vtk.create_object_pipeline(params)
+          .catch(console.error);
+      }
+    },
+    async delete_object_pipeline (params) {
+      const ws_link_store = use_ws_link_store()
+      if (ws_link_store.client) {
+        use_ws_link_store().client
+          .getRemote()
+          .vtk.delete_object_pipeline(params)
           .catch(console.error);
       }
     },

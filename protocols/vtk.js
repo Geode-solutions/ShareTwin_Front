@@ -2,6 +2,7 @@
 export default function createMethods (session) {
   return {
     create_object_pipeline: (params) => session.call('create_object_pipeline', [params]),
+    delete_object_pipeline: (params) => session.call('delete_object_pipeline', [params]),
     create_visualization: () => session.call('create_visualization', []),
     reset: () => session.call('reset'),
     reset_camera: () => session.call('reset_camera', []),

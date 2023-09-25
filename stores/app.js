@@ -1,8 +1,6 @@
-import { defineStore } from 'pinia'
-
 export const use_app_store = defineStore('app', {
   state: () => ({
-    display_menu: true,
+    display_menu: false,
     display_object_selector: false,
     display_crs_assigner: false,
     display_crs_converter: false,
@@ -10,7 +8,8 @@ export const use_app_store = defineStore('app', {
     picking_mode: false,
     object_tree: [],
     object_tree_index: null,
-    picked_point: { x: null, y: null }
+    picked_point: { x: null, y: null },
+    accepted_gtcu: useLocalStorage('accepted_gtcu', false)
   }),
   getters: {
     are_textures_valid: (state) => (object_tree_index) => {
@@ -27,6 +26,13 @@ export const use_app_store = defineStore('app', {
     }
   },
   actions: {
+    accept_gtcu () {
+      this.accepted_gtcu = true
+      localStorage.setItem('accepted_gtcu', true)
+      this.display_menu = true
+      window.location.href = "/app"
+
+    },
     async add_object_tree_item (object_tree_item) {
       object_tree_item.is_visible = true
       object_tree_item.textures = [create_texture_item()]
@@ -35,7 +41,15 @@ export const use_app_store = defineStore('app', {
 
       await this.get_coordinate_systems(this.object_tree.length - 1)
     },
-    remove_object_tree_item (object_tree_index) {
+
+    delete_object (object_tree_index) {
+      console.log('delete_object')
+      const vtk_store = use_vtk_store()
+      const ws_link_store = use_ws_link_store()
+      const id = this.object_tree[object_tree_index]['id']
+      ws_link_store.$patch({ busy: true })
+      vtk_store.delete_object_pipeline({ id })
+      ws_link_store.$patch({ busy: false })
       this.object_tree.splice(object_tree_index, 1)
     },
     toggle_object_visibility (object_tree_index) {
