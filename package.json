@@ -15,7 +15,7 @@
     "eslint-plugin-prettier-vue": "^5.0.0",
     "eslint-plugin-vue": "^9.17.0",
     "eslint-plugin-vuetify": "^2.0.5",
-    "nuxt": "^3.7.3"
+    "nuxt": "^3.7.4"
   },
   "dependencies": {
     "@dargmuesli/nuxt-cookie-control": "^6.4.3",
