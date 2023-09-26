@@ -103,9 +103,6 @@ export default defineNuxtConfig({
       isCustomElement: (tag) => ['md-linedivider'].includes(tag)
     }
   },
-  nitro: {
-    preset: 'netlify'
-  },
 
   devtools: {
     enabled: process.env.NODE_ENV === 'production' ? false : true
