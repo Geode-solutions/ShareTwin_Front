@@ -50,7 +50,7 @@
 </template>
 
 <script setup>
-import geode_objects from '@/assets/geode_objects'
+import geode_objects from '@geode/opengeodeweb-front/assets/geode_objects'
 import { storeToRefs } from 'pinia'
 
 const app_store = use_app_store()

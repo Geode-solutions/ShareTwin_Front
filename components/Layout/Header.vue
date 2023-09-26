@@ -26,11 +26,11 @@
 
 const app_store = use_app_store()
 const cloud_store = use_cloud_store()
-const ws_link_store = use_ws_link_store()
+const websocket_store = use_websocket_store()
 
 const { display_menu } = storeToRefs(app_store)
 const { is_cloud_running } = storeToRefs(cloud_store)
-const { busy } = storeToRefs(ws_link_store)
+const { busy } = storeToRefs(websocket_store)
 
 
 function toggle_diplay_menu () {
