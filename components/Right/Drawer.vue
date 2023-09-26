@@ -76,8 +76,8 @@
 
 <script setup>
 const app_store = use_app_store()
-const vtk_store = use_vtk_store()
-const ws_link_store = use_ws_link_store()
+const viewer_store = use_viewer_store()
+const websocket_store = use_websocket_store()
 
 function create_data () {
   const world_x = ref(null)
@@ -89,7 +89,8 @@ function create_data () {
 
 var real_picked_points = [create_data(), create_data(), create_data()]
 const coordinate_system_name = ref('')
-const { display_georeferencing_drawer, picking_mode, picked_point, object_tree, object_tree_index } = storeToRefs(app_store)
+const { display_georeferencing_drawer, object_tree, object_tree_index } = storeToRefs(app_store)
+const { picking_mode, picked_point } = storeToRefs(viewer_store)
 const disabled_button = computed(() => {
   for (let i = 0; i < real_picked_points.length; i++) {
     if (([null, undefined, ''].includes(real_picked_points[i].real_x.value)) ||
@@ -121,7 +122,7 @@ function reset_real_picked_points () {
   coordinate_system_name.value = ''
 }
 function pick_point (point_index) {
-  app_store.toggle_picking_mode(true)
+  viewer_store.toggle_picking_mode(true)
 
 
   watchOnce(picking_mode, () => {
@@ -133,7 +134,7 @@ function pick_point (point_index) {
 
 
 async function apply_georeferencing () {
-  ws_link_store.$patch({ busy: true })
+  websocket_store.$patch({ busy: true })
 
   const params = new FormData()
 
@@ -156,10 +157,10 @@ async function apply_georeferencing () {
 
   await api_fetch(`/georeference`, { body: params, method: 'POST' }, {
     'response_function': (response) => {
-      vtk_store.update_data({ id: object_tree.value[object_tree_index.value].id })
+      viewer_store.update_data({ id: object_tree.value[object_tree_index.value].id })
     }
   })
-  ws_link_store.$patch({ busy: false })
+  websocket_store.$patch({ busy: false })
 }
 </script>
 

@@ -13,14 +13,14 @@
 <script setup>
 
 const app_store = use_app_store()
-const vtk_store = use_vtk_store()
-const ws_link_store = use_ws_link_store()
+const viewer_store = use_viewer_store()
+const websocket_store = use_websocket_store()
 
 const props = defineProps({
-  component_options: { type: Object, required: true }
+  input_files: { type: Array, required: true },
+  input_geode_object: { type: String, required: true }
 })
-const { input_files,
-  input_geode_object } = props.component_options
+const { input_files, input_geode_object } = props
 
 const stepper_tree = inject('stepper_tree')
 
@@ -33,10 +33,10 @@ async function convert_file () {
 
     const reader = new FileReader()
     reader.onload = async function (event) {
-      ws_link_store.$patch({ busy: true })
+      websocket_store.$patch({ busy: true })
 
       const params = new FormData()
-      params.append('object_type', input_geode_object)
+      params.append('geode_object', input_geode_object)
       params.append('file', event.target.result)
       params.append('old_file_name', input_files[i].name)
       params.append('file_size', input_files[i].size)
@@ -46,7 +46,7 @@ async function convert_file () {
         {
           'response_function': async (response) => {
 
-            vtk_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
+            viewer_store.create_object_pipeline({ "file_name": response._data.viewable_file_name, "id": response._data.id })
 
             const object_tree_item = {
               'id': response._data.id,
@@ -66,7 +66,7 @@ async function convert_file () {
         }
       )
 
-      ws_link_store.$patch({ busy: false })
+      websocket_store.$patch({ busy: false })
     }
     reader.readAsDataURL(input_files[i])
   }
