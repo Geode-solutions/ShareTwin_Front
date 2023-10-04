@@ -18,9 +18,9 @@
     "nuxt": "^3.7.4"
   },
   "dependencies": {
-    "@dargmuesli/nuxt-cookie-control": "^6.4.3",
-    "@geode/opengeodeweb-front": "^2.1.1",
-    "@kitware/vtk.js": "^28.12.0",
+    "@dargmuesli/nuxt-cookie-control": "^6.4.4",
+    "@geode/opengeodeweb-front": "^2.0.0rc.9",
+    "@kitware/vtk.js": "^28.12.2",
     "@mdi/font": "^7.2.96",
     "@nuxt/devtools": "^0.8.5",
     "@pinia/nuxt": "^0.4.11",
@@ -32,8 +32,8 @@
     "sass": "^1.68.0",
     "vue-gtag": "^2.0.1",
     "vue-recaptcha": "^2.0.3",
-    "vuetify": "^3.3.17",
-    "wslink": "1.11.4"
+    "vuetify": "^3.3.19",
+    "wslink": "1.12.2"
   },
   "overrides": {
     "vue": "latest"

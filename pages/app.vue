@@ -15,12 +15,11 @@
         <a :href="'/'">Landing page</a>
       </v-col>
     </v-row>
-    <v-row v-else no-gutters class="fill-height">
-      <Launcher v-if="!is_cloud_running || !is_client_created" class="pa-5" :site_key="site_key" />
-      <v-col v-else class="pa-0">
-
+    <v-row v-else no-gutters class="fill-height pa-0">
+      <v-col v-if="cloud_store.is_running" class="pa-0">
         <RemoteRenderingView :client="client" />
       </v-col>
+      <Launcher v-else class="pa-5" />
     </v-row>
   </v-container>
 </template>
@@ -31,9 +30,7 @@ const websocket_store = use_websocket_store()
 const app_store = use_app_store()
 
 const { accepted_gtcu } = storeToRefs(app_store)
-const { is_cloud_running } = storeToRefs(cloud_store)
-const { client, is_client_created } = storeToRefs(websocket_store)
-const site_key = useRuntimeConfig().public.SITE_KEY
+const { client } = storeToRefs(websocket_store)
 
 onMounted(() => {
   if (accepted_gtcu.value) {
