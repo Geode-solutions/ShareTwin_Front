@@ -75,6 +75,8 @@
 </template>
 
 <script setup>
+import { useEventListener } from '@vueuse/core'
+
 const app_store = use_app_store()
 const viewer_store = use_viewer_store()
 const websocket_store = use_websocket_store()
@@ -120,11 +122,12 @@ function disable_apply_georeferencing () {
 }
 
 watch(picking_mode, (value) => {
-  console.log('picking_mode')
   if (value) {
-    window.addEventListener('keydown', function eventHandler (e) {
+    const cleanup = useEventListener(document, 'keydown', (e) => {
       if (e.key == 'Escape') {
+        console.log('escape')
         viewer_store.toggle_picking_mode(false)
+        cleanup()
       }
     })
   }
