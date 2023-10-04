@@ -108,7 +108,7 @@ const disabled_button = computed(() => {
 
     api_fetch(`/coordinate_reference_system_exists`, { body: params, method: 'POST' }, {
       'response_function': (response) => {
-        disabled_button.value = !response._data.coordinate_reference_system_exists
+        return response._data.coordinate_reference_system_exists
       }
     })
   } else {
