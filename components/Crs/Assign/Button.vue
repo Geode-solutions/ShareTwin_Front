@@ -16,11 +16,12 @@ import { useToggle } from '@vueuse/core'
 const app_store = use_app_store()
 
 const props = defineProps({
-  component_options: { type: Object, required: true }
+  object_tree_index: { type: Number, required: true },
+  output_crs: { type: Object, required: true }
 })
 
 
-const { object_tree_index, output_crs } = props.component_options
+const { object_tree_index, output_crs } = props
 const stepper_tree = inject('stepper_tree')
 const loading = ref(false)
 const toggle_loading = useToggle(loading)

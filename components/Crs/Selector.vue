@@ -11,10 +11,10 @@ import { useToggle } from '@vueuse/core'
 const app_store = use_app_store()
 
 const props = defineProps({
-  component_options: { type: Object, required: true },
+  crs_key: { type: String, required: true },
 })
 
-const { crs_key } = props.component_options
+const { crs_key } = props
 
 const { object_tree, object_tree_index } = storeToRefs(app_store)
 
