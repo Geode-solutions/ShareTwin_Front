@@ -19,7 +19,7 @@
       <v-col v-if="cloud_store.is_running" class="pa-0">
         <RemoteRenderingView :client="client" />
       </v-col>
-      <Launcher v-else class="pa-5" />
+      <Launcher v-else class="pa-5" :site_key="site_key" />
     </v-row>
   </v-container>
 </template>
@@ -31,6 +31,9 @@ const app_store = use_app_store()
 
 const { accepted_gtcu } = storeToRefs(app_store)
 const { client } = storeToRefs(websocket_store)
+
+const site_key = useRuntimeConfig().public.RECAPTCHA_SITE_KEY
+
 
 onMounted(() => {
   if (accepted_gtcu.value) {
