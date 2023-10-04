@@ -12,7 +12,7 @@ export default defineNuxtConfig({
       SITE_BRANCH: process.env.NODE_ENV === 'production' ? process.env.SITE_BRANCH : '',
       PROJECT: 'sharetwin',
       NODE_ENV: process.env.NODE_ENV,
-      RECAPTCHA_SITE_KEY: process.env.RECAPTCHA_SITE_KEY,
+      RECAPTCHA_SITE_KEY: '6LdPWi8jAAAAACH7JQZcWOK1Agmqpt4h6C5DCOlw',
     }
   },
 
