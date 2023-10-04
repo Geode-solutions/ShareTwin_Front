@@ -91,7 +91,10 @@ var real_picked_points = [create_data(), create_data(), create_data()]
 const coordinate_system_name = ref('')
 const { display_georeferencing_drawer, object_tree, object_tree_index } = storeToRefs(app_store)
 const { picking_mode, picked_point } = storeToRefs(viewer_store)
-const disabled_button = computed(() => {
+
+const disabled_button = ref(true)
+
+function disable_apply_georeferencing () {
   for (let i = 0; i < real_picked_points.length; i++) {
     if (([null, undefined, ''].includes(real_picked_points[i].real_x.value)) ||
       ([null, undefined, ''].includes(real_picked_points[i].real_y.value)) ||
@@ -114,8 +117,15 @@ const disabled_button = computed(() => {
   } else {
     return true
   }
+}
+
+watch(real_picked_points, () => {
+  disabled_button.value = disable_apply_georeferencing()
 })
 
+watch(coordinate_system_name, () => {
+  disabled_button.value = disable_apply_georeferencing()
+})
 
 function reset_real_picked_points () {
   real_picked_points = [create_data(), create_data(), create_data()]
@@ -142,12 +152,12 @@ async function apply_georeferencing () {
   params.append('id', object_tree.value[object_tree_index.value].id)
   params.append('filename', object_tree.value[object_tree_index.value].native_file_name)
   params.append('coordinate_system_name', coordinate_system_name.value)
-  params.append('input_origin_x', Number(real_picked_points[0].world_x))
-  params.append('input_origin_y', Number(real_picked_points[0].world_y))
-  params.append('input_point_1_x', Number(real_picked_points[1].world_x))
-  params.append('input_point_1_y', Number(real_picked_points[1].world_y))
-  params.append('input_point_2_x', Number(real_picked_points[2].world_x))
-  params.append('input_point_2_y', Number(real_picked_points[2].world_y))
+  params.append('input_origin_x', Number(real_picked_points[0].world_x.value))
+  params.append('input_origin_y', Number(real_picked_points[0].world_y.value))
+  params.append('input_point_1_x', Number(real_picked_points[1].world_x.value))
+  params.append('input_point_1_y', Number(real_picked_points[1].world_y.value))
+  params.append('input_point_2_x', Number(real_picked_points[2].world_x.value))
+  params.append('input_point_2_y', Number(real_picked_points[2].world_y.value))
   params.append('output_origin_x', Number(real_picked_points[0].real_x.value))
   params.append('output_origin_y', Number(real_picked_points[0].real_y.value))
   params.append('output_point_1_x', Number(real_picked_points[1].real_x.value))
