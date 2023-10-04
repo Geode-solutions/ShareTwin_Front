@@ -119,6 +119,17 @@ function disable_apply_georeferencing () {
   }
 }
 
+watch(picking_mode, (value) => {
+  console.log('picking_mode')
+  if (value) {
+    window.addEventListener('keydown', function eventHandler (e) {
+      if (e.key == 'Escape') {
+        viewer_store.toggle_picking_mode(false)
+      }
+    })
+  }
+})
+
 watch(real_picked_points, () => {
   disabled_button.value = disable_apply_georeferencing()
 })
