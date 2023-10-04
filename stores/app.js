@@ -84,29 +84,24 @@ export const use_app_store = defineStore('app', {
       this.object_tree_index = object_tree_index
     },
     toggle_display_crs_assigner (value, object_tree_index) {
-      console.log('toggle_display_crs_assigner', value)
       this.display_crs_assigner = value
       this.object_tree_index = object_tree_index
     },
     toggle_display_crs_converter (value, object_tree_index) {
-      console.log('toggle_display_crs_converter', value)
       this.display_crs_converter = value
       this.object_tree_index = object_tree_index
     },
 
     async get_coordinate_systems (object_tree_index) {
-      console.log('get_coordinate_systems', object_tree_index)
       const websocket_store = use_websocket_store()
       websocket_store.$patch({ busy: true })
       const params = new FormData()
-      console.log('object_tree', this.object_tree)
       params.append('native_file_name', this.object_tree[object_tree_index].native_file_name)
       params.append('geode_object', this.object_tree[object_tree_index].geode_object)
       await api_fetch(`/coordinate_systems`, { body: params, method: 'POST' }, {
         'response_function': (response) => {
           console.log(response)
           this.object_tree[object_tree_index].coordinate_systems = response._data.coordinate_systems
-          console.log('object_tree', this.object_tree)
         }
       })
       websocket_store.$patch({ busy: false })
