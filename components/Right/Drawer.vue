@@ -125,7 +125,6 @@ watch(picking_mode, (value) => {
   if (value) {
     const cleanup = useEventListener(document, 'keydown', (e) => {
       if (e.key == 'Escape') {
-        console.log('escape')
         viewer_store.toggle_picking_mode(false)
         cleanup()
       }
