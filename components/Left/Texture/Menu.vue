@@ -7,15 +7,20 @@
             <v-icon icon="mdi-texture-box" />
           </v-col>
           <v-col cols="auto" class="align-self-center">
-            <h4 class="overflow-x-hidden">
-              Textures
-            </h4>
+            <h4 class="overflow-x-hidden">Textures</h4>
           </v-col>
         </v-row>
       </v-expansion-panel-title>
       <v-expansion-panel-text clas="pa-0">
-        <v-container v-for="(item, texture_index) in textures" :key="object_tree_index" class="pa-3">
-          <LeftTextureSelector :object_tree_index="object_tree_index" :texture_index="texture_index" />
+        <v-container
+          v-for="(item, texture_index) in textures"
+          :key="object_tree_index"
+          class="pa-3"
+        >
+          <LeftTextureSelector
+            :object_tree_index="object_tree_index"
+            :texture_index="texture_index"
+          />
         </v-container>
       </v-expansion-panel-text>
     </v-expansion-panel>
@@ -23,16 +28,14 @@
 </template>
 
 <script setup>
+  const app_store = use_app_store()
 
-const app_store = use_app_store()
+  const props = defineProps({
+    object_tree_index: { type: Number, required: true },
+  })
 
-const props = defineProps({
-  object_tree_index: { type: Number, required: true }
-})
+  const { object_tree_index } = props
+  const { object_tree } = storeToRefs(app_store)
 
-const { object_tree_index } = props
-const { object_tree } = storeToRefs(app_store)
-
-const textures = object_tree.value[object_tree_index].textures
-
+  const textures = object_tree.value[object_tree_index].textures
 </script>

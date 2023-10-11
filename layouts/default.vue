@@ -7,17 +7,14 @@
   </v-app>
 </template>
 
-<script setup>
-
-</script>
+<script setup></script>
 
 <style scoped>
-* {
-  text-transform: none !important;
-}
+  * {
+    text-transform: none !important;
+  }
 
-.card {
-  border-radius: 15px
-}
+  .card {
+    border-radius: 15px;
+  }
 </style>
-
