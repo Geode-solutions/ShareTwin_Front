@@ -30,13 +30,14 @@
   const websocket_store = use_websocket_store()
   const app_store = use_app_store()
 
+  const { is_captcha_validated } = storeToRefs(cloud_store)
   const { accepted_gtcu } = storeToRefs(app_store)
   const { client } = storeToRefs(websocket_store)
 
   const site_key = useRuntimeConfig().public.RECAPTCHA_SITE_KEY
 
-  onMounted(() => {
-    if (accepted_gtcu.value) {
+  watch(is_captcha_validated, (value) => {
+    if (value) {
       app_store.$patch({ display_menu: true })
     }
   })
