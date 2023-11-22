@@ -29,14 +29,12 @@
   <v-row class="pa-5 text-center">
     <v-col cols="12">
       <p class="font-weight-bold">
-        Please accept the Terms of Use and Personnal Data Policy before
-        accessing the app:
-        <br />
-        <a :href="'/terms_of_use'" target="_blank">Terms of Use</a>
-        <br />
+        Please accept the
+        <a :href="'/terms_of_use'" target="_blank">Terms of Use</a> and
         <a :href="'/personal_data_policy'" target="_blank"
           >Personnal Data Policy</a
         >
+        before accessing the app:
       </p>
     </v-col>
   </v-row>
