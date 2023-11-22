@@ -29,10 +29,13 @@
   <v-row class="pa-5 text-center">
     <v-col cols="12">
       <p class="font-weight-bold">
-        Please accept the general terms and conditions before accessing the app:
+        Please accept the Terms of Use and Personnal Data Policy before
+        accessing the app:
         <br />
-        <a :href="'/license'" target="_blank"
-          >General Terms and Conditions of Use</a
+        <a :href="'/terms_of_use'" target="_blank">Terms of Use</a>
+        <br />
+        <a :href="'/personal_data_policy'" target="_blank"
+          >Personnal Data Policy</a
         >
       </p>
     </v-col>
@@ -41,7 +44,7 @@
     <v-col cols="12">
       <div class="text-center">
         <v-btn
-          text="Accept Terms and Conditions"
+          text="Accept the Terms of Use and Personnal Data Policy"
           @click="app_store.accept_gtcu()"
           color="primary"
           class="text-center"
