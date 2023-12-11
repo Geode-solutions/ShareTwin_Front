@@ -72,6 +72,26 @@ export default defineNuxtConfig({
           controlButtonIconHoverColor: colors.amber.accent4,
           controlButtonHoverBackground: colors.brown.darken4,
         },
+        isModalForced: false,
+        closeModalOnClickOutside: true,
+        cookies: {
+          necessary: [
+            {
+              description: {
+                en: "Functionnal cookies",
+              },
+              targetCookieIds: ["functionnal_cookies"],
+              name: {
+                en: "Mandatory",
+              },
+              links: {
+                "https://share-twin.com/terms_of_use": "Terms of Use",
+                "https://share-twin.com/personal_data_policy":
+                  "Personal Data Policy",
+              },
+            },
+          ],
+        },
       },
     ],
     [
@@ -80,19 +100,8 @@ export default defineNuxtConfig({
         autoImports: ["storeToRefs", "defineStore"],
       },
     ],
-
     "@nuxt/devtools",
   ],
-  cookies: {
-    necessary: [
-      {
-        name: "Default Cookies",
-        description: "Used for cookie control.",
-        cookies: ["cookie_control_consent", "cookie_control_enabled_cookies"],
-        isSecureContext: true,
-      },
-    ],
-  },
 
   imports: {
     dirs: ["stores", "@geode/opengeodeweb-front/stores"],

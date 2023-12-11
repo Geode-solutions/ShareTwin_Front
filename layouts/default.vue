@@ -5,9 +5,12 @@
       <slot />
     </v-main>
   </v-app>
+  <CookieControl v-if="public_runtime_config.NODE_ENV === 'production'" />
 </template>
 
-<script setup></script>
+<script setup>
+  const public_runtime_config = useRuntimeConfig().public
+</script>
 
 <style scoped>
   * {
