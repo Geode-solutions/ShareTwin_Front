@@ -3,5 +3,5 @@
 </template>
 
 <script setup>
-  import personal_data_policy from "@/assets/documents/PDP_SHARETWIN_anglais_v.22112023.pdf"
+  import personal_data_policy from "@/assets/documents/PDP_SHARETWIN_anglais_v.12112023.pdf"
 </script>
