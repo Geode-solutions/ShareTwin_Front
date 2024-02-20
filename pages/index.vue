@@ -32,7 +32,7 @@
         Please accept the
         <a :href="'/terms_of_use'" target="_blank">Terms of Use</a> and
         <a :href="'/personal_data_policy'" target="_blank"
-          >Personnal Data Policy</a
+          >Personal Data Policy</a
         >
         before accessing the app:
       </p>
@@ -42,7 +42,7 @@
     <v-col cols="12">
       <div class="text-center">
         <v-btn
-          text="Accept the Terms of Use and Personnal Data Policy"
+          text="Accept the Terms of Use and Personal Data Policy"
           @click="app_store.accept_gtcu()"
           color="primary"
           class="text-center"
