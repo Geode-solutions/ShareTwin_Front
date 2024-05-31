@@ -26,6 +26,15 @@
   <v-row>
     <v-img :src="OGW_infra" height="600" />
   </v-row>
+  <v-row class="pa-2 text-center">
+    <v-col cols="12">
+      <p class="font-weight-bold">
+        Click
+        <a :href="'/user_manual'" target="_blank">here</a> to read the user
+        manual
+      </p>
+    </v-col>
+  </v-row>
   <v-row class="pa-5 text-center">
     <v-col cols="12">
       <p class="font-weight-bold">
